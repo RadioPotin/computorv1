@@ -40,17 +40,19 @@ open Str
 	|Plus of char
 	|Mult of char
 	|Divi of char
+	|Equa of char
 	|End
 
-let re_num = regexp "-?[0-9]+"
+let re_num = regexp "[+-]?[1-9][0-9]*"
 let re_var = regexp "[a-zA-Z]"
 let re_ope = regexp "("
 let re_clo = regexp ")"
-let re_pow = regexp "^"
+let re_pow = regexp "\^"
 let re_sum = regexp "+"
 let re_sub = regexp "-"
 let re_mul = regexp "*"
 let re_div = regexp "/"
+let re_equ = regexp "="
 let re_spc = regexp "[ \n\r\x0c\t]+"
 
 let rec print_toklist l =
@@ -66,6 +68,7 @@ let rec print_toklist l =
 			| Plus x -> printf "[ + ]"; print_toklist r
 			| Mult x -> printf "[ * ]"; print_toklist r
 			| Divi x -> printf "[ / ]"; print_toklist r
+			| Equa x -> printf "[ = ]"; print_toklist r
 			| End -> printf "[ END ]\n"; print_toklist r
 
 exception UnknownToken of string
@@ -94,6 +97,8 @@ let lexer raw =
 			Open_p '('::(tok (pos + 1) s)
 		else if (Str.string_match re_clo s pos) then
 			Clos_p ')'::(tok (pos + 1) s)
+		else if (Str.string_match re_equ s pos) then
+			Equa '='::(tok (pos + 1) s)
 		else if (Str.string_match re_spc s pos) then
 			(tok (pos + 1) s)
 		else
