@@ -27,9 +27,6 @@
   A lexer that generates a token list to send to parser.
 
   *)
-
-module Lexer =
-struct
 open Printf
 open Str
 
@@ -46,14 +43,7 @@ open Str
 	|Equa of char
 	|End
 
-(*
-	Regex for number identification,
-		One for positive integers without + sign := 5, 7, 4589
-		Another for positive OR negative integers WITH +- sign and parentheses := (+5) (-45)
-	*)
-let re_num = regexp "[1-9][0-9]*"
-let re_pnum = regexp "(\\([-+]?[1-9][0-9]*\\))"
-
+let re_num = regexp "\\([+-]?[1-9][0-9]*\\)"
 let re_var = regexp "[a-zA-Z]"
 let re_ope = regexp "("
 let re_clo = regexp ")"
@@ -87,8 +77,7 @@ exception UnauthorizedSyntax of string
 let lexer raw =
 	let rec tok pos s =
 		if pos >= String.length s then [End]
-		else if ((Str.string_match re_pnum s pos)
-				|| (Str.string_match re_num s pos)) then
+		else if (Str.string_match re_num s pos) then
 			let token = Str.matched_string s in
 				(Nbr token)::(tok (pos + String.length token) s);
 		else if (Str.string_match re_sum s pos) then
@@ -117,4 +106,3 @@ let lexer raw =
 	in
 	tok 0 raw
 
-end
