@@ -1,0 +1,9 @@
+(library
+ (name computor_lib)
+ (modules lexer)
+ (libraries str))
+
+(executable
+ (name main)
+ (modules main)
+ (libraries computor_lib))
