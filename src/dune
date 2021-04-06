@@ -1,6 +1,6 @@
 (library
  (name computor_lib)
- (modules lexer)
+ (modules ast lexer parser pp solver)
  (libraries str))
 
 (executable

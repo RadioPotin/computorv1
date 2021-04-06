@@ -1,38 +1,14 @@
-(*
-
-  Grammar
-
-/ ! \  + means AT LEST ONE
-/_!_\  * means ZERO OR MORE
-
-  end -> epsilon
-  equation -> expression '=' expression end
-  expression -> (sum | product | factor | term) +
-  sum -> product (('+' product)|('-' product))*
-  product -> factor (('*' factor)|('/' factor))*
-  factor -> power | term
-  power -> term '^' factor
-  term -> group | variable | number
-  group -> '(' expression ')'
-  variable -> [a-zA-Z]+
-  number-> [0-9]+
-  *)
-
-
-(*
-  Need:
-  A function for each grammar rule that call eachother recursively in the parser
-
+  (*
   Also:
   A lexer that generates a token list to send to parser.
 
   *)
 
 open Str
-open Printf
+open Format
 
 type terminals =
-    Nbr of string
+  |Nbr of string
   |Var of char
   |Open_p of char
   |Clos_p of char
@@ -44,6 +20,10 @@ type terminals =
   |Equa of char
   |End
 
+exception UnknownToken of string
+exception UnauthorizedSyntax of string
+
+
 (*
 	Regex for number identification,
 		One for positive integers without + sign := 5, 7, 4589
@@ -51,6 +31,15 @@ type terminals =
 	*)
 let re_num = regexp "[1-9][0-9]*"
 let re_pnum = regexp "(\\([-+]?[1-9][0-9]*\\))"
+
+let re_zero = regexp "0"
+let re_pzero = regexp "\\([-+]?0\\)"
+
+let re_fnum = regexp "[0-9]\\.[0-9]+"
+let re_fpnum = regexp "(\\([-+]?(0|[1-9]+)\\.[0-9]+\\))"
+
+let re_fzero = regexp "0\\.[0-9]+"
+let re_fpzero = regexp "\\([-+]?0\\.[0-9]+\\)"
 
 let re_var = regexp "[a-zA-Z]"
 let re_ope = regexp "("
@@ -79,14 +68,15 @@ let rec print_toklist l =
     | Equa _x -> printf "[ = ]"; print_toklist r
     | End -> printf "[ END ]\n"; print_toklist r
 
-exception UnknownToken of string
-exception UnauthorizedSyntax of string
-
 let lexer raw =
   let rec tok pos s =
     if pos >= String.length s then [End]
     else if ((Str.string_match re_pnum s pos)
-             || (Str.string_match re_num s pos)) then
+			 || (Str.string_match re_zero s pos)
+			 || (Str.string_match re_pzero s pos)
+             || (Str.string_match re_num s pos)
+			 || (Str.string_match re_fnum s pos)
+			 || (Str.string_match re_fpnum s pos)) then
       let token = Str.matched_string s in
       (Nbr token)::(tok (pos + String.length token) s);
     else if (Str.string_match re_sum s pos) then
