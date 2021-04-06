@@ -1,9 +1,8 @@
 open OUnit2
-open Computor_lib
 
-(*
 let test_sanity _ =
   assert_equal 1 1 ~msg:"Custom error message"
+(*
 
 let lexer_test_simple_int _ =
   assert_equal [Nbr "5"; End]
