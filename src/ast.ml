@@ -3,7 +3,7 @@
 (*
   ax^n
 *)
-type monome = int * (string option) * int
+type monome = int * ((string * int) option)
 
 (*
   aX^n + X + b 
