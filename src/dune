@@ -7,3 +7,9 @@
  (name main)
  (modules main)
  (libraries computor_lib))
+
+(ocamllex
+ (modules lexer))
+
+(menhir
+ (modules parser))

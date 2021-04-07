@@ -22,6 +22,9 @@
     bx = -c
     x = (-c)/b
 *)
+(* TODO
+ * REPLACE SQRT WITH CUSTOM SQRT
+ * *)
 
 let solve e =
   let left, right = e in
@@ -64,3 +67,7 @@ let solve e =
     let x2 = (~-.b +. sqrt (float_of_int delta))/. (2. *. a) in
     Format.printf "x1 = %f and x2 = %f@." x1 x2
   |delta -> assert (delta < 0); ()
+(*
+   * (-b + i*sqrt(-delta))/(2a) and (-b - i*sqrt(-delta))/(2a)
+   * sont solutions pour delta < 0, difficilement affichable mais recevable si simplifié
+   * *)
