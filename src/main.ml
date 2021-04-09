@@ -1,10 +1,14 @@
 open Computor_lib
 
-let main _argc _argv =
-  Pp.std ([], []);
-  Solver.solve ([], []);
-  Pp.std([(3, Some ("x", 2));(-4, Some("x", 1)); (7, None)], [(28,None)]);
-  Solver.solve ([(3, Some ("x", 2));(-4, Some("x", 1)); (7, None)], [(28,None)])
+let usage () =
+  Format.eprintf "usage: %s <file>@." Sys.argv.(0);
+  exit 1
 
 let () =
-  main (Array.length Sys.argv) Sys.argv
+  if Array.length Sys.argv <> 2 then usage () ;
+  let chan = open_in Sys.argv.(1) in
+  let buf = Lexing.from_channel chan in
+  let file = Parser.equation Lexer.token buf in
+  close_in chan;
+  Pp.std file ;
+  Solver.solve file
