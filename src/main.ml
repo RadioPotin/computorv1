@@ -10,5 +10,4 @@ let () =
   let buf = Lexing.from_channel chan in
   let file = Parser.equation Lexer.token buf in
   close_in chan;
-  Pp.std file ;
   Solver.solve file
