@@ -7,7 +7,7 @@ type op = Plus | Minus
 (*
  * ax^n
  *)
-type monome = int * ((string * int) option)
+type monome = float * ((string * int) option)
 
 (*
  * aX^n + X + b
