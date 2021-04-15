@@ -3,7 +3,7 @@
 (*
  * TODO
  * REPLACE SQRT WITH CUSTOM SQRT
-*)
+ *)
 
 let solve e =
   (* Separate both polynomes of the equation left and right from '=' sign *)
@@ -39,6 +39,20 @@ let solve e =
     |(coeff, Some (_x, _n)) -> (coeff, var)
   ) p in
 
+  let degree = ref 0 in
+  List.iter (fun (_coeff, var)->
+    match var with
+    |None -> ()
+    |Some (_var, n)->
+      match !degree with
+      |0 -> degree := n
+      |x ->
+        if x < n then
+          degree := n
+        else
+          ()
+  ) poly;
+
   (*
    * Add coefficients of same power together
    * c is for constants
@@ -55,34 +69,38 @@ let solve e =
       if n = 1 then b := !b +. coeff
       else if n = 2 then a := !a +. coeff
       else
-        (Format.eprintf "Polynomial degree is strictly greater than 2 (%d) I can't solve.@." n; exit 1)
+        ()
   ) poly;
 
-  (*
-  let reduce polynome =
-     *)
+  Pp.reduced !a !b !c seen;
+  if !degree > 2  then
+    begin
+      Format.eprintf "Polynomial degree is %d@." !degree;
+      Format.eprintf "Polynomial degree is strictly greater than 2 I can't solve.@.";
+      exit 1
+    end
+  else
+    Format.printf "Polynomial degree is %d@." !degree;
 
-  Pp.std (poly, [(0., None)]);
-
-  let a = !a in
-  let b = !b in
-  let c = !c in
+  let a = Option.value (Some !a) ~default:0. in
+  let b = Option.value (Some !b) ~default:0. in
+  let c = Option.value (Some !c) ~default:0. in
   (* Calculating delta for resolution *)
   let delta = b *. b -. 4. *. a *. c in
-  Pp.deltap delta;
-
-  let b = b in
-  let a = a in
-  match delta with
-  |0. -> let sol = ~-.b /. (2. *. a) in
-    Format.printf "%f@." sol
-  |delta when delta > 0. ->
-    let x1 = (~-.b -. (sqrt delta))/. (2. *. a) in
-    let x2 = (~-.b +. (sqrt delta))/. (2. *. a) in
-    Format.printf "%f@.%f@." x1 x2
-  |delta -> assert (delta < 0.); ()
-
+  begin
+    match delta with
+    |0. -> let solution = ~-.b /. (2. *. a) in
+      Pp.deltap delta;
+      Format.printf "%f@." solution
+    |delta when Float.compare 0. delta < 0 ->
+      let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in
+      let solution2 = (~-.b +. (sqrt delta))/. (2. *. a) in
+      Pp.deltap delta;
+      Format.printf "%f@.%f@." solution1 solution2
+    |delta -> assert (Float.compare 0. delta < 0);
+  end;
 (*
-   * (-b + i*sqrt(-delta))/(2a) and (-b - i*sqrt(-delta))/(2a)
+ * (-b + i*sqrt(-delta))/(2a) and (-b - i*sqrt(-delta))/(2a)
    * sont solutions pour delta < 0, difficilement affichable mais recevable si simplifié
-   * *)
+   *
+   *)
