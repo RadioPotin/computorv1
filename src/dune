@@ -1,12 +1,14 @@
 (library
- (name computor_lib)
+ (public_name computor)
  (modules ast lexer parser pp solver)
- (libraries str))
+ (libraries str alcotest)
+ (instrumentation
+  (backend bisect_ppx)))
 
 (executable
- (name main)
- (modules main)
- (libraries computor_lib))
+ (public_name computor)
+ (modules computor)
+ (libraries computor))
 
 (ocamllex
  (modules lexer))
