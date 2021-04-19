@@ -4,9 +4,9 @@
 
 (name computor)
 
-(authors "DarioPinto <laradiopotin@gmail.com>")
+(authors "Dario Pinto <laradiopotin@gmail.com>")
 
-(maintainers "DarioPinto <laradiopotin@gmail.com>")
+(maintainers "Dario Pinto <laradiopotin@gmail.com>")
 
 (source
  (github RadioPotin/computorv1))

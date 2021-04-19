@@ -3,8 +3,8 @@ opam-version: "2.0"
 synopsis: "2nd Degree equation solver"
 description:
   "Functionnal programming project from the 42Paris computer engineering course. 2nd Degree equation solver."
-maintainer: ["DarioPinto <laradiopotin@gmail.com>"]
-authors: ["DarioPinto <laradiopotin@gmail.com>"]
+maintainer: ["Dario Pinto <laradiopotin@gmail.com>"]
+authors: ["Dario Pinto <laradiopotin@gmail.com>"]
 homepage: "https://github.com/RadioPotin/computorv1"
 bug-reports: "https://github.com/RadioPotin/computorv1/issues"
 depends: [

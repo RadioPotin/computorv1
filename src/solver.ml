@@ -1,9 +1,26 @@
 (* This module will contain code for 2nd Degree equation resolution *)
 
 (*
- * TODO
- * REPLACE SQRT WITH CUSTOM SQRT
+Alternative, iterative version of the custom SQRT function re-implementation
+
+let sqrt x =
+  let z = ref 1. in
+  for i = 10 downto 0 do
+     begin
+       z := !z -. (!z *. !z -. x) /. (2. *. !z)
+     end
+      done;
+   !z
  *)
+
+let sqrt x =
+  let rec sqrt_aux guess = function
+    | 0. -> guess
+    | iter ->
+      let guess = guess -. ((guess *. guess -. x) /. (2. *. guess)) in
+      sqrt_aux guess (iter -. 1.)
+  in
+  sqrt_aux 1. 10.
 
 let solve e =
   (* Separate both polynomes of the equation left and right from '=' sign *)
