@@ -122,13 +122,14 @@ let solve fmt e =
     match b with
     | 0. ->
       begin
-        if Float.compare 0. c = 0 then
-          Format.fprintf fmt "Impossible.@."
-        else
+        match c with
+        | 0.->
           Pp.reduced fmt a b c seen;
-        Format.fprintf fmt "Polynomial degree: %d@." !degree;
-        Pp.deltap fmt 0.
-      end;
+          Format.fprintf fmt "Polynomial degree: %d@." !degree;
+          Pp.deltap fmt 0.;
+        | _c ->
+          Format.fprintf fmt "Impossible.@."
+      end
     | b ->
       begin
         let solution = ~-.c /. b in
