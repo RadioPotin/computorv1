@@ -89,34 +89,57 @@ let solve fmt e =
         ()
   ) poly;
 
-  Pp.reduced fmt !a !b !c seen;
-  if !degree > 2  then
+  if !degree > 2 then
     begin
       Format.fprintf fmt "Polynomial degree: %d@." !degree;
       Format.fprintf fmt "The polynomial degree is strictly greater than 2, I can't solve.@.";
       exit 1
-    end
-  else
-    Format.fprintf fmt "Polynomial degree: %d@." !degree;
+    end;
 
   let a = Option.value (Some !a) ~default:0. in
   let b = Option.value (Some !b) ~default:0. in
   let c = Option.value (Some !c) ~default:0. in
-  (* Calculating delta for resolution *)
-  let delta = b *. b -. 4. *. a *. c in
-  print_float delta;
-  begin
-    match delta with
-    |0. -> let solution = ~-.b /. (2. *. a) in
-      Pp.deltap fmt delta;
-      Format.fprintf fmt "%f@." solution
-    |delta when Float.compare 0. delta < 0 ->
-      let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in
-      let solution2 = (~-.b +. (sqrt delta))/. (2. *. a) in
-      Pp.deltap fmt delta;
-      Format.fprintf fmt "%f@.%f@." solution1 solution2
-    |delta -> assert (Float.compare 0. delta > 0);
-  end;
+  if a <> 0. then
+    (* Calculating delta for resolution *)
+    let delta = b *. b -. 4. *. a *. c in
+    begin
+      match delta with
+      | 0. -> let solution = ~-.b /. (2. *. a) in
+        Pp.reduced fmt a b c seen;
+        Format.fprintf fmt "Polynomial degree: %d@." !degree;
+        Pp.deltap fmt delta;
+        Format.fprintf fmt "%g@." solution
+      | delta when Float.compare 0. delta < 0 ->
+        let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in
+        let solution2 = (~-.b +. (sqrt delta))/. (2. *. a) in
+        Pp.reduced fmt a b c seen;
+        Format.fprintf fmt "Polynomial degree: %d@." !degree;
+        Pp.deltap fmt delta;
+        Format.fprintf fmt "%g@.%gf@." solution1 solution2
+      | delta -> assert (Float.compare 0. delta > 0);
+    end;
+  else (*NOT a 2nd degree POLYNOME*)
+    match b with
+    | 0. ->
+      begin
+        if Float.compare 0. c = 0 then
+          Format.fprintf fmt "Impossible.@."
+        else
+          Pp.reduced fmt a b c seen;
+        Format.fprintf fmt "Polynomial degree: %d@." !degree;
+        Pp.deltap fmt 0.
+      end;
+    | b ->
+      begin
+        let solution = ~-.c /. b in
+        Pp.reduced fmt a b c seen;
+        Format.fprintf fmt "Polynomial degree: %d@." !degree;
+        Pp.deltap fmt 0.;
+        Format.fprintf fmt "%g@." solution
+      end
+
+
+
 (*
  * (-b + i*sqrt(-delta))/(2a) and (-b - i*sqrt(-delta))/(2a)
    * sont solutions pour delta < 0, difficilement affichable mais recevable si simplifié
