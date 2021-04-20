@@ -2,7 +2,7 @@
 
 open Ast
 
-let reduced fmt a b c seen =
+let reduced fmt (a, b, c, seen) =
   Format.fprintf fmt "Reduced form: ";
   let a =
     if Float.equal a 0. then
@@ -35,6 +35,12 @@ let reduced fmt a b c seen =
     | Some x, Some y, None -> Format.fprintf fmt "%g * %s^1 + %g * %s^2 = 0@." y var x var
     | Some x, Some y, Some z-> Format.fprintf fmt "%g * %s^0 + %g * %s^1 + %g * %s^2 = 0@." z var y var x var
   end
+
+let pretty fmt a b c seen =
+  let s = Format.asprintf "%a" reduced (a, b, c, seen) in
+  let sign = Str.regexp "\\+ -" in
+  let str = Str.global_replace sign "- " s in
+  Format.fprintf fmt "%s" str
 
 let deltap fmt delta =
   Format.fprintf fmt (
