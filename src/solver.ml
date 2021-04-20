@@ -100,7 +100,9 @@ let solve fmt e =
   let b = Option.value (Some !b) ~default:0. in
   let c = Option.value (Some !c) ~default:0. in
   if a <> 0. then
-    (* Calculating delta for resolution *)
+    (* Calculating delta for resolution of
+     * 2nd Degree equation
+    *)
     let delta = b *. b -. 4. *. a *. c in
     begin
       match delta with
@@ -118,23 +120,41 @@ let solve fmt e =
         Pp.deltap fmt delta;
         Format.fprintf fmt "%g@.%g@." solution1 solution2
 
-      | delta -> assert (Float.compare 0. delta > 0);
+      | delta ->
+        Pp.pretty fmt a b c seen;
+        Format.fprintf fmt "Polynomial degree: %d@." !degree;
+        Pp.deltap fmt delta;
+        Format.fprintf fmt "Complex solution here.@."
+
+      (* (-b + i*sqrt(-delta))/(2a) and (-b - i*sqrt(-delta))/(2a)
+         * sont solutions pour delta < 0, difficilement affichable mais recevable si simplifié
+         *
+      *)
     end;
-  else (* NOT a 2nd degree POLYNOME *)
+  else
+    (* Calculating x for resolution of
+     * 1st or 0th Degree equation
+    *)
     match b with
     | 0. ->
       begin
         match c with
+        (* Case 0 = 0
+        *)
         | 0.->
           Pp.pretty fmt a b c seen;
           Format.fprintf fmt "Polynomial degree: %d@." !degree;
           Pp.deltap fmt 0.;
 
+          (* Case 3 = 0
+          *)
         | c ->
           Pp.pretty fmt a b c seen;
           Format.fprintf fmt "Impossible.@."
       end
 
+    (* Case x = -c/b
+    *)
     | b ->
       begin
         let solution = ~-.c /. b in
@@ -143,11 +163,3 @@ let solve fmt e =
         Pp.deltap fmt 0.;
         Format.fprintf fmt "%g@." solution
       end
-
-
-
-(*
- * (-b + i*sqrt(-delta))/(2a) and (-b - i*sqrt(-delta))/(2a)
-   * sont solutions pour delta < 0, difficilement affichable mais recevable si simplifié
-   *
-   *)
