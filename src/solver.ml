@@ -22,7 +22,7 @@ let sqrt x =
   in
   sqrt_aux 1. 10.
 
-let solve e =
+let solve fmt e =
   (* Separate both polynomes of the equation left and right from '=' sign *)
   let left, right = e in
   (* Move right polynome to the left of the '=' sign, invert signs *)
@@ -40,7 +40,7 @@ let solve e =
         match !seen with
         |None -> seen := Some var
         |Some seen -> if seen <> var then
-            (Format.eprintf "There are two different variable `%s` and `%s`!@." var seen; exit 1)
+            (Format.fprintf fmt "There are two different variable `%s` and `%s`!@." var seen; exit 1)
       end
   ) p;
 
@@ -89,32 +89,33 @@ let solve e =
         ()
   ) poly;
 
-  Pp.reduced !a !b !c seen;
+  Pp.reduced fmt !a !b !c seen;
   if !degree > 2  then
     begin
-      Format.eprintf "Polynomial degree is %d@." !degree;
-      Format.eprintf "Polynomial degree is strictly greater than 2 I can't solve.@.";
+      Format.fprintf fmt "Polynomial degree: %d@." !degree;
+      Format.fprintf fmt "The polynomial degree is strictly greater than 2, I can't solve.@.";
       exit 1
     end
   else
-    Format.printf "Polynomial degree is %d@." !degree;
+    Format.fprintf fmt "Polynomial degree: %d@." !degree;
 
   let a = Option.value (Some !a) ~default:0. in
   let b = Option.value (Some !b) ~default:0. in
   let c = Option.value (Some !c) ~default:0. in
   (* Calculating delta for resolution *)
   let delta = b *. b -. 4. *. a *. c in
+  print_float delta;
   begin
     match delta with
     |0. -> let solution = ~-.b /. (2. *. a) in
-      Pp.deltap delta;
-      Format.printf "%f@." solution
+      Pp.deltap fmt delta;
+      Format.fprintf fmt "%f@." solution
     |delta when Float.compare 0. delta < 0 ->
       let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in
       let solution2 = (~-.b +. (sqrt delta))/. (2. *. a) in
-      Pp.deltap delta;
-      Format.printf "%f@.%f@." solution1 solution2
-    |delta -> assert (Float.compare 0. delta < 0);
+      Pp.deltap fmt delta;
+      Format.fprintf fmt "%f@.%f@." solution1 solution2
+    |delta -> assert (Float.compare 0. delta > 0);
   end;
 (*
  * (-b + i*sqrt(-delta))/(2a) and (-b - i*sqrt(-delta))/(2a)

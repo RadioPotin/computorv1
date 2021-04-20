@@ -25,32 +25,35 @@
   | p = nonempty_list(monome) {p}
 
   %inline monome:
-  | o = op c = coefficient option(STAR) var = option(variable) {
+  | o = op c = coefficient option(STAR) var = option(variable)
+  {
     match o with
     | Ast.Plus -> (c, var)
     | Ast.Minus -> (~-.c, var)
   }
-| o = op var = variable {
-  match o with
-  | Ast.Plus -> (1., Some var)
-  | Ast.Minus -> (-1., Some var)
-}
+  | o = op var = variable
+  {
+	match o with
+	| Ast.Plus -> (1., Some var)
+	| Ast.Minus -> (-1., Some var)
+  }
 
-%inline variable:
-    |var = VAR p = option(pow) {
-      match p with
-      |None -> (var, 1)
-      |Some p -> (var, p)
-    }
+  %inline variable:
+  |var = VAR p = option(pow)
+  {
+    match p with
+    |None -> (var, 1)
+    |Some p -> (var, p)
+  }
 
-    %inline coefficient:
+  %inline coefficient:
     |i = INT {float_of_int i}
-|i = FLOAT {i}
+    |i = FLOAT {i}
 
-%inline pow:
-   | CIRCUM i = INT {i}
+  %inline pow:
+    | CIRCUM i = INT {i}
 
-   %inline op:
-   | PLUS {Ast.Plus}
-| MINUS {Ast.Minus}
-|{Ast.Plus}
+  %inline op:
+    | PLUS {Ast.Plus}
+    | MINUS {Ast.Minus}
+    |{Ast.Plus}

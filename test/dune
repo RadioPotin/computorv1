@@ -1,3 +1,4 @@
 (test
- (name test)
+ (name test_computor)
+ (modules test_computor test_parser)
  (libraries computor alcotest))

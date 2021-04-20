@@ -2,8 +2,8 @@
 
 open Ast
 
-let reduced a b c seen =
-  Format.printf "Reduced form: ";
+let reduced fmt a b c seen =
+  Format.fprintf fmt "Reduced form: ";
   let a =
     if Float.equal a 0. then
       None
@@ -26,25 +26,25 @@ let reduced a b c seen =
   in
   begin
     match a,b,c with
-    | None, None, None -> Format.printf "0 = 0@."
-    | None, None, Some z -> Format.printf "%g = 0@." z
-    | None, Some y, None -> Format.printf "%g%s = 0@." y var
-    | None, Some y, Some z -> Format.printf "%g%s + %g = 0@." y var z
-    | Some x, None, None -> Format.printf "%g%s^2 = 0@." x var
-    | Some x, None, Some z -> Format.printf "%g%s^2 + %g = 0@." x var z
-    | Some x, Some y, None -> Format.printf "%g%s^2 + %g%s = 0@." x var y var
-    | Some x, Some y, Some z-> Format.printf "%g%s^2 + %g%s + %g = 0@." x var y var z
+    | None, None, None -> Format.fprintf fmt "0 = 0@."
+    | None, None, Some z -> Format.fprintf fmt "%g * %s^0 = 0@." z var
+    | None, Some y, None -> Format.fprintf fmt "%g * %s^1 = 0@." y var
+    | None, Some y, Some z -> Format.fprintf fmt "%g * %s^0 + %g * %s^1 = 0@." z var y var
+    | Some x, None, None -> Format.fprintf fmt "%g * %s^2 = 0@." x var
+    | Some x, None, Some z -> Format.fprintf fmt "%g * %s^0 + %g * %s^2 = 0@." z var x var
+    | Some x, Some y, None -> Format.fprintf fmt "%g * %s^1 + %g * %s^2 = 0@." y var x var
+    | Some x, Some y, Some z-> Format.fprintf fmt "%g * %s^0 + %g * %s^1 + %g * %s^2 = 0@." z var y var x var
   end
 
-let deltap delta =
-  Format.printf (
+let deltap fmt delta =
+  Format.fprintf fmt (
     if delta > 0. then
-      "Delta is strictly positive (%g), the two solutions are:@."
+      "Discriminant is strictly positive, the two solutions are:@."
     else if delta < 0. then
-      "Delta is strictly negative (%g), there is no solution with real numbers:@."
+      "Discriminant is strictly negative, there is no solution with real numbers:@."
     else
-      "Delta is %g, the solution is:@."
-  ) delta
+      "The solution is:@."
+  )
 
 let pow fmt n =
   if n <> 1 then Format.fprintf fmt "^%d" n
