@@ -76,29 +76,35 @@ let solve fmt e =
    * b for 1st degree terms
    * a for 2nd degree terms
    *)
-  let a = ref 0. in
-  let b = ref 0. in
-  let c = ref 0. in
+  let tbl = Hashtbl.create 512 in
   List.iter (fun (coeff, var)->
     match var with
-    |None -> c := !c +. coeff
+    |None -> let x = Hashtbl.find_opt tbl 0 in
+      begin
+        match x with
+        | None -> Hashtbl.replace tbl 0 coeff
+        | Some x -> Hashtbl.replace tbl 0 (coeff +. x)
+      end
     |Some (_var, n)->
-      if n = 1 then b := !b +. coeff
-      else if n = 2 then a := !a +. coeff
-      else
-        ()
+      let x = Hashtbl.find_opt tbl n in
+      begin
+        match x with
+        | None -> Hashtbl.replace tbl n coeff
+        | Some x -> Hashtbl.replace tbl n (coeff +. x)
+      end
   ) poly;
 
   if !degree > 2 then
     begin
+      Pp.superior_degree fmt tbl (Option.value !seen ~default:"");
       Format.fprintf fmt "Polynomial degree: %d@." !degree;
       Format.fprintf fmt "The polynomial degree is strictly greater than 2, I can't solve.@.";
       exit 1
     end;
 
-  let a = Option.value (Some !a) ~default:0. in
-  let b = Option.value (Some !b) ~default:0. in
-  let c = Option.value (Some !c) ~default:0. in
+  let a = Option.value (Hashtbl.find_opt tbl 2) ~default:0. in
+  let b = Option.value (Hashtbl.find_opt tbl 1) ~default:0. in
+  let c = Option.value (Hashtbl.find_opt tbl 0) ~default:0. in
   if a <> 0. then
     (* Calculating delta for resolution of
      * 2nd Degree equation

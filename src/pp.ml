@@ -52,6 +52,49 @@ let deltap fmt delta =
       "The solution is:@."
   )
 
+let superior_degree fmt tbl seen =
+  let allkeys = Hashtbl.fold (fun k v acc -> (k, v) :: acc) tbl [] in
+  let sortedkeys = List.sort (fun (x, _) (y, _) -> Int.compare x y) allkeys in
+  let print_sign fmt l =
+    match l with
+    | [] -> ()
+    | (_k, v)::_r ->
+      if Float.compare 0. v > 0 then
+        Format.fprintf fmt " - "
+      else
+        Format.fprintf fmt " + " in
+  let rec reduce sortedkeys seen =
+    begin
+      match sortedkeys with
+      | [] -> Format.fprintf fmt " = 0@."
+      | (k, v)::[] ->
+        if Float.compare 0. v > 0 then
+          begin
+            Format.fprintf fmt "%g * %s^%d" ~-.v seen k;
+            reduce [] seen
+          end
+        else
+          begin
+            Format.fprintf fmt "%g * %s^%d" v seen k;
+            reduce [] seen
+          end
+      | (k, v)::r ->
+        if Float.compare 0. v > 0 then
+          begin
+            Format.fprintf fmt "%g * %s^%d" ~-.v seen k;
+            print_sign fmt r;
+            reduce r seen
+          end
+        else
+          begin
+            Format.fprintf fmt "%g * %s^%d" v seen k;
+            print_sign fmt r;
+            reduce r seen
+          end
+    end;
+  in
+  reduce sortedkeys seen
+
 let pow fmt n =
   if n <> 1 then Format.fprintf fmt "^%d" n
 
