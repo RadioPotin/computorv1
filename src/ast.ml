@@ -2,6 +2,8 @@
  * This file will contain all custom types for computorv1
  *)
 
+exception Big_degree of string
+
 type op = Plus | Minus
 
 (*

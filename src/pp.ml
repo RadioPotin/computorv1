@@ -52,9 +52,8 @@ let deltap fmt delta =
       "The solution is:@."
   )
 
-let superior_degree fmt tbl seen =
-  let allkeys = Hashtbl.fold (fun k v acc -> (k, v) :: acc) tbl [] in
-  let sortedkeys = List.sort (fun (x, _) (y, _) -> Int.compare x y) allkeys in
+let polyprint fmt (terms, variable) =
+  Format.fprintf fmt"Reduced form: ";
   let print_sign fmt l =
     match l with
     | [] -> ()
@@ -63,37 +62,37 @@ let superior_degree fmt tbl seen =
         Format.fprintf fmt " - "
       else
         Format.fprintf fmt " + " in
-  let rec reduce sortedkeys seen =
+  let rec reduce terms variable =
     begin
-      match sortedkeys with
+      match terms with
       | [] -> Format.fprintf fmt " = 0@."
       | (k, v)::[] ->
         if Float.compare 0. v > 0 then
           begin
-            Format.fprintf fmt "%g * %s^%d" ~-.v seen k;
-            reduce [] seen
+            Format.fprintf fmt "%g * %s^%d" ~-.v variable k;
+            reduce [] variable
           end
         else
           begin
-            Format.fprintf fmt "%g * %s^%d" v seen k;
-            reduce [] seen
+            Format.fprintf fmt "%g * %s^%d" v variable k;
+            reduce [] variable
           end
       | (k, v)::r ->
         if Float.compare 0. v > 0 then
           begin
-            Format.fprintf fmt "%g * %s^%d" ~-.v seen k;
+            Format.fprintf fmt "%g * %s^%d" ~-.v variable k;
             print_sign fmt r;
-            reduce r seen
+            reduce r variable
           end
         else
           begin
-            Format.fprintf fmt "%g * %s^%d" v seen k;
+            Format.fprintf fmt "%g * %s^%d" v variable k;
             print_sign fmt r;
-            reduce r seen
+            reduce r variable
           end
     end;
   in
-  reduce sortedkeys seen
+  reduce terms variable
 
 let pow fmt n =
   if n <> 1 then Format.fprintf fmt "^%d" n

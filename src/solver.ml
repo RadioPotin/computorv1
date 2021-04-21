@@ -1,5 +1,7 @@
 (* This module will contain code for 2nd Degree equation resolution *)
 
+open Ast
+
 (*
 Alternative, iterative version of the custom SQRT function re-implementation
 
@@ -56,20 +58,6 @@ let solve fmt e =
     |(coeff, Some (_x, _n)) -> (coeff, var)
   ) p in
 
-  let degree = ref 0 in
-  List.iter (fun (_coeff, var)->
-    match var with
-    |None -> ()
-    |Some (_var, n)->
-      match !degree with
-      |0 -> degree := n
-      |x ->
-        if x < n then
-          degree := n
-        else
-          ()
-  ) poly;
-
   (*
    * Add coefficients of same power together
    * c is for constants
@@ -82,7 +70,7 @@ let solve fmt e =
     |None -> let x = Hashtbl.find_opt tbl 0 in
       begin
         match x with
-        | None -> Hashtbl.replace tbl 0 coeff
+        | None -> Hashtbl.add tbl 0 coeff
         | Some x -> Hashtbl.replace tbl 0 (coeff +. x)
       end
     |Some (_var, n)->
@@ -94,12 +82,20 @@ let solve fmt e =
       end
   ) poly;
 
-  if !degree > 2 then
+  let allterms = List.of_seq (Hashtbl.to_seq tbl) in
+  let sorted_terms = List.sort (fun (pow1, _) (pow2, _) -> Int.compare pow1 pow2) allterms in
+  let filtered_terms = List.filter (fun x -> snd x <> 0.) sorted_terms in
+  let max_degree = List.fold_left (fun acc el ->
+    match el with
+    | (0, _n) -> acc
+    | (p1, _c1) -> if acc > p1 then acc else p1) 0 filtered_terms in
+
+  if max_degree > 2 then
     begin
-      Pp.superior_degree fmt tbl (Option.value !seen ~default:"");
-      Format.fprintf fmt "Polynomial degree: %d@." !degree;
+      Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+      Format.fprintf fmt "Polynomial degree: %d@." max_degree;
       Format.fprintf fmt "The polynomial degree is strictly greater than 2, I can't solve.@.";
-      exit 1
+      raise (Big_degree "Degree is too high")
     end;
 
   let a = Option.value (Hashtbl.find_opt tbl 2) ~default:0. in
@@ -113,22 +109,22 @@ let solve fmt e =
     begin
       match delta with
       | 0. -> let solution = ~-.b /. (2. *. a) in
-        Pp.pretty fmt a b c seen;
-        Format.fprintf fmt "Polynomial degree: %d@." !degree;
+        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
         Format.fprintf fmt "%g@." solution
 
       | delta when Float.compare 0. delta < 0 ->
         let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in
         let solution2 = (~-.b +. (sqrt delta))/. (2. *. a) in
-        Pp.pretty fmt a b c seen;
-        Format.fprintf fmt "Polynomial degree: %d@." !degree;
+        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
         Format.fprintf fmt "%g@.%g@." solution1 solution2
 
       | delta ->
-        Pp.pretty fmt a b c seen;
-        Format.fprintf fmt "Polynomial degree: %d@." !degree;
+        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
         Format.fprintf fmt "Complex solution here.@."
 
@@ -149,7 +145,7 @@ let solve fmt e =
         *)
         | 0.->
           Pp.pretty fmt a b c seen;
-          Format.fprintf fmt "Polynomial degree: %d@." !degree;
+          Format.fprintf fmt "Polynomial degree: %d@." max_degree;
           Pp.deltap fmt 0.;
 
           (* Case 3 = 0
@@ -164,8 +160,8 @@ let solve fmt e =
     | b ->
       begin
         let solution = ~-.c /. b in
-        Pp.pretty fmt a b c seen;
-        Format.fprintf fmt "Polynomial degree: %d@." !degree;
+        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt 0.;
         Format.fprintf fmt "%g@." solution
       end
