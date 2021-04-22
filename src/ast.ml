@@ -2,7 +2,7 @@
  * This file will contain all custom types for computorv1
  *)
 
-exception Big_degree of string
+exception Big_degree
 
 type op = Plus | Minus
 

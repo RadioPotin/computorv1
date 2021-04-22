@@ -12,4 +12,4 @@ let () =
     let file = Parser.equation Lexer.token buf in
     Solver.solve Format.std_formatter file
   with
-  | Big_degree "Degree is too high" -> exit 1
+  | Big_degree -> exit 1

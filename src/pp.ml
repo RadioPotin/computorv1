@@ -2,14 +2,8 @@
 
 open Ast
 
-let reduced fmt (a, b, c, seen) =
+let reduced fmt (b, c, seen) =
   Format.fprintf fmt "Reduced form: ";
-  let a =
-    if Float.equal a 0. then
-      None
-    else
-      Some a
-  in
   let b =
     if Float.equal b 0. then
       None
@@ -25,19 +19,15 @@ let reduced fmt (a, b, c, seen) =
   let var =  Option.value !seen ~default:""
   in
   begin
-    match a,b,c with
-    | None, None, None -> Format.fprintf fmt "0 = 0@."
-    | None, None, Some z -> Format.fprintf fmt "%g * %s^0 = 0@." z var
-    | None, Some y, None -> Format.fprintf fmt "%g * %s^1 = 0@." y var
-    | None, Some y, Some z -> Format.fprintf fmt "%g * %s^0 + %g * %s^1 = 0@." z var y var
-    | Some x, None, None -> Format.fprintf fmt "%g * %s^2 = 0@." x var
-    | Some x, None, Some z -> Format.fprintf fmt "%g * %s^0 + %g * %s^2 = 0@." z var x var
-    | Some x, Some y, None -> Format.fprintf fmt "%g * %s^1 + %g * %s^2 = 0@." y var x var
-    | Some x, Some y, Some z-> Format.fprintf fmt "%g * %s^0 + %g * %s^1 + %g * %s^2 = 0@." z var y var x var
+    match b,c with
+    | None, None -> Format.fprintf fmt "0 = 0@."
+    | None, Some z -> Format.fprintf fmt "%g * %s^0 = 0@." z var
+    | Some y, None -> Format.fprintf fmt "%g * %s^1 = 0@." y var
+    | Some y, Some z -> Format.fprintf fmt "%g * %s^0 + %g * %s^1 = 0@." z var y var
   end
 
-let pretty fmt a b c seen =
-  let s = Format.asprintf "%a" reduced (a, b, c, seen) in
+let smol_equa fmt b c seen =
+  let s = Format.asprintf "%a" reduced (b, c, seen) in
   let sign = Str.regexp "\\+ -" in
   let str = Str.global_replace sign "- " s in
   Format.fprintf fmt "%s" str

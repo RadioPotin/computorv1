@@ -82,20 +82,25 @@ let solve fmt e =
       end
   ) poly;
 
+  (* Convert all Hashtbl of monomes (power, coef) to a list *)
   let allterms = List.of_seq (Hashtbl.to_seq tbl) in
+  (* Order in growing order of (power, _coef) *)
   let sorted_terms = List.sort (fun (pow1, _) (pow2, _) -> Int.compare pow1 pow2) allterms in
+  (* Filter out the monomes that have a coef of 0 *)
   let filtered_terms = List.filter (fun x -> snd x <> 0.) sorted_terms in
+  (* Find highest degree with non null coefficient *)
   let max_degree = List.fold_left (fun acc el ->
     match el with
     | (0, _n) -> acc
     | (p1, _c1) -> if acc > p1 then acc else p1) 0 filtered_terms in
 
+  (* Raise an exception in case of degree > 2 *)
   if max_degree > 2 then
     begin
       Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
       Format.fprintf fmt "Polynomial degree: %d@." max_degree;
       Format.fprintf fmt "The polynomial degree is strictly greater than 2, I can't solve.@.";
-      raise (Big_degree "Degree is too high")
+      raise (Big_degree)
     end;
 
   let a = Option.value (Hashtbl.find_opt tbl 2) ~default:0. in
@@ -144,14 +149,15 @@ let solve fmt e =
         (* Case 0 = 0
         *)
         | 0.->
-          Pp.pretty fmt a b c seen;
+          Pp.smol_equa fmt b c seen;
           Format.fprintf fmt "Polynomial degree: %d@." max_degree;
           Pp.deltap fmt 0.;
+          Format.fprintf fmt "All real numbers are solutions.\n";
 
           (* Case 3 = 0
           *)
-        | c ->
-          Pp.pretty fmt a b c seen;
+        | _c ->
+          Pp.smol_equa fmt b c seen;
           Format.fprintf fmt "Impossible.@."
       end
 
@@ -160,7 +166,7 @@ let solve fmt e =
     | b ->
       begin
         let solution = ~-.c /. b in
-        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Pp.smol_equa fmt b c seen;
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt 0.;
         Format.fprintf fmt "%g@." solution

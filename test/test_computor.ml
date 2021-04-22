@@ -3,6 +3,8 @@ open Ast
 
 let eq_to_string s = Format.asprintf "%a" Solver.solve (Parser.equation Lexer.token (Lexing.from_string s))
 
+
+
 let () =
   (*
    * TEST 0
@@ -29,7 +31,7 @@ let () =
       eq_to_string "8 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 3 * X^0" in
     assert (String.equal "Reduced form: 5 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 0\nPolynomial degree: 3\nThe polynomial degree is stricly greater than 2, I can't solve.\n" s);
   with
-  | Big_degree "Degree is too high" -> ();
+  | Big_degree -> ();
 
 
   (*
@@ -68,8 +70,8 @@ let () =
    * TEST 7
    *)
     let s =
-      Format.printf "Test 7: 4 * X^0 = 8\n";
-      eq_to_string "4 * X^0 = 8" in
+      Format.printf "Test 7: 4 * X^0 = 8 * X^0\n";
+      eq_to_string "4 * X^0 = 8 * X^0" in
     assert (String.equal "Reduced form: -4 * X^0 = 0\nImpossible.\n" s);
 
   (*
@@ -78,4 +80,12 @@ let () =
     let s =
       Format.printf "Test 8: 5 * X^0 + 3 * X^1 + 3 * X^2 = 1 * X^0 + 0 * X^1\n";
       eq_to_string "5 * X^0 + 3 * X^1 + 3 * X^2 = 1 * X^0 + 0 * X^1" in
-    assert (String.equal "Reduced form: 4 * X^0 + 3 * X^1 + 3 * X^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly negative, there is no solution with real numbers:\nComplex solution here.\n" s)
+    assert (String.equal "Reduced form: 4 * X^0 + 3 * X^1 + 3 * X^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly negative, there is no solution with real numbers:\nComplex solution here.\n" s);
+
+  (*
+   * TEST 9
+   *)
+    let s =
+      Format.printf "Test 9: 5 * X^0 = 5 * X^0\n";
+      eq_to_string "5 * X^0 = 5 * X^0" in
+    assert (String.equal "Reduced form: 0 = 0\nPolynomial degree: 0\nThe solution is:\nAll real numbers are solutions.\n" s);
