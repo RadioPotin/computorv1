@@ -57,29 +57,12 @@ let polyprint fmt (terms, variable) =
       match terms with
       | [] -> Format.fprintf fmt " = 0@."
       | (k, v)::[] ->
-        if Float.compare 0. v > 0 then
-          begin
-            Format.fprintf fmt "%g * %s^%d" ~-.v variable k;
-            reduce [] variable
-          end
-        else
-          begin
-            Format.fprintf fmt "%g * %s^%d" v variable k;
-            reduce [] variable
-          end
+        Format.fprintf fmt "%g * %s^%d" (if Float.compare 0. v > 0 then ~-.v else v) variable k;
+        reduce [] variable
       | (k, v)::r ->
-        if Float.compare 0. v > 0 then
-          begin
-            Format.fprintf fmt "%g * %s^%d" ~-.v variable k;
-            print_sign fmt r;
-            reduce r variable
-          end
-        else
-          begin
-            Format.fprintf fmt "%g * %s^%d" v variable k;
-            print_sign fmt r;
-            reduce r variable
-          end
+        Format.fprintf fmt "%g * %s^%d" (if Float.compare 0. v > 0 then ~-.v else v) variable k;
+        print_sign fmt r;
+        reduce r variable
     end;
   in
   reduce terms variable
