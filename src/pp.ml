@@ -2,36 +2,6 @@
 
 open Ast
 
-let reduced fmt (b, c, seen) =
-  Format.fprintf fmt "Reduced form: ";
-  let b =
-    if Float.equal b 0. then
-      None
-    else
-      Some b
-  in
-  let c =
-    if Float.equal c 0. then
-      None
-    else
-      Some c
-  in
-  let var =  Option.value !seen ~default:""
-  in
-  begin
-    match b,c with
-    | None, None -> Format.fprintf fmt "0 = 0@."
-    | None, Some z -> Format.fprintf fmt "%g * %s^0 = 0@." z var
-    | Some y, None -> Format.fprintf fmt "%g * %s^1 = 0@." y var
-    | Some y, Some z -> Format.fprintf fmt "%g * %s^0 + %g * %s^1 = 0@." z var y var
-  end
-
-let smol_equa fmt b c seen =
-  let s = Format.asprintf "%a" reduced (b, c, seen) in
-  let sign = Str.regexp "\\+ -" in
-  let str = Str.global_replace sign "- " s in
-  Format.fprintf fmt "%s" str
-
 let deltap fmt delta =
   Format.fprintf fmt (
     if delta > 0. then
