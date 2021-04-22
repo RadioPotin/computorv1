@@ -32,7 +32,6 @@ let () =
   with
   | Big_degree -> ();
 
-
   (*
    * TEST 3
    *)

@@ -115,6 +115,7 @@ let solve fmt e =
       match delta with
       | 0. -> let solution = ~-.b /. (2. *. a) in
         Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
         Format.fprintf fmt "%g@." solution
@@ -123,12 +124,14 @@ let solve fmt e =
         let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in
         let solution2 = (~-.b +. (sqrt delta))/. (2. *. a) in
         Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
         Format.fprintf fmt "%g@.%g@." solution1 solution2
 
       | delta ->
         Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
         Format.fprintf fmt "Complex solution here.@."
@@ -149,7 +152,7 @@ let solve fmt e =
         (* Case 0 = 0
         *)
         | 0.->
-          Pp.smol_equa fmt b c seen;
+          Format.fprintf fmt "Reduced form: 0 = 0@.";
           Format.fprintf fmt "Polynomial degree: %d@." max_degree;
           Pp.deltap fmt 0.;
           Format.fprintf fmt "All real numbers are solutions.\n";
@@ -157,7 +160,8 @@ let solve fmt e =
           (* Case 3 = 0
           *)
         | _c ->
-          Pp.smol_equa fmt b c seen;
+          Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+          Format.fprintf fmt " = 0@.";
           Format.fprintf fmt "Impossible.@."
       end
 
@@ -166,7 +170,8 @@ let solve fmt e =
     | b ->
       begin
         let solution = ~-.c /. b in
-        Pp.smol_equa fmt b c seen;
+        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt 0.;
         Format.fprintf fmt "%g@." solution
