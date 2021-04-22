@@ -42,7 +42,11 @@ let solve fmt e =
         match !seen with
         |None -> seen := Some var
         |Some seen -> if seen <> var then
-            (Format.fprintf fmt "There are two different variable `%s` and `%s`!@." var seen; exit 1)
+            begin
+              Format.fprintf fmt "There are two different variables `%s` and `%s`!@." var seen;
+              Format.fprintf fmt "Won't compute.@.";
+              raise (Too_many_variables)
+            end
       end
   ) p;
 
@@ -59,10 +63,11 @@ let solve fmt e =
   ) p in
 
   (*
-   * Add coefficients of same power together
-   * c is for constants
-   * b for 1st degree terms
-   * a for 2nd degree terms
+   * Create hashtable
+   * Keys are Power to which a given coefficient(varible option) is raised
+   * Values are the said coefficients
+   *
+   * Add coefficients of same power together to simplify polynome
    *)
   let tbl = Hashtbl.create 512 in
   List.iter (fun (coeff, var)->
@@ -82,7 +87,7 @@ let solve fmt e =
       end
   ) poly;
 
-  (* Convert all Hashtbl of monomes (power, coef) to a list *)
+  (* Convert all Hashtbl of monomes (key:power, value:coef) to a list *)
   let allterms = List.of_seq (Hashtbl.to_seq tbl) in
   (* Order in growing order of (power, _coef) *)
   let sorted_terms = List.sort (fun (pow1, _) (pow2, _) -> Int.compare pow1 pow2) allterms in
@@ -106,6 +111,7 @@ let solve fmt e =
   let a = Option.value (Hashtbl.find_opt tbl 2) ~default:0. in
   let b = Option.value (Hashtbl.find_opt tbl 1) ~default:0. in
   let c = Option.value (Hashtbl.find_opt tbl 0) ~default:0. in
+  (* If a is not 0, then it's not a 2nd degree equation *)
   if a <> 0. then
     (* Calculating delta for resolution of
      * 2nd Degree equation
@@ -136,9 +142,10 @@ let solve fmt e =
         Pp.deltap fmt delta;
         Format.fprintf fmt "Complex solution here.@."
 
-      (* (-b + i*sqrt(-delta))/(2a) and (-b - i*sqrt(-delta))/(2a)
-         * sont solutions pour delta < 0, difficilement affichable mais recevable si simplifié
-         *
+      (*
+       * For complex solutions, the formulas are as followed
+       * (-b + i*sqrt(-delta))/(2a)
+       * (-b - i*sqrt(-delta))/(2a)
       *)
     end;
   else

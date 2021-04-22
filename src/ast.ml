@@ -3,6 +3,7 @@
  *)
 
 exception Big_degree
+exception Too_many_variables
 
 type op = Plus | Minus
 

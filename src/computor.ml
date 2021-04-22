@@ -13,3 +13,4 @@ let () =
     Solver.solve Format.std_formatter file
   with
   | Big_degree -> exit 1
+  | Too_many_variables -> exit 1
