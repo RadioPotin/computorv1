@@ -87,7 +87,7 @@ let solve fmt e =
       end
   ) poly;
 
-  (* Convert all Hashtbl of monomes (key:power, value:coef) to a list *)
+  (* Convert all Hashtbl of monomes (key:power, value:coef) to a list of (power, coef)*)
   let allterms = List.of_seq (Hashtbl.to_seq tbl) in
   (* Order in growing order of (power, _coef) *)
   let sorted_terms = List.sort (fun (pow1, _) (pow2, _) -> Int.compare pow1 pow2) allterms in
