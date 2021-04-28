@@ -1,6 +1,6 @@
 open Computor
 
-let eq_to_list_tuple s = Parser.equation Lexer.token (Lexing.from_string s)
+let eq_parse s = Parser.equation Lexer.token (Lexing.from_string s)
 
 let counter =
   let count = ref (-1) in
@@ -25,7 +25,8 @@ let handle_test expectedL expectedR given =
         false
     end
   in
-  let pl, pr = (eq_to_list_tuple given) in
+  let ast = eq_parse given in
+  let pl, pr = Solver.file_to_lists ast in
   assert ((List.equal eq expectedL pl) && (List.equal eq expectedR pr))
 
 let test_parser () =

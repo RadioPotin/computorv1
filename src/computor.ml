@@ -10,7 +10,8 @@ let () =
   let buf = Lexing.from_string Sys.argv.(1) in
   try
     let file = Parser.equation Lexer.token buf in
-    Solver.solve Format.std_formatter file
+    let polynomes = Solver.file_to_lists file in
+    Solver.solve Format.std_formatter polynomes
   with
   | Big_degree -> exit 1
   | Too_many_variables -> exit 1

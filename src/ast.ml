@@ -5,17 +5,14 @@
 exception Big_degree
 exception Too_many_variables
 
-type op = Plus | Minus
+type monome =
+  | Const of float
+  | Term of float * string * int
 
-(*
- * ax^n
- *)
-type monome = float * ((string * int) option)
 
-(*
- * aX^n + X + b
- * [(a, ("x", n));;(1, ("x", 1));;(b,("", 1))]
-*)
-type polynome = monome list
+type polynome =
+  | Mon of monome
+  | Add of polynome * polynome
+  | Sub of polynome * polynome
 
 type equation = polynome * polynome

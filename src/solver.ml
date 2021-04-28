@@ -14,6 +14,28 @@ let sqrt x =
       done;
    !z
  *)
+let file_to_lists (p1, p2) =
+  let rec convert_sub p =
+    match p with
+    | Add(a, b) -> convert a @ convert b
+    | Sub(a, b) -> convert_sub a @ convert_sub b
+    | Mon x ->
+      begin
+        match x with
+        | Term(coef, var, pow) -> [(~-.coef, Some(var, pow))]
+        | Const f -> [(~-.f, None)]
+      end
+  and convert p =
+    match p with
+    | Add(a, b) -> convert a @ convert b
+    | Sub(a, b) -> convert a @ convert_sub b
+    | Mon x->
+      begin
+        match x with
+        | Term(coef, var, pow) -> [(coef, Some(var, pow))]
+        | Const f -> [(f, None)]
+      end
+  in (convert p1, convert p2)
 
 let sqrt x =
   let rec sqrt_aux guess = function
@@ -27,6 +49,13 @@ let sqrt x =
 let solve fmt e =
   (* Separate both polynomes of the equation left and right from '=' sign *)
   let left, right = e in
+
+  (*
+  Pp.print_monome_list fmt left;
+  Format.fprintf fmt "=@.";
+  Pp.print_monome_list fmt right;
+     *)
+
   (* Move right polynome to the left of the '=' sign, invert signs *)
   let right' = List.map (fun (coeff, var) ->
     (~-.coeff, var)) right in

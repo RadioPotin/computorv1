@@ -2,18 +2,18 @@ open Computor
 open Ast
 open Test_parser
 
-let eq_to_string s = Format.asprintf "%a" Solver.solve (Parser.equation Lexer.token (Lexing.from_string s))
-
-let counter =
-  let count = ref (-1) in
-  fun () -> incr count;
-    !count
 let handle_test expected given =
   Format.printf "Test %d: %s@." (counter()) given;
-  assert (String.equal expected (eq_to_string given))
+  let ast = eq_parse given in
+  let pl, pr = Solver.file_to_lists ast in
+  let str = Format.asprintf "%a" Solver.solve (pl, pr)
+  in
+  try
+    assert (String.equal expected str)
+  with
+  | _ -> Format.eprintf "EXPECTED\t\t--------------------@.@.%s@.GOT     \t\t--------------------@.@.%s@." expected str; exit 1
 
 let () =
-
   (*
    * Test 0
    *)
