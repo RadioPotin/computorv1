@@ -10,6 +10,8 @@
 %token<float> FLOAT
 %token CIRCUM
 
+%left MINUS
+%left PLUS
 %start <Ast.equation> equation
 
 %%
