@@ -1,7 +1,7 @@
 (library
  (public_name computor)
  (modules ast lexer parser pp solver)
- (libraries str alcotest)
+ (libraries str)
  (instrumentation
   (backend bisect_ppx)))
 
