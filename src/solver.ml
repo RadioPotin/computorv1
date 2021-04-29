@@ -169,7 +169,8 @@ let solve fmt e =
         Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
-        Format.fprintf fmt "Complex solution here.@."
+        Format.fprintf fmt "%g - %gi@." (~-.b /. (2. *. a)) ((sqrt ~-.delta) /. (2. *. a));
+        Format.fprintf fmt "%g + %gi@." (~-.b /. (2. *. a)) ((sqrt ~-.delta) /. (2. *. a));
 
       (*
        * For complex solutions, the formulas are as followed

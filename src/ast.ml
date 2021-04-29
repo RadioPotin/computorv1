@@ -9,7 +9,6 @@ type monome =
   | Const of float
   | Term of float * string * int
 
-
 type polynome =
   | Mon of monome
   | Add of polynome * polynome

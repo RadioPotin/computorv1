@@ -77,7 +77,7 @@ let () =
    * Test 8
    *)
     handle_test
-      "Reduced form: 4 * X^0 + 3 * X^1 + 3 * X^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly negative, there is no solution with real numbers:\nComplex solution here.\n"
+      "Reduced form: 4 * X^0 + 3 * X^1 + 3 * X^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly negative, there is no solution with real numbers:\n-0.5 - 1.04083i\n-0.5 + 1.04083i\n"
       "5 * X^0 + 3 * X^1 + 3 * X^2 = 1 * X^0 + 0 * X^1";
 
   (*
@@ -124,5 +124,11 @@ let () =
         "2x + 4y = 0";
     with
     | Too_many_variables -> ();
+  (*
+   * Test 15
+   *)
+      handle_test
+        "Reduced form: 5 * x^0 + 4 * x^1 + 1 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly negative, there is no solution with real numbers:\n-2 - 1i\n-2 + 1i\n"
+        "x^2 + 4x + 5 = 0";
 
       test_parser ()

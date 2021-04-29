@@ -21,7 +21,7 @@
 | pl = polynome MINUS pr = polynome {Ast.Sub (pl, pr)}
 | m = monome {Ast.Mon m}
 
-  monome:
+%inline monome:
     | f = FLOAT option(STAR) v = VAR CIRCUM p = INT {Ast.Term (f, v, p)}
 | i = INT option(STAR) v = VAR CIRCUM p = INT {Ast.Term ((float_of_int i), v, p)}
 | f = FLOAT option(STAR) v = VAR {Ast.Term (f, v, 1)}
