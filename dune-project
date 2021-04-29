@@ -20,9 +20,11 @@
   "Functionnal programming project from the 42Paris computer engineering course. 2nd Degree equation solver.")
  (depends
   (ocaml
-   (>= 4.09))
+   (>= 4.05))
   (dune
    (>= 2.8))
+  (menhir
+   (>= 2.1))
   (bisect_ppx
    (and
     :with-test
