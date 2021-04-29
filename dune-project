@@ -20,7 +20,7 @@
   "Functionnal programming project from the 42Paris computer engineering course. 2nd Degree equation solver.")
  (depends
   (ocaml
-   (>= 4.05))
+   (>= 4.07))
   (dune
    (>= 2.8))
   (menhir
