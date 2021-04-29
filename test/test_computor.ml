@@ -11,7 +11,7 @@ let handle_test expected given =
   try
     assert (String.equal expected str)
   with
-  | _ -> Format.eprintf "EXPECTED\t\t--------------------@.@.%s@.GOT     \t\t--------------------@.@.%s@." expected str; exit 1
+  | Assert_failure _-> Format.eprintf "EXPECTED\t\t--------------------@.@.%s@.GOT     \t\t--------------------@.@.%s@." expected str; exit 1
 
 let () =
   (*
