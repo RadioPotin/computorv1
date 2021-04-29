@@ -128,7 +128,7 @@ let () =
    * Test 15
    *)
       handle_test
-        "Reduced form: 5 * x^0 + 4 * x^1 + 1 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly negative, there is no solution with real numbers:\n-2 - 1i\n-2 + 1i\n"
+        "Reduced form: 5 * x^0 + 4 * x^1 + 1 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly negative, there is no solution with real numbers:\n-2 - i\n-2 + i\n"
         "x^2 + 4x + 5 = 0";
 
       test_parser ()

@@ -169,8 +169,13 @@ let solve fmt e =
         Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
-        Format.fprintf fmt "%g - %gi@." (~-.b /. (2. *. a)) ((sqrt ~-.delta) /. (2. *. a));
-        Format.fprintf fmt "%g + %gi@." (~-.b /. (2. *. a)) ((sqrt ~-.delta) /. (2. *. a));
+        let reduce_zi fmt root =
+          if root = 1. then Format.fprintf fmt "" else Format.fprintf fmt "%g" root
+        in
+        let root1 = (~-.b /. (2. *. a)) in
+        let root2 = (sqrt ~-.delta) /. (2. *. a) in
+        Format.fprintf fmt "%g - %ai@." root1 reduce_zi root2;
+        Format.fprintf fmt "%g + %ai@." root1 reduce_zi root2;
 
       (*
        * For complex solutions, the formulas are as followed
