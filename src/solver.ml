@@ -49,13 +49,6 @@ let sqrt x =
 let solve fmt e =
   (* Separate both polynomes of the equation left and right from '=' sign *)
   let left, right = e in
-
-  (*
-  Pp.print_monome_list fmt left;
-  Format.fprintf fmt "=@.";
-  Pp.print_monome_list fmt right;
-     *)
-
   (* Move right polynome to the left of the '=' sign, invert signs *)
   let right' = List.map (fun (coeff, var) ->
     (~-.coeff, var)) right in
@@ -176,12 +169,6 @@ let solve fmt e =
         let root2 = (sqrt ~-.delta) /. (2. *. a) in
         Format.fprintf fmt "%g - %ai@." root1 reduce_zi root2;
         Format.fprintf fmt "%g + %ai@." root1 reduce_zi root2;
-
-      (*
-       * For complex solutions, the formulas are as followed
-       * (-b + i*sqrt(-delta))/(2a)
-       * (-b - i*sqrt(-delta))/(2a)
-      *)
     end;
   else
     (* Calculating x for resolution of

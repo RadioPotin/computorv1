@@ -34,10 +34,3 @@ let polyprint fmt (terms, variable) =
     end;
   in
   reduce terms variable
-
-let print_monome_list fmt l =
-  List.iter (fun (c, var)->
-    match (c, var) with
-    | (c, None)-> Format.fprintf fmt "(%g, None)@." c
-    | (c, Some(v, pow))-> Format.fprintf fmt "(%g, (%s, %d))@." c v pow
-  ) l;
