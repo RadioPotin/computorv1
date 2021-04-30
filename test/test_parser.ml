@@ -41,4 +41,36 @@ let test_parser () =
   handle_test
     [(0., None)]
     [(0., None)]
-    "0 = 0"
+    "0 = 0";
+
+  (*
+   * TEST 1
+   *)
+  handle_test
+    [(0., None)]
+    [(3., None)]
+    "0 = 3";
+
+  (*
+   * TEST 2
+   *)
+  handle_test
+    [(0., None)]
+    [(0., None)]
+    "-x + 1 = 0";
+
+  (*
+   * TEST 3
+   *)
+  handle_test
+    [(0., None)]
+    [(0., None)]
+    "0 = 0";
+
+  (*
+   * TEST 4
+   *)
+  handle_test
+    [(5., Some("X", 0));(4., Some("X", 1));(-9.3, Some("X", 2))]
+    [(1., Some("X", 0))]
+    "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"

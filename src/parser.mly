@@ -16,19 +16,21 @@
 
 %%
   equation:
-	| pl = polynome EQ pr = polynome EOF {(pl, pr)}
+  | pl = polynome EQ pr = polynome EOF {(pl, pr)}
 
-polynome:
-	| pl = polynome PLUS pr = polynome {Ast.Add (pl, pr)}
-	| pl = polynome MINUS pr = polynome {Ast.Sub (pl, pr)}
-	| m = monome {Ast.Mon m}
+    polynome:
+  | pl = polynome PLUS pr = polynome {Ast.Add (pl, pr)}
+| pl = polynome MINUS pr = polynome {Ast.Sub (pl, pr)}
+| m = monome {Ast.Mon m}
 
 %inline monome:
     | f = FLOAT option(STAR) v = VAR CIRCUM p = INT {Ast.Term (f, v, p)}
-	| i = INT option(STAR) v = VAR CIRCUM p = INT {Ast.Term ((float_of_int i), v, p)}
-	| f = FLOAT option(STAR) v = VAR {Ast.Term (f, v, 1)}
-	| i = INT option(STAR) v = VAR {Ast.Term ((float_of_int i), v, 1)}
-	| v = VAR CIRCUM i = INT {Ast.Term (1., v, i)}
-	| f = FLOAT {Ast.Const f}
-	| i = INT {Ast.Const (float_of_int i)}
-	| v = VAR {Ast.Term (1., v, 1)}
+| i = INT option(STAR) v = VAR CIRCUM p = INT {Ast.Term ((float_of_int i), v, p)}
+| f = FLOAT option(STAR) v = VAR {Ast.Term (f, v, 1)}
+| i = INT option(STAR) v = VAR {Ast.Term ((float_of_int i), v, 1)}
+| v = VAR CIRCUM i = INT {Ast.Term (1., v, i)}
+| MINUS v = VAR CIRCUM i = INT {Ast.Term (-1., v, i)}
+| MINUS v = VAR {Ast.Term (-1., v, 1)}
+| v = VAR {Ast.Term (1., v, 1)}
+| i = INT {Ast.Const (float_of_int i)}
+| f = FLOAT {Ast.Const f}
