@@ -459,27 +459,27 @@ let sqrt x =
    !z
  *)
 let file_to_lists (p1, p2) =
-  <span data-count="22">l</span>et rec convert_sub p =
-    <span data-count="10">m</span>atch p with
-    | <span data-count="1">A</span>dd(a, b) -&gt; convert_su<span data-count="1">b</span> a @ conver<span data-count="1">t</span> b
+  <span data-count="23">l</span>et rec convert_sub p =
+    <span data-count="16">m</span>atch p with
+    | <span data-count="4">A</span>dd(a, b) -&gt; convert_su<span data-count="4">b</span> a @ conver<span data-count="4">t</span> b
     | <span data-count="0">S</span>ub(a, b) -&gt; convert_su<span data-count="0">b</span> a @ convert_su<span data-count="0">b</span> b
-    | <span data-count="9">M</span>on x -&gt;
+    | <span data-count="12">M</span>on x -&gt;
       begin
         match x with
-        | <span data-count="6">T</span>erm(coef, var, pow) -&gt; [(~-<span data-count="6">.</span>coef, Some(var, pow))]
+        | <span data-count="9">T</span>erm(coef, var, pow) -&gt; [(~-<span data-count="9">.</span>coef, Some(var, pow))]
         | <span data-count="3">C</span>onst f -&gt; [(~-<span data-count="3">.</span>f, None)]
       end
   and convert p =
-    <span data-count="98">m</span>atch p with
-    | <span data-count="22">A</span>dd(a, b) -&gt; conver<span data-count="22">t</span> a @ conver<span data-count="22">t</span> b
-    | <span data-count="9">S</span>ub(a, b) -&gt; conver<span data-count="9">t</span> a @ convert_su<span data-count="9">b</span> b
-    | <span data-count="67">M</span>on x-&gt;
+    <span data-count="108">m</span>atch p with
+    | <span data-count="23">A</span>dd(a, b) -&gt; conver<span data-count="23">t</span> a @ conver<span data-count="23">t</span> b
+    | <span data-count="12">S</span>ub(a, b) -&gt; conver<span data-count="12">t</span> a @ convert_su<span data-count="12">b</span> b
+    | <span data-count="73">M</span>on x-&gt;
       begin
         match x with
-        | <span data-count="49">T</span>erm(coef, var, pow) -&gt; [(coef, Some(var, pow))]
-        | <span data-count="18">C</span>onst f -&gt; [(f, None)]
+        | <span data-count="53">T</span>erm(coef, var, pow) -&gt; [(coef, Some(var, pow))]
+        | <span data-count="20">C</span>onst f -&gt; [(f, None)]
       end
-  in (conver<span data-count="22">t</span> p1, conver<span data-count="22">t</span> p2)
+  in (conver<span data-count="23">t</span> p1, conver<span data-count="23">t</span> p2)
 
 let sqrt x =
   <span data-count="15">l</span>et rec sqrt_aux guess = function
