@@ -31,7 +31,7 @@ let handle_test expectedL expectedR given =
     List.iter2 (fun x y -> assert (eq x y)) expectedL pl;
     List.iter2 (fun x y -> assert (eq x y)) expectedR pr; ()
   with
-    Assert_failure _ -> ()
+    Assert_failure _ -> Format.eprintf "Error with equality of lists.@.";exit 1
 
 let test_parser () =
   Format.printf "---- Now testing parser ----@.";
@@ -55,7 +55,7 @@ let test_parser () =
    * TEST 2
    *)
   handle_test
-    [(0., None)]
+    [(-1., Some("x", 1));(1., None)]
     [(0., None)]
     "-x + 1 = 0";
 
@@ -63,9 +63,9 @@ let test_parser () =
    * TEST 3
    *)
   handle_test
+    [(-1., Some("X", 1));(-1., Some("X", 1));(-1., Some("X", 1));(1., Some("X", 2));(-2., Some("X", 2));(1., Some("X", 2));(1., None);]
     [(0., None)]
-    [(0., None)]
-    "0 = 0";
+    "-X - X - X + X^2 - 2X^2 + X^2 + 1 = 0";
 
   (*
    * TEST 4
@@ -73,4 +73,11 @@ let test_parser () =
   handle_test
     [(5., Some("X", 0));(4., Some("X", 1));(-9.3, Some("X", 2))]
     [(1., Some("X", 0))]
-    "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"
+    "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0";
+  (*
+   * TEST 2
+   *)
+  handle_test
+    [(-1., Some("x", 2));(1., None)]
+    [(0., None)]
+    "-x^2 + 1 = 0"
