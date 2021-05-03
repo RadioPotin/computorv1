@@ -5,9 +5,9 @@ open Ast
   (*
    * All tests for Solver module
    *)
-
 let handle_test_ast expectedL expectedR ast =
   Format.printf "Test %d: Ast behaviour for Sub(a, b) function convert_sub match case@." (counter());
+  let pl, pr = Solver.file_to_lists ast in
   let eq e1 e2 =
     let f1, opt1 = e1 in
     let f2, opt2 = e2 in
@@ -24,11 +24,13 @@ let handle_test_ast expectedL expectedR ast =
     end
   in
   try
-    let pl, pr = Solver.file_to_lists ast in
     List.iter2 (fun x y -> assert (eq x y)) expectedL pl;
     List.iter2 (fun x y -> assert (eq x y)) expectedR pr; ()
   with
-    Assert_failure _ -> Format.eprintf "Error with equality of lists.@.";exit 1
+    Assert_failure _ ->
+    Format.eprintf "Error with equality of lists.@.";
+    Pp.equ Format.err_formatter (pl, pr);
+    exit 1
 
 let test_solver () =
   Format.printf "---- Now testing solver ----@.";
