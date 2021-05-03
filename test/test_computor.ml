@@ -139,4 +139,14 @@ let () =
         "Reduced form: 6 * x^0 + 3 * x^1 + 2 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly negative, there is no solution with real numbers:\n-0.75 - 1.56125i\n-0.75 + 1.56125i\n"
         "2x^2+3x+6=0";
 
+  (*
+   * Test 17
+   *)
+      begin
+        match Pp.polyprint Format.std_formatter ([], "") with
+        | exception (Assert_failure _) -> ()
+        | () -> assert false
+      end;
+
+
       test_parser ()

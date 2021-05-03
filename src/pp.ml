@@ -11,12 +11,11 @@ let deltap fmt delta =
   )
 
 let polyprint fmt (terms, variable) =
-  Format.fprintf fmt"Reduced form: ";
+  Format.fprintf fmt "Reduced form: ";
   let size = List.length terms in
   let print_sign fmt l =
     match l with
-    | [] -> ()
-    | (_k, v)::_r ->
+    | (_k, v) ->
       if Float.compare 0. v > 0 then
         Format.fprintf fmt " - "
       else
@@ -24,12 +23,12 @@ let polyprint fmt (terms, variable) =
   let rec reduce terms variable =
     begin
       match terms with
-      | [] -> ()
-      | (k, v)::[] ->
+      | [] -> assert false
+      | [(k, v)] ->
         Format.fprintf fmt "%g * %s^%d" (if Float.compare 0. v > 0 && size <> 1 then ~-.v else v) variable k;
       | (k, v)::r ->
         Format.fprintf fmt "%g * %s^%d" (if Float.compare 0. v > 0 then ~-.v else v) variable k;
-        print_sign fmt r;
+        print_sign fmt (List.hd r);
         reduce r variable
     end;
   in
