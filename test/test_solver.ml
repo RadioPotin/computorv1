@@ -6,13 +6,47 @@ open Ast
    * All tests for Solver module
    *)
 
+let handle_test_ast expectedL expectedR ast =
+  Format.printf "Test %d: Ast behaviour for Sub(a, b) function convert_sub match case@." (counter());
+  let eq e1 e2 =
+    let f1, opt1 = e1 in
+    let f2, opt2 = e2 in
+    begin
+      if Float.compare f1 f2 = 0 then
+        match opt1, opt2 with
+        | None, None -> true
+        | None, Some _x -> false
+        | Some _x, None -> false
+        | Some (var1, p1), Some (var2, p2) ->
+          String.equal var1 var2 && Int.compare p1 p2 = 0
+      else
+        false
+    end
+  in
+  try
+    let pl, pr = Solver.file_to_lists ast in
+    List.iter2 (fun x y -> assert (eq x y)) expectedL pl;
+    List.iter2 (fun x y -> assert (eq x y)) expectedR pr; ()
+  with
+    Assert_failure _ -> Format.eprintf "Error with equality of lists.@.";exit 1
+
 let test_solver () =
   Format.printf "---- Now testing solver ----@.";
-  Format.printf "Test %d: Sending ungenerated test to file_to_list for coverage@." (counter());
-  let p1, p2 = Solver.file_to_lists (
-    Sub(Mon (Const (-1.)), Mon(Const (-3.))),
-    Sub(Sub(Mon(Const (-1.)), Mon(Const (-2.))),
-      Sub(Mon(Const (-3.)), Mon(Const (-4.))))
-  ) in
-  let str = Format.asprintf "%a" Solver.solve (p1, p2)
-  in Format.fprintf Format.std_formatter "%s" str
+  (*
+   * Test for Sub(a, b) match for convert_sub recursive call
+   *)
+  handle_test_ast
+    [(-1., None);(-3., None)]
+    [(-1., None);(-2., None);(-3., None);(-4., None)]
+    (
+      Sub(
+        Mon (Const (-1.)), Mon(Const (-3.))
+      ),
+
+      Sub(
+        Sub(
+          Mon(Const (-1.)), Mon(Const (-2.))),
+        Sub(
+          Mon(Const (-3.)), Mon(Const (-4.)))
+      )
+    )
