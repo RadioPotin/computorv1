@@ -31,6 +31,8 @@
 | v = VAR CIRCUM i = INT {Ast.Term (1., v, i)}
 | MINUS v = VAR CIRCUM i = INT {Ast.Term (-1., v, i)}
 | MINUS v = VAR {Ast.Term (-1., v, 1)}
+| MINUS i = INT {Ast.Const (float_of_int (-i))}
+| MINUS f = FLOAT {Ast.Const ~-.f}
 | v = VAR {Ast.Term (1., v, 1)}
 | i = INT {Ast.Const (float_of_int i)}
 | f = FLOAT {Ast.Const f}
