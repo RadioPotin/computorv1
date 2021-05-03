@@ -146,7 +146,7 @@ let solve fmt e =
         Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
-        Format.fprintf fmt "%g@." solution
+        Format.fprintf fmt "%g@." (if Float.compare (-0.) solution = 0 then 0. else solution)
 
       | delta when Float.compare 0. delta < 0 ->
         let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in
@@ -155,7 +155,9 @@ let solve fmt e =
         Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
-        Format.fprintf fmt "%g@.%g@." solution1 solution2
+        Format.fprintf fmt "%g@.%g@."
+          (if Float.compare (-0.) solution1 = 0 then 0. else solution1)
+          (if Float.compare (-0.) solution2 = 0 then 0. else solution2)
 
       | delta ->
         Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
@@ -167,8 +169,12 @@ let solve fmt e =
         in
         let root1 = (~-.b /. (2. *. a)) in
         let root2 = (sqrt ~-.delta) /. (2. *. a) in
-        Format.fprintf fmt "%g - %ai@." root1 reduce_zi root2;
-        Format.fprintf fmt "%g + %ai@." root1 reduce_zi root2;
+        Format.fprintf fmt "%g - %ai@."
+          (if Float.compare (-0.) root1 = 0 then ~-.root1 else root1)
+          reduce_zi (if Float.compare (-0.) root2 = 0 then 0. else root2);
+        Format.fprintf fmt "%g + %ai@."
+          (if Float.compare (-0.) root1 = 0 then ~-.root1 else root1)
+          reduce_zi (if Float.compare (-0.) root2 = 0 then 0. else root2);
     end;
   else
     (* Calculating x for resolution of
@@ -203,5 +209,5 @@ let solve fmt e =
         Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt 0.;
-        Format.fprintf fmt "%g@." solution
+        Format.fprintf fmt "%g@." (if Float.compare (-0.) solution = 0 then 0. else solution)
       end

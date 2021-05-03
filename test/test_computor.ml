@@ -173,7 +173,7 @@ let () =
    * Test 21
    *)
       handle_test
-        "Reduced form: -2 * x^1 = 0\nPolynomial degree: 1\nThe solution is:\n-0\n"
+        "Reduced form: -2 * x^1 = 0\nPolynomial degree: 1\nThe solution is:\n0\n"
         "-2 * x = 0";
 
       test_parser ();
