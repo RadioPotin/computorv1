@@ -99,19 +99,19 @@
 <pre><code class="ocaml">(* This file will contain all pretty-printing for computorv1 *)
 
 let deltap fmt delta =
-  <span data-count="14">F</span>ormat.fprintf fmt (
+  <span data-count="17">F</span>ormat.fprintf fmt (
     if delta &gt; 0. then
       <span data-count="6">"</span>Discriminant is strictly positive, the two solutions are:@."
-    else <span data-count="8">i</span>f delta &lt; 0. then
+    else <span data-count="11">i</span>f delta &lt; 0. then
       <span data-count="3">"</span>Discriminant is strictly negative, there is no solution with real numbers:@."
     else
-      <span data-count="5">"</span>The solution is:@."
+      <span data-count="8">"</span>The solution is:@."
   )
 
 let polyprint fmt (terms, variable) =
-  <span data-count="16">F</span>ormat.fprintf fmt "Reduced form: ";
-  <span data-count="16">l</span>et size = List.length terms in
-  <span data-count="16">l</span>et print_sign fmt l =
+  <span data-count="18">F</span>ormat.fprintf fmt "Reduced form: ";
+  <span data-count="18">l</span>et size = List.length terms in
+  <span data-count="18">l</span>et print_sign fmt l =
     <span data-count="22">m</span>atch l with
     | <span data-count="22">(</span>_k, v) -&gt;
       if Float.compar<span data-count="22">e</span> 0. v &gt; 0 then
@@ -119,11 +119,11 @@ let polyprint fmt (terms, variable) =
       else
         <span data-count="17">F</span>ormat.fprintf fmt " + " in
   let rec reduce terms variable =
-    <span data-count="38">b</span>egin
+    <span data-count="40">b</span>egin
       match terms with
       | [] -&gt; assert false
-      | <span data-count="15">[</span>(k, v)] -&gt;
-        Format.fprintf fmt "%g * %s^%d" (if Float.compar<span data-count="15">e</span> 0. v &gt; 0 &amp;&amp; <span data-count="4">s</span>ize &lt;&gt; 1 then <span data-count="3">~</span>-<span data-count="3">.</span>v else <span data-count="12">v</span>) variable k;
+      | <span data-count="17">[</span>(k, v)] -&gt;
+        Format.fprintf fmt "%g * %s^%d" (if Float.compar<span data-count="17">e</span> 0. v &gt; 0 &amp;&amp; <span data-count="6">s</span>ize &lt;&gt; 1 then <span data-count="3">~</span>-<span data-count="3">.</span>v else <span data-count="14">v</span>) variable k;
       | <span data-count="22">(</span>k, v)::r -&gt;
         Format.fprintf fmt "%g * %s^%d" (if Float.compar<span data-count="22">e</span> 0. v &gt; 0 then <span data-count="6">~</span>-<span data-count="6">.</span>v else <span data-count="16">v</span>) variable k;
         <span data-count="22">p</span>rint_sign fmt (List.h<span data-count="22">d</span> r);

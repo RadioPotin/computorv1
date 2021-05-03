@@ -459,27 +459,27 @@ let sqrt x =
    !z
  *)
 let file_to_lists (p1, p2) =
-  <span data-count="23">l</span>et rec convert_sub p =
-    <span data-count="16">m</span>atch p with
+  <span data-count="26">l</span>et rec convert_sub p =
+    <span data-count="17">m</span>atch p with
     | <span data-count="4">A</span>dd(a, b) -&gt; convert_su<span data-count="4">b</span> a @ conver<span data-count="4">t</span> b
     | <span data-count="0">S</span>ub(a, b) -&gt; Format.printf "help"; <span data-count="0">c</span>onvert_su<span data-count="0">b</span> a @ convert_su<span data-count="0">b</span> b
-    | <span data-count="12">M</span>on x -&gt;
+    | <span data-count="13">M</span>on x -&gt;
       begin
         match x with
         | <span data-count="9">T</span>erm(coef, var, pow) -&gt; [(~-<span data-count="9">.</span>coef, Some(var, pow))]
-        | <span data-count="3">C</span>onst f -&gt; [(~-<span data-count="3">.</span>f, None)]
+        | <span data-count="4">C</span>onst f -&gt; [(~-<span data-count="4">.</span>f, None)]
       end
   and convert p =
-    <span data-count="108">m</span>atch p with
+    <span data-count="115">m</span>atch p with
     | <span data-count="23">A</span>dd(a, b) -&gt; conver<span data-count="23">t</span> a @ conver<span data-count="23">t</span> b
-    | <span data-count="12">S</span>ub(a, b) -&gt; conver<span data-count="12">t</span> a @ convert_su<span data-count="12">b</span> b
-    | <span data-count="73">M</span>on x-&gt;
+    | <span data-count="13">S</span>ub(a, b) -&gt; conver<span data-count="13">t</span> a @ convert_su<span data-count="13">b</span> b
+    | <span data-count="79">M</span>on x-&gt;
       begin
         match x with
-        | <span data-count="53">T</span>erm(coef, var, pow) -&gt; [(coef, Some(var, pow))]
-        | <span data-count="20">C</span>onst f -&gt; [(f, None)]
+        | <span data-count="55">T</span>erm(coef, var, pow) -&gt; [(coef, Some(var, pow))]
+        | <span data-count="24">C</span>onst f -&gt; [(f, None)]
       end
-  in (conver<span data-count="23">t</span> p1, conver<span data-count="23">t</span> p2)
+  in (conver<span data-count="26">t</span> p1, conver<span data-count="26">t</span> p2)
 
 let sqrt x =
   <span data-count="15">l</span>et rec sqrt_aux guess = function
@@ -492,21 +492,21 @@ let sqrt x =
 
 let solve fmt e =
   (* Separate both polynomes of the equation left and right from '=' sign *)
-  <span data-count="17">l</span>et left, right = e in
+  <span data-count="20">l</span>et left, right = e in
   (* Move right polynome to the left of the '=' sign, invert signs *)
   let right' = List.map (fun (coeff, var) -&gt;
-    <span data-count="21">(</span>~-<span data-count="21">.</span>coeff, var)) right in
+    <span data-count="24">(</span>~-<span data-count="24">.</span>coeff, var)) right in
   (* Concatenate *)
-  <span data-count="17">l</span>et p = left @ right' in
+  <span data-count="20">l</span>et p = left @ right' in
   let seen = ref None in
   (* Scan for presence of more than one variable, exit if there is *)
   List.iter (fun (_coeff, var)-&gt;
-    <span data-count="62">m</span>atch var with
-    |<span data-count="12">N</span>one -&gt; ()
-    |<span data-count="50">S</span>ome (var, _n)-&gt;
+    <span data-count="69">m</span>atch var with
+    |<span data-count="17">N</span>one -&gt; ()
+    |<span data-count="52">S</span>ome (var, _n)-&gt;
       begin
         match !seen with
-        |<span data-count="17">N</span>one -&gt; seen := Some var
+        |<span data-count="19">N</span>one -&gt; seen := Some var
         |<span data-count="33">S</span>ome seen -&gt; if seen &lt;&gt; var then
             <span data-count="1">b</span>egin
               Format.fprintf fmt "There are two different variables `%s` and `%s`!@." var seen;
@@ -521,11 +521,11 @@ let solve fmt e =
    * (coeff:float * (var:string, 0) option)
    * replaced with (1, None)
    *)
-  <span data-count="16">l</span>et poly = List.map (fun (coeff, var)-&gt;
-    <span data-count="60">m</span>atch (coeff, var) with
-    |<span data-count="12">(</span>coeff, None) -&gt; (coeff, var)
+  <span data-count="19">l</span>et poly = List.map (fun (coeff, var)-&gt;
+    <span data-count="67">m</span>atch (coeff, var) with
+    |<span data-count="17">(</span>coeff, None) -&gt; (coeff, var)
     |<span data-count="19">(</span>coeff, Some (_x, 0)) -&gt; (coeff, None)
-    |<span data-count="29">(</span>coeff, Some (_x, _n)) -&gt; (coeff, var)
+    |<span data-count="31">(</span>coeff, Some (_x, _n)) -&gt; (coeff, var)
   ) p in
 
   (*
@@ -535,38 +535,38 @@ let solve fmt e =
    *
    * Add coefficients of same power together to simplify polynome
    *)
-  <span data-count="16">l</span>et tbl = Hashtbl.create 512 in
-  <span data-count="16">L</span>ist.iter (fun (coeff, var)-&gt;
-    <span data-count="60">m</span>atch var with
-    |<span data-count="31">N</span>one -&gt; let x = Hashtbl.find_opt tbl 0 in
+  <span data-count="19">l</span>et tbl = Hashtbl.create 512 in
+  <span data-count="19">L</span>ist.iter (fun (coeff, var)-&gt;
+    <span data-count="67">m</span>atch var with
+    |<span data-count="36">N</span>one -&gt; let x = Hashtbl.find_opt tbl 0 in
+      <span data-count="36">b</span>egin
+        match x with
+        | <span data-count="19">N</span>one -&gt; Hashtbl.add tbl 0 coeff
+        | <span data-count="17">S</span>ome x -&gt; Hashtbl.replace tbl 0 (coeff +. x)
+      end
+    |<span data-count="31">S</span>ome (_var, n)-&gt;
+      let x = Hashtbl.find_opt tbl n in
       <span data-count="31">b</span>egin
         match x with
-        | <span data-count="16">N</span>one -&gt; Hashtbl.add tbl 0 coeff
-        | <span data-count="15">S</span>ome x -&gt; Hashtbl.replace tbl 0 (coeff +. x)
-      end
-    |<span data-count="29">S</span>ome (_var, n)-&gt;
-      let x = Hashtbl.find_opt tbl n in
-      <span data-count="29">b</span>egin
-        match x with
-        | <span data-count="25">N</span>one -&gt; Hashtbl.replace tbl n coeff
+        | <span data-count="27">N</span>one -&gt; Hashtbl.replace tbl n coeff
         | <span data-count="4">S</span>ome x -&gt; Hashtbl.replace tbl n (coeff +. x)
       end
   ) poly;
 
   (* Convert all Hashtbl of monomes (key:power, value:coef) to a list of (power, coef)*)
-  <span data-count="16">l</span>et allterms = List.of_seq (Hashtbl.to_se<span data-count="16">q</span> tbl) in
+  <span data-count="19">l</span>et allterms = List.of_seq (Hashtbl.to_se<span data-count="19">q</span> tbl) in
   (* Order in growing order of (power, _coef) *)
-  <span data-count="16">l</span>et sorted_terms = List.sort (fun (pow1, _) (pow2, _) -&gt; <span data-count="36">I</span>nt.compare pow1 pow2) allterms in
+  <span data-count="19">l</span>et sorted_terms = List.sort (fun (pow1, _) (pow2, _) -&gt; <span data-count="38">I</span>nt.compare pow1 pow2) allterms in
   (* Filter out the monomes that have a coef of 0 *)
-  <span data-count="16">l</span>et filtered_terms = List.filter (fun x -&gt; <span data-count="41">s</span>n<span data-count="41">d</span> x &lt;&gt; 0.) sorted_terms in
+  <span data-count="19">l</span>et filtered_terms = List.filter (fun x -&gt; <span data-count="46">s</span>n<span data-count="46">d</span> x &lt;&gt; 0.) sorted_terms in
   (* Find highest degree with non null coefficient *)
-  <span data-count="16">l</span>et max_degree = List.fold_left (fun acc el -&gt;
-    <span data-count="37">m</span>atch el with
+  <span data-count="19">l</span>et max_degree = List.fold_left (fun acc el -&gt;
+    <span data-count="39">m</span>atch el with
     | <span data-count="14">(</span>0, _n) -&gt; acc
-    | <span data-count="23">(</span>p1, _c1) -&gt; if acc &gt; p1 then <span data-count="0">a</span>cc else <span data-count="23">p</span>1) 0 filtered_terms in
+    | <span data-count="25">(</span>p1, _c1) -&gt; if acc &gt; p1 then <span data-count="0">a</span>cc else <span data-count="25">p</span>1) 0 filtered_terms in
 
   (* Raise an exception in case of degree &gt; 2 *)
-  <span data-count="16">i</span>f max_degree &gt; 2 then
+  <span data-count="19">i</span>f max_degree &gt; 2 then
     <span data-count="1">b</span>egin
       Pp.polyprint fmt (filtered_terms, (Option.valu<span data-count="1">e</span> !seen ~default:""));
       <span data-count="1">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
@@ -574,23 +574,23 @@ let solve fmt e =
       <span data-count="1">r</span>aise (Big_degree)
     end;
 
-  <span data-count="15">l</span>et a = Option.value (Hashtbl.find_op<span data-count="15">t</span> tbl 2) ~default:0. in
-  <span data-count="15">l</span>et b = Option.value (Hashtbl.find_op<span data-count="15">t</span> tbl 1) ~default:0. in
-  <span data-count="15">l</span>et c = Option.value (Hashtbl.find_op<span data-count="15">t</span> tbl 0) ~default:0. in
+  <span data-count="18">l</span>et a = Option.value (Hashtbl.find_op<span data-count="18">t</span> tbl 2) ~default:0. in
+  <span data-count="18">l</span>et b = Option.value (Hashtbl.find_op<span data-count="18">t</span> tbl 1) ~default:0. in
+  <span data-count="18">l</span>et c = Option.value (Hashtbl.find_op<span data-count="18">t</span> tbl 0) ~default:0. in
   (* If a is not 0, then it's not a 2nd degree equation *)
-  <span data-count="15">i</span>f a &lt;&gt; 0. then
+  <span data-count="18">i</span>f a &lt;&gt; 0. then
     (* Calculating delta for resolution of
      * 2nd Degree equation
     *)
-    <span data-count="10">l</span>et delta = b *. b -. 4. *. a *. c in
+    <span data-count="11">l</span>et delta = b *. b -. 4. *. a *. c in
     begin
       match delta with
-      | <span data-count="1">0</span>. -&gt; let solution = ~-<span data-count="1">.</span>b /. (2. *. a) in
-        Pp.polyprint fmt (filtered_terms, (Option.valu<span data-count="1">e</span> !seen ~default:""));
-        <span data-count="1">F</span>ormat.fprintf fmt " = 0@.";
-        <span data-count="1">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
-        <span data-count="1">P</span>p.deltap fmt delta;
-        <span data-count="1">F</span>ormat.fprintf fmt "%g@." solution
+      | <span data-count="2">0</span>. -&gt; let solution = ~-<span data-count="2">.</span>b /. (2. *. a) in
+        Pp.polyprint fmt (filtered_terms, (Option.valu<span data-count="2">e</span> !seen ~default:""));
+        <span data-count="2">F</span>ormat.fprintf fmt " = 0@.";
+        <span data-count="2">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
+        <span data-count="2">P</span>p.deltap fmt delta;
+        <span data-count="2">F</span>ormat.fprintf fmt "%g@." solution
 
       | <span data-count="9">d</span>elta when Float.compar<span data-count="9">e</span> 0. delta &lt; 0 -&gt;
         <span data-count="6">l</span>et solution1 = (~-<span data-count="6">.</span>b -. (sqr<span data-count="6">t</span> delta))/. (2. *. a) in
@@ -618,17 +618,17 @@ let solve fmt e =
     (* Calculating x for resolution of
      * 1st or 0th Degree equation
     *)
-    <span data-count="5">m</span>atch b with
-    | <span data-count="2">0</span>. -&gt;
+    <span data-count="7">m</span>atch b with
+    | <span data-count="3">0</span>. -&gt;
       begin
         match c with
         (* Case 0 = 0
         *)
-        | <span data-count="1">0</span>.-&gt;
+        | <span data-count="2">0</span>.-&gt;
           Format.fprintf fmt "Reduced form: 0 = 0@.";
-          <span data-count="1">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
-          <span data-count="1">P</span>p.deltap fmt 0.;
-          <span data-count="1">F</span>ormat.fprintf fmt "All real numbers are solutions.\n";
+          <span data-count="2">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
+          <span data-count="2">P</span>p.deltap fmt 0.;
+          <span data-count="2">F</span>ormat.fprintf fmt "All real numbers are solutions.\n";
 
           (* Case 3 = 0
           *)
@@ -640,14 +640,14 @@ let solve fmt e =
 
     (* Case x = -c/b
     *)
-    | <span data-count="3">b</span> -&gt;
+    | <span data-count="4">b</span> -&gt;
       begin
-        let solution = ~-<span data-count="3">.</span>c /. b in
-        Pp.polyprint fmt (filtered_terms, (Option.valu<span data-count="3">e</span> !seen ~default:""));
-        <span data-count="3">F</span>ormat.fprintf fmt " = 0@.";
-        <span data-count="3">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
-        <span data-count="3">P</span>p.deltap fmt 0.;
-        <span data-count="3">F</span>ormat.fprintf fmt "%g@." solution
+        let solution = ~-<span data-count="4">.</span>c /. b in
+        Pp.polyprint fmt (filtered_terms, (Option.valu<span data-count="4">e</span> !seen ~default:""));
+        <span data-count="4">F</span>ormat.fprintf fmt " = 0@.";
+        <span data-count="4">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
+        <span data-count="4">P</span>p.deltap fmt 0.;
+        <span data-count="4">F</span>ormat.fprintf fmt "%g@." solution
       end
 </code></pre>
       </div>
