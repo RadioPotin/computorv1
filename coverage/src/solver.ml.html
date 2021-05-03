@@ -14,10 +14,15 @@
           <span class="dirname">src/</span>solver.ml
         </a>
       </h1>
-      <h2>99.24%</h2>
+      <h2>94.94%</h2>
     </div>
     <div id="navbar">
-      <span class="some-visited" style="bottom:41.06%"></span>
+      <span class="some-visited" style="bottom:42.72%"></span>
+      <span class="some-visited" style="bottom:24.88%"></span>
+      <span class="some-visited" style="bottom:18.78%"></span>
+      <span class="some-visited" style="bottom:18.31%"></span>
+      <span class="some-visited" style="bottom:17.37%"></span>
+      <span class="some-visited" style="bottom:16.90%"></span>
     </div>
     <div id="report">
       <div id="lines-layer">
@@ -180,55 +185,61 @@
 <a id="L156"></a><span class="visited"> </span>
 <a id="L157"></a><span class="visited"> </span>
 <a id="L158"></a><span class="visited"> </span>
-<a id="L159"></a><span > </span>
-<a id="L160"></a><span class="visited"> </span>
-<a id="L161"></a><span class="visited"> </span>
+<a id="L159"></a><span class="visited"> </span>
+<a id="L160"></a><span class="some-visited"> </span>
+<a id="L161"></a><span > </span>
 <a id="L162"></a><span class="visited"> </span>
 <a id="L163"></a><span class="visited"> </span>
 <a id="L164"></a><span class="visited"> </span>
 <a id="L165"></a><span class="visited"> </span>
 <a id="L166"></a><span class="visited"> </span>
-<a id="L167"></a><span > </span>
+<a id="L167"></a><span class="visited"> </span>
 <a id="L168"></a><span class="visited"> </span>
-<a id="L169"></a><span class="visited"> </span>
-<a id="L170"></a><span > </span>
+<a id="L169"></a><span > </span>
+<a id="L170"></a><span class="visited"> </span>
 <a id="L171"></a><span class="visited"> </span>
 <a id="L172"></a><span > </span>
-<a id="L173"></a><span > </span>
-<a id="L174"></a><span > </span>
-<a id="L175"></a><span > </span>
-<a id="L176"></a><span > </span>
-<a id="L177"></a><span class="visited"> </span>
-<a id="L178"></a><span class="visited"> </span>
+<a id="L173"></a><span class="some-visited"> </span>
+<a id="L174"></a><span class="some-visited"> </span>
+<a id="L175"></a><span class="visited"> </span>
+<a id="L176"></a><span class="some-visited"> </span>
+<a id="L177"></a><span class="some-visited"> </span>
+<a id="L178"></a><span > </span>
 <a id="L179"></a><span > </span>
 <a id="L180"></a><span > </span>
 <a id="L181"></a><span > </span>
 <a id="L182"></a><span > </span>
 <a id="L183"></a><span class="visited"> </span>
-<a id="L184"></a><span > </span>
-<a id="L185"></a><span class="visited"> </span>
-<a id="L186"></a><span class="visited"> </span>
-<a id="L187"></a><span class="visited"> </span>
+<a id="L184"></a><span class="visited"> </span>
+<a id="L185"></a><span > </span>
+<a id="L186"></a><span > </span>
+<a id="L187"></a><span > </span>
 <a id="L188"></a><span > </span>
-<a id="L189"></a><span > </span>
+<a id="L189"></a><span class="visited"> </span>
 <a id="L190"></a><span > </span>
 <a id="L191"></a><span class="visited"> </span>
 <a id="L192"></a><span class="visited"> </span>
 <a id="L193"></a><span class="visited"> </span>
-<a id="L194"></a><span class="visited"> </span>
+<a id="L194"></a><span > </span>
 <a id="L195"></a><span > </span>
 <a id="L196"></a><span > </span>
-<a id="L197"></a><span > </span>
-<a id="L198"></a><span > </span>
+<a id="L197"></a><span class="visited"> </span>
+<a id="L198"></a><span class="visited"> </span>
 <a id="L199"></a><span class="visited"> </span>
-<a id="L200"></a><span > </span>
-<a id="L201"></a><span class="visited"> </span>
-<a id="L202"></a><span class="visited"> </span>
-<a id="L203"></a><span class="visited"> </span>
-<a id="L204"></a><span class="visited"> </span>
+<a id="L200"></a><span class="visited"> </span>
+<a id="L201"></a><span > </span>
+<a id="L202"></a><span > </span>
+<a id="L203"></a><span > </span>
+<a id="L204"></a><span > </span>
 <a id="L205"></a><span class="visited"> </span>
-<a id="L206"></a><span class="visited"> </span>
-<a id="L207"></a><span > </span>
+<a id="L206"></a><span > </span>
+<a id="L207"></a><span class="visited"> </span>
+<a id="L208"></a><span class="visited"> </span>
+<a id="L209"></a><span class="visited"> </span>
+<a id="L210"></a><span class="visited"> </span>
+<a id="L211"></a><span class="visited"> </span>
+<a id="L212"></a><span class="visited"> </span>
+<a id="L213"></a><span > </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -440,6 +451,12 @@
 <a href="#L205">205</a>
 <a href="#L206">206</a>
 <a href="#L207">207</a>
+<a href="#L208">208</a>
+<a href="#L209">209</a>
+<a href="#L210">210</a>
+<a href="#L211">211</a>
+<a href="#L212">212</a>
+<a href="#L213">213</a>
 </pre>
 <pre><code class="ocaml">(* This module will contain code for 2nd Degree equation resolution *)
 
@@ -589,7 +606,7 @@ let solve fmt e =
         <span data-count="3">F</span>ormat.fprintf fmt " = 0@.";
         <span data-count="3">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
         <span data-count="3">P</span>p.deltap fmt delta;
-        <span data-count="3">F</span>ormat.fprintf fmt "%g@." solution
+        <span data-count="3">F</span>ormat.fprintf fmt "%g@." (if Float.compar<span data-count="3">e</span> (-0.) solution = 0 then <span data-count="2">0</span>. else <span data-count="1">s</span>olution)
 
       | <span data-count="9">d</span>elta when Float.compar<span data-count="9">e</span> 0. delta &lt; 0 -&gt;
         <span data-count="6">l</span>et solution1 = (~-<span data-count="6">.</span>b -. (sqr<span data-count="6">t</span> delta))/. (2. *. a) in
@@ -598,7 +615,9 @@ let solve fmt e =
         <span data-count="6">F</span>ormat.fprintf fmt " = 0@.";
         <span data-count="6">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
         <span data-count="6">P</span>p.deltap fmt delta;
-        <span data-count="6">F</span>ormat.fprintf fmt "%g@.%g@." solution1 solution2
+        <span data-count="6">F</span>ormat.fprintf fmt "%g@.%g@."
+          (if Float.compar<span data-count="6">e</span> (-0.) solution1 = 0 then <span data-count="1">0</span>. else <span data-count="5">s</span>olution1)
+          (if Float.compar<span data-count="6">e</span> (-0.) solution2 = 0 then <span data-count="0">0</span>. else <span data-count="6">s</span>olution2)
 
       | <span data-count="3">d</span>elta -&gt;
         Pp.polyprint fmt (filtered_terms, (Option.valu<span data-count="3">e</span> !seen ~default:""));
@@ -610,8 +629,12 @@ let solve fmt e =
         in
         let root1 = (~-<span data-count="3">.</span>b /. (2. *. a)) in
         let root2 = (sqr<span data-count="3">t</span> ~-<span data-count="3">.</span>delta) /. (2. *. a) in
-        Format.fprintf fmt "%g - %ai@." root1 reduce_zi root2;
-        <span data-count="3">F</span>ormat.fprintf fmt "%g + %ai@." root1 reduce_zi root2;
+        Format.fprintf fmt "%g - %ai@."
+          (if Float.compar<span data-count="3">e</span> (-0.) root1 = 0 then <span data-count="0">~</span>-<span data-count="0">.</span>root1 else <span data-count="3">r</span>oot1)
+          reduce_zi (if Float.compar<span data-count="3">e</span> (-0.) root2 = 0 then <span data-count="0">0</span>. else <span data-count="3">r</span>oot2);
+        <span data-count="3">F</span>ormat.fprintf fmt "%g + %ai@."
+          (if Float.compar<span data-count="3">e</span> (-0.) root1 = 0 then <span data-count="0">~</span>-<span data-count="0">.</span>root1 else <span data-count="3">r</span>oot1)
+          reduce_zi (if Float.compar<span data-count="3">e</span> (-0.) root2 = 0 then <span data-count="0">0</span>. else <span data-count="3">r</span>oot2);
     end;
   else
     (* Calculating x for resolution of
@@ -646,7 +669,7 @@ let solve fmt e =
         <span data-count="4">F</span>ormat.fprintf fmt " = 0@.";
         <span data-count="4">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
         <span data-count="4">P</span>p.deltap fmt 0.;
-        <span data-count="4">F</span>ormat.fprintf fmt "%g@." solution
+        <span data-count="4">F</span>ormat.fprintf fmt "%g@." (if Float.compar<span data-count="4">e</span> (-0.) solution = 0 then <span data-count="1">0</span>. else <span data-count="3">s</span>olution)
       end
 </code></pre>
       </div>
