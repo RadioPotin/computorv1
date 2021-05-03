@@ -67,7 +67,7 @@ let solve fmt e =
             begin
               Format.fprintf fmt "There are two different variables `%s` and `%s`!@." var seen;
               Format.fprintf fmt "Won't compute.@.";
-              raise (Too_many_variables)
+              raise Too_many_variables
             end
       end
   ) p;
@@ -127,7 +127,7 @@ let solve fmt e =
       Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
       Format.fprintf fmt "Polynomial degree: %d@." max_degree;
       Format.fprintf fmt "The polynomial degree is strictly greater than 2, I can't solve.@.";
-      raise (Big_degree)
+      raise Big_degree
     end;
 
   let a = Option.value (Hashtbl.find_opt tbl 2) ~default:0. in
