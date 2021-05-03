@@ -593,10 +593,10 @@ let __ocaml_lex_tables = {
 }
 
 let rec token lexbuf =
-   <span data-count="600">_</span>_ocaml_lex_token_rec lexbuf 0
+   <span data-count="625">_</span>_ocaml_lex_token_rec lexbuf 0
 and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
-  <span data-count="600">m</span>atch Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
-      | <span data-count="211">0</span> -&gt;
+  <span data-count="625">m</span>atch Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
+      | <span data-count="219">0</span> -&gt;
 # 12 "src/lexer.mll"
                         ( token lexbuf )
 # 144 "src/lexer.ml"
@@ -606,7 +606,7 @@ and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
                        (token lexbuf)
 # 149 "src/lexer.ml"
 
-  | <span data-count="26">2</span> -&gt;
+  | <span data-count="28">2</span> -&gt;
 # 14 "src/lexer.mll"
                  (EQ)
 # 154 "src/lexer.ml"
@@ -616,39 +616,39 @@ and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
                  (PLUS)
 # 159 "src/lexer.ml"
 
-  | <span data-count="43">4</span> -&gt;
+  | <span data-count="44">4</span> -&gt;
 # 16 "src/lexer.mll"
                  (STAR)
 # 164 "src/lexer.ml"
 
-  | <span data-count="52">5</span> -&gt;
+  | <span data-count="53">5</span> -&gt;
 # 17 "src/lexer.mll"
                  (CIRCUM)
 # 169 "src/lexer.ml"
 
-  | <span data-count="20">6</span> -&gt;
+  | <span data-count="24">6</span> -&gt;
 # 18 "src/lexer.mll"
                  (MINUS)
 # 174 "src/lexer.ml"
 
-  | <span data-count="64">7</span> -&gt;
+  | <span data-count="65">7</span> -&gt;
 let
 # 19 "src/lexer.mll"
                        id
 # 180 "src/lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
 # 19 "src/lexer.mll"
-                          <span data-count="64">(</span>VAR id)
+                          <span data-count="65">(</span>VAR id)
 # 184 "src/lexer.ml"
 
-  | <span data-count="128">8</span> -&gt;
+  | <span data-count="134">8</span> -&gt;
 let
 # 20 "src/lexer.mll"
                        id
 # 190 "src/lexer.ml"
 = Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
 # 20 "src/lexer.mll"
-                          <span data-count="128">(</span>INT (int_of_strin<span data-count="128">g</span> id))
+                          <span data-count="134">(</span>INT (int_of_strin<span data-count="134">g</span> id))
 # 194 "src/lexer.ml"
 
   | <span data-count="3">9</span> -&gt;
@@ -661,7 +661,7 @@ let
                             <span data-count="3">(</span>FLOAT (float_of_strin<span data-count="3">g</span> id))
 # 204 "src/lexer.ml"
 
-  | <span data-count="26">1</span>0 -&gt;
+  | <span data-count="28">1</span>0 -&gt;
 # 22 "src/lexer.mll"
                  ( EOF )
 # 209 "src/lexer.ml"
