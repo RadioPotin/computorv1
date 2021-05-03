@@ -1,6 +1,8 @@
 open Computor
 open Ast
 open Test_parser
+open Test_pp
+open Test_solver
 
 let handle_test expected given =
   Format.printf "Test %d: %s@." (counter()) given;
@@ -142,7 +144,8 @@ let () =
   (*
    * Test 17
    *)
-      Format.printf "Test %d: Assert Pp.polyprint empty list unreachable path. Ignore ->" (counter());
+      <<<<<<< HEAD
+          Format.printf "Test %d: Assert Pp.polyprint empty list unreachable path. Ignore ->" (counter());
       begin
         match Pp.polyprint Format.std_formatter ([], "") with
         | exception (Assert_failure _) -> ()
@@ -168,7 +171,23 @@ let () =
    * Test 20
    *)
       handle_test
+        "Reduced form: 0 = 0\nPolynomial degree: 0\nThe solution is:\nAll real numbers are solutions.\n"
+        "-1 - -1 = 0";
+
+  (*
+   * Test 18
+   *)
+      handle_test
+        "Reduced form: -2 * x^2 = 0\nPolynomial degree: 2\nThe solution is:\n0\n"
+        "-2 * x^2 = 0";
+
+  (*
+   * Test 19
+   *)
+      handle_test
         "Reduced form: -2 * x^1 = 0\nPolynomial degree: 1\nThe solution is:\n-0\n"
         "-2 * x = 0";
 
-      test_parser ()
+      test_parser ();
+      test_pp ();
+      test_solver ()
