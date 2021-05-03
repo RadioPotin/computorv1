@@ -142,6 +142,7 @@ let () =
   (*
    * Test 17
    *)
+      Format.printf "Test %d: Assert Pp.polyprint empty list unreachable path@." (counter());
       begin
         match Pp.polyprint Format.std_formatter ([], "") with
         | exception (Assert_failure _) -> ()
