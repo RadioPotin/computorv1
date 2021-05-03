@@ -28,6 +28,10 @@
 | i = INT option(STAR) v = VAR CIRCUM p = INT {Ast.Term ((float_of_int i), v, p)}
 | f = FLOAT option(STAR) v = VAR {Ast.Term (f, v, 1)}
 | i = INT option(STAR) v = VAR {Ast.Term ((float_of_int i), v, 1)}
+| MINUS f = FLOAT option(STAR) v = VAR CIRCUM p = INT {Ast.Term (~-.f, v, p)}
+| MINUS i = INT option(STAR) v = VAR CIRCUM p = INT {Ast.Term ((float_of_int (-i)), v, p)}
+| MINUS f = FLOAT option(STAR) v = VAR {Ast.Term (~-.f, v, 1)}
+| MINUS i = INT option(STAR) v = VAR {Ast.Term ((float_of_int (-i)), v, 1)}
 | v = VAR CIRCUM i = INT {Ast.Term (1., v, i)}
 | MINUS v = VAR CIRCUM i = INT {Ast.Term (-1., v, i)}
 | MINUS v = VAR {Ast.Term (-1., v, 1)}
