@@ -5,9 +5,9 @@ open Ast
   (*
    * All tests for Solver module
    *)
-let handle_test_ast expectedL expectedR ast =
+let handle_test_ast expected ast =
   Format.printf "Test %d: Ast behaviour for Sub(a, b) function convert_sub match case@." (counter());
-  let pl, pr = Solver.file_to_lists ast in
+  let pl = Solver.convert ast in
   let eq e1 e2 =
     let f1, opt1 = e1 in
     let f2, opt2 = e2 in
@@ -24,12 +24,11 @@ let handle_test_ast expectedL expectedR ast =
     end
   in
   try
-    List.iter2 (fun x y -> assert (eq x y)) expectedL pl;
-    List.iter2 (fun x y -> assert (eq x y)) expectedR pr; ()
+    List.iter2 (fun x y -> assert (eq x y)) expected pl; ()
   with
     Assert_failure _ ->
-    Format.eprintf "Error with equality of lists.@.";
-    Pp.equ Format.err_formatter (pl, pr);
+    Format.eprintf "Error with equality of lists.:@.@.";
+    Format.eprintf "Expected: %a@.Got: %a" Pp.equ (expected, [0., None]) Pp.equ (pl, [0., None]);
     exit 1
 
 let test_solver () =
@@ -38,17 +37,10 @@ let test_solver () =
    * Test for Sub(a, b) match for convert_sub recursive call
    *)
   handle_test_ast
-    [(-1., None);(-3., None)]
-    [(-1., None);(-2., None);(-3., None);(-4., None)]
+    [(-1., None);(2., None)]
     (
       Sub(
-        Mon (Const (-1.)), Mon(Const (-3.))
-      ),
-
-      Sub(
-        Sub(
-          Mon(Const (-1.)), Mon(Const (-2.))),
-        Sub(
-          Mon(Const (-3.)), Mon(Const (-4.)))
+        Mon(Const (-1.)),
+        Mon(Const (-2.))
       )
     )

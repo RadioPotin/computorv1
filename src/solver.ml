@@ -14,28 +14,29 @@ let sqrt x =
       done;
    !z
  *)
+let rec convert_sub p =
+  match p with
+  | Add(a, b) -> convert_sub a @ convert b
+  | Sub(a, b) -> convert_sub a @ convert_sub b
+  | Mon x ->
+    begin
+      match x with
+      | Term(coef, var, pow) -> [(~-.coef, Some(var, pow))]
+      | Const f -> [(~-.f, None)]
+    end
+and convert p =
+  match p with
+  | Add(a, b) -> convert a @ convert b
+  | Sub(a, b) -> convert a @ convert_sub b
+  | Mon x->
+    begin
+      match x with
+      | Term(coef, var, pow) -> [(coef, Some(var, pow))]
+      | Const f -> [(f, None)]
+    end
+
 let file_to_lists (p1, p2) =
-  let rec convert_sub p =
-    match p with
-    | Add(a, b) -> convert_sub a @ convert b
-    | Sub(a, b) -> convert_sub a @ convert_sub b
-    | Mon x ->
-      begin
-        match x with
-        | Term(coef, var, pow) -> [(~-.coef, Some(var, pow))]
-        | Const f -> [(~-.f, None)]
-      end
-  and convert p =
-    match p with
-    | Add(a, b) -> convert a @ convert b
-    | Sub(a, b) -> convert a @ convert_sub b
-    | Mon x->
-      begin
-        match x with
-        | Term(coef, var, pow) -> [(coef, Some(var, pow))]
-        | Const f -> [(f, None)]
-      end
-  in (convert p1, convert p2)
+  (convert p1, convert p2)
 
 let sqrt x =
   let rec sqrt_aux guess = function

@@ -31,7 +31,8 @@ let handle_test expectedL expectedR given =
     List.iter2 (fun x y -> assert (eq x y)) expectedL pl;
     List.iter2 (fun x y -> assert (eq x y)) expectedR pr; ()
   with
-    Assert_failure _ -> Format.eprintf "Error with equality of lists.@.";exit 1
+    Assert_failure _ -> Format.eprintf "Error with equality of lists.@.";
+    Format.eprintf "Expected: %a@.Got: %a" Pp.equ (expectedL, expectedR) Pp.equ (pl, pr); exit 1
 
 let test_parser () =
   Format.printf "---- Now testing parser ----@.";
