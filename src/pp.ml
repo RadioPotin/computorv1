@@ -50,6 +50,3 @@ let poly fmt = function
 
 let equ fmt (left, right) =
   Format.fprintf fmt "%a = %a@." poly left poly right
-
-let std e =
-  equ Format.std_formatter e
