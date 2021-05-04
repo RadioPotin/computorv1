@@ -37,7 +37,6 @@
 <a id="L14"></a><span > </span>
 <a id="L15"></a><span > </span>
 <a id="L16"></a><span > </span>
-<a id="L17"></a><span > </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -58,7 +57,6 @@
 <a href="#L14">14</a>
 <a href="#L15">15</a>
 <a href="#L16">16</a>
-<a href="#L17">17</a>
 </pre>
 <pre><code class="ocaml">(*
  * This file will contain all custom types for computorv1
@@ -68,8 +66,7 @@ exception Big_degree
 exception Too_many_variables
 
 type monome =
-  | Const of float
-  | Term of float * string * int
+  float * (string * int) option
 
 type polynome =
   | Mon of monome

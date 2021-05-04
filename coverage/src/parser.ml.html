@@ -2112,7 +2112,7 @@ and _menhir_goto_option_STAR_ : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state 
                     ))) = _menhir_stack in
                     let _v : (Ast.polynome) = let m = 
 # 32 "src/parser.mly"
-                                                    (Ast.Term ((float_of_in<span data-count="2">t</span> (<span data-count="2">-</span>i)), v, p))
+                                                    (((float_of_in<span data-count="2">t</span> (<span data-count="2">-</span>i)), Some(v, p)))
 # 136 "src/parser.ml"
                      in
                     
@@ -2140,7 +2140,7 @@ and _menhir_goto_option_STAR_ : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state 
                 ))) = _menhir_stack in
                 let _v : (Ast.polynome) = let m = 
 # 34 "src/parser.mly"
-                                     (Ast.Term ((float_of_in<span data-count="1">t</span> (<span data-count="1">-</span>i)), v, 1))
+                                     (((float_of_in<span data-count="1">t</span> (<span data-count="1">-</span>i)), Some(v, 1)))
 # 164 "src/parser.ml"
                  in
                 
@@ -2197,7 +2197,7 @@ and _menhir_goto_option_STAR_ : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state 
                     ))) = _menhir_stack in
                     let _v : (Ast.polynome) = let m = 
 # 31 "src/parser.mly"
-                                                      (Ast.Term (~-<span data-count="0">.</span>f, v, p))
+                                                      ((~-<span data-count="0">.</span>f, Some(v, p)))
 # 221 "src/parser.ml"
                      in
                     
@@ -2225,7 +2225,7 @@ and _menhir_goto_option_STAR_ : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state 
                 ))) = _menhir_stack in
                 let _v : (Ast.polynome) = let m = 
 # 33 "src/parser.mly"
-                                       (Ast.Term (~-<span data-count="0">.</span>f, v, 1))
+                                       ((~-<span data-count="0">.</span>f, Some(v, 1)))
 # 249 "src/parser.ml"
                  in
                 
@@ -2282,7 +2282,7 @@ and _menhir_goto_option_STAR_ : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state 
                     ))) = _menhir_stack in
                     let _v : (Ast.polynome) = let m = 
 # 28 "src/parser.mly"
-                                              (Ast.Term ((float_of_in<span data-count="40">t</span> i), v, p))
+                                              (((float_of_in<span data-count="40">t</span> i), Some(v, p)))
 # 306 "src/parser.ml"
                      in
                     
@@ -2310,7 +2310,7 @@ and _menhir_goto_option_STAR_ : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state 
                 ))) = _menhir_stack in
                 let _v : (Ast.polynome) = let m = 
 # 30 "src/parser.mly"
-                               (Ast.Term ((float_of_in<span data-count="6">t</span> i), v, 1))
+                               (((float_of_in<span data-count="6">t</span> i), Some(v, 1)))
 # 334 "src/parser.ml"
                  in
                 
@@ -2367,7 +2367,7 @@ and _menhir_goto_option_STAR_ : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state 
                     ))) = _menhir_stack in
                     let _v : (Ast.polynome) = let m = 
 # 27 "src/parser.mly"
-                                                    (Ast.Term (f, v, p))
+                                                    ((f, Some(v, p)))
 # 391 "src/parser.ml"
                      in
                     
@@ -2395,7 +2395,7 @@ and _menhir_goto_option_STAR_ : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state 
                 ))) = _menhir_stack in
                 let _v : (Ast.polynome) = let m = 
 # 29 "src/parser.mly"
-                                 (Ast.Term (f, v, 1))
+                                 ((f, Some(v, 1)))
 # 419 "src/parser.ml"
                  in
                 
@@ -2605,7 +2605,7 @@ and _menhir_run1 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; (
             ))) = _menhir_stack in
             let _v : (Ast.polynome) = let m = 
 # 35 "src/parser.mly"
-                         (Ast.Term (1., v, i))
+                         ((1., Some(v, i)))
 # 629 "src/parser.ml"
              in
             
@@ -2629,7 +2629,7 @@ and _menhir_run1 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; (
         ))) = _menhir_stack in
         let _v : (Ast.polynome) = let m = 
 # 40 "src/parser.mly"
-          (Ast.Term (1., v, 1))
+          ((1., Some(v, 1)))
 # 653 "src/parser.ml"
          in
         
@@ -2668,7 +2668,7 @@ and _menhir_run4 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; 'ttv_re
             ))) = _menhir_stack in
             let _v : (Ast.polynome) = let m = 
 # 39 "src/parser.mly"
-                  (Ast.Const ~-<span data-count="0">.</span>f)
+                  ((~-<span data-count="0">.</span>f, None))
 # 692 "src/parser.ml"
              in
             
@@ -2700,7 +2700,7 @@ and _menhir_run4 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; 'ttv_re
             ))) = _menhir_stack in
             let _v : (Ast.polynome) = let m = 
 # 38 "src/parser.mly"
-                (Ast.Const (float_of_in<span data-count="4">t</span> (<span data-count="4">-</span>i)))
+                (((float_of_in<span data-count="4">t</span> (<span data-count="4">-</span>i)), None))
 # 724 "src/parser.ml"
              in
             
@@ -2742,7 +2742,7 @@ and _menhir_run4 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; 'ttv_re
                 ))) = _menhir_stack in
                 let _v : (Ast.polynome) = let m = 
 # 36 "src/parser.mly"
-                               (Ast.Term (-1., v, i))
+                               ((-1., Some(v, i)))
 # 766 "src/parser.ml"
                  in
                 
@@ -2766,7 +2766,7 @@ and _menhir_run4 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; 'ttv_re
             ))) = _menhir_stack in
             let _v : (Ast.polynome) = let m = 
 # 37 "src/parser.mly"
-                (Ast.Term (-1., v, 1))
+                ((-1., Some(v, 1)))
 # 790 "src/parser.ml"
              in
             
@@ -2809,7 +2809,7 @@ and _menhir_run19 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; (
         ))) = _menhir_stack in
         let _v : (Ast.polynome) = let m = 
 # 41 "src/parser.mly"
-          (Ast.Const (float_of_in<span data-count="28">t</span> i))
+          (((float_of_in<span data-count="28">t</span> i), None))
 # 833 "src/parser.ml"
          in
         
@@ -2846,7 +2846,7 @@ and _menhir_run24 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; (
         ))) = _menhir_stack in
         let _v : (Ast.polynome) = let m = 
 # 42 "src/parser.mly"
-            (Ast.Const f)
+            ((f, None))
 # 870 "src/parser.ml"
          in
         
