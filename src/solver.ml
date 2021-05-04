@@ -21,8 +21,7 @@ let rec convert_sub p =
   | Mon x ->
     begin
       match x with
-      | Term(coef, var, pow) -> [(~-.coef, Some(var, pow))]
-      | Const f -> [(~-.f, None)]
+      | (n, v)-> [(~-.n, v)]
     end
 and convert p =
   match p with
@@ -31,8 +30,7 @@ and convert p =
   | Mon x->
     begin
       match x with
-      | Term(coef, var, pow) -> [(coef, Some(var, pow))]
-      | Const f -> [(f, None)]
+      | (n, v) -> [(n, v)]
     end
 
 let file_to_lists (p1, p2) =

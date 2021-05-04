@@ -24,19 +24,19 @@
 | m = monome {Ast.Mon m}
 
 %inline monome:
-    | f = FLOAT option(STAR) v = VAR CIRCUM p = INT {Ast.Term (f, v, p)}
-| i = INT option(STAR) v = VAR CIRCUM p = INT {Ast.Term ((float_of_int i), v, p)}
-| f = FLOAT option(STAR) v = VAR {Ast.Term (f, v, 1)}
-| i = INT option(STAR) v = VAR {Ast.Term ((float_of_int i), v, 1)}
-| MINUS f = FLOAT option(STAR) v = VAR CIRCUM p = INT {Ast.Term (~-.f, v, p)}
-| MINUS i = INT option(STAR) v = VAR CIRCUM p = INT {Ast.Term ((float_of_int (-i)), v, p)}
-| MINUS f = FLOAT option(STAR) v = VAR {Ast.Term (~-.f, v, 1)}
-| MINUS i = INT option(STAR) v = VAR {Ast.Term ((float_of_int (-i)), v, 1)}
-| v = VAR CIRCUM i = INT {Ast.Term (1., v, i)}
-| MINUS v = VAR CIRCUM i = INT {Ast.Term (-1., v, i)}
-| MINUS v = VAR {Ast.Term (-1., v, 1)}
-| MINUS i = INT {Ast.Const (float_of_int (-i))}
-| MINUS f = FLOAT {Ast.Const ~-.f}
-| v = VAR {Ast.Term (1., v, 1)}
-| i = INT {Ast.Const (float_of_int i)}
-| f = FLOAT {Ast.Const f}
+    | f = FLOAT option(STAR) v = VAR CIRCUM p = INT {(f, Some(v, p))}
+| i = INT option(STAR) v = VAR CIRCUM p = INT {((float_of_int i), Some(v, p))}
+| f = FLOAT option(STAR) v = VAR {(f, Some(v, 1))}
+| i = INT option(STAR) v = VAR {((float_of_int i), Some(v, 1))}
+| MINUS f = FLOAT option(STAR) v = VAR CIRCUM p = INT {(~-.f, Some(v, p))}
+| MINUS i = INT option(STAR) v = VAR CIRCUM p = INT {((float_of_int (-i)), Some(v, p))}
+| MINUS f = FLOAT option(STAR) v = VAR {(~-.f, Some(v, 1))}
+| MINUS i = INT option(STAR) v = VAR {((float_of_int (-i)), Some(v, 1))}
+| v = VAR CIRCUM i = INT {(1., Some(v, i))}
+| MINUS v = VAR CIRCUM i = INT {(-1., Some(v, i))}
+| MINUS v = VAR {(-1., Some(v, 1))}
+| MINUS i = INT {((float_of_int (-i)), None)}
+| MINUS f = FLOAT {(~-.f, None)}
+| v = VAR {(1., Some(v, 1))}
+| i = INT {((float_of_int i), None)}
+| f = FLOAT {(f, None)}

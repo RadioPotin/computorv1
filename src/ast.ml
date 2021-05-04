@@ -6,8 +6,7 @@ exception Big_degree
 exception Too_many_variables
 
 type monome =
-  | Const of float
-  | Term of float * string * int
+  float * (string * int) option
 
 type polynome =
   | Mon of monome

@@ -37,10 +37,13 @@ let test_solver () =
    * Test for Sub(a, b) match for convert_sub recursive call
    *)
   handle_test_ast
-    [(-1., None);(2., None)]
+    [(3., None);(-4., None);(-5., None);]
     (
       Sub(
-        Mon(Const (-1.)),
-        Mon(Const (-2.))
+        Mon((3., None)),
+        Sub(
+          Mon((4., None)),
+          Mon((5., None))
+        )
       )
     )
