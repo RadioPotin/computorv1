@@ -7,7 +7,7 @@ open Ast
    *)
 let handle_test_ast expected ast =
   Format.printf "Test %d: Ast behaviour for Sub(a, b) function convert_sub match case@." (counter());
-  let pl = Solver.convert false ast in
+  let pl = Solver.convert ast in
   let eq e1 e2 =
     let f1, opt1 = e1 in
     let f2, opt2 = e2 in

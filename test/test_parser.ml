@@ -19,7 +19,7 @@ let handle_test expected_l expected_r given =
     end
   in
   let ast = eq_parse given in
-  let pl, pr = Solver.file_to_lists ast in
+  let pl, pr = Solver.ast_to_lists ast in
   try
     List.iter2 (fun x y -> assert (eq x y)) expected_l pl;
     List.iter2 (fun x y -> assert (eq x y)) expected_r pr; ()

@@ -7,7 +7,7 @@ open Test_solver
 let handle_test expected given =
   Format.printf "Test %d: %s@." (counter()) given;
   let ast = eq_parse given in
-  let pl, pr = Solver.file_to_lists ast in
+  let pl, pr = Solver.ast_to_lists ast in
   let str = Format.asprintf "%a" Solver.solve (pl, pr)
   in
   try

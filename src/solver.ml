@@ -14,13 +14,16 @@ let sqrt x =
       done;
    !z
  *)
-let rec convert sub = function
-  | Add (a, b) -> convert sub a @ convert false b
-  | Sub (a, b) -> convert sub a @ convert true b
-  | Mon (x, v) -> if sub then [(~-. x, v)] else [(x, v)]
+let convert =
+  let rec aux sub = function
+    | Add (a, b) -> aux sub a @ aux false b
+    | Sub (a, b) -> aux sub a @ aux true b
+    | Mon (x, v) -> if sub then [(~-. x, v)] else [(x, v)]
+  in
+  aux false
 
-let file_to_lists (p1, p2) =
-  (convert false p1, convert false p2)
+let ast_to_lists (p1, p2) =
+  (convert p1, convert p2)
 
 let sqrt x =
   let rec sqrt_aux guess = function
@@ -94,7 +97,7 @@ let solve fmt e =
       end
   ) poly;
 
-  let var = (Option.value !seen ~default:"") in
+  let var = Option.value !seen ~default:"" in
   (* Convert all Hashtbl of monomes (key:power, value:coef) to a list of (power, coef)*)
   let allterms = List.of_seq (Hashtbl.to_seq tbl) in
   (* Order in growing order of (power, _coef) *)
