@@ -14,12 +14,10 @@
           <span class="dirname">src/</span>pp.ml
         </a>
       </h1>
-      <h2>89.74%</h2>
+      <h2>97.30%</h2>
     </div>
     <div id="navbar">
-      <span class="some-visited" style="bottom:22.64%"></span>
-      <span class="unvisited" style="bottom:7.55%"></span>
-      <span class="unvisited" style="bottom:5.66%"></span>
+      <span class="some-visited" style="bottom:16.33%"></span>
     </div>
     <div id="report">
       <div id="lines-layer">
@@ -58,7 +56,7 @@
 <a id="L32"></a><span > </span>
 <a id="L33"></a><span class="visited"> </span>
 <a id="L34"></a><span > </span>
-<a id="L35"></a><span > </span>
+<a id="L35"></a><span class="visited"> </span>
 <a id="L36"></a><span class="visited"> </span>
 <a id="L37"></a><span class="visited"> </span>
 <a id="L38"></a><span class="visited"> </span>
@@ -72,11 +70,7 @@
 <a id="L46"></a><span > </span>
 <a id="L47"></a><span > </span>
 <a id="L48"></a><span > </span>
-<a id="L49"></a><span class="unvisited"> </span>
-<a id="L50"></a><span class="unvisited"> </span>
-<a id="L51"></a><span > </span>
-<a id="L52"></a><span > </span>
-<a id="L53"></a><span class="visited"> </span>
+<a id="L49"></a><span class="visited"> </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -130,10 +124,6 @@
 <a href="#L47">47</a>
 <a href="#L48">48</a>
 <a href="#L49">49</a>
-<a href="#L50">50</a>
-<a href="#L51">51</a>
-<a href="#L52">52</a>
-<a href="#L53">53</a>
 </pre>
 <pre><code class="ocaml">(* This file will contain all pretty-printing for computorv1 *)
 
@@ -148,18 +138,18 @@ let deltap fmt delta =
   )
 
 let pow fmt n =
-  <span data-count="44">F</span>ormat.fprintf fmt "^%d" n
+  <span data-count="45">F</span>ormat.fprintf fmt "^%d" n
 
 let var fmt = function
   | <span data-count="2">N</span>one -&gt; ()
-  | <span data-count="44">S</span>ome (x, n) -&gt; Format.fprintf fmt " * %s%a" x pow n
+  | <span data-count="45">S</span>ome (x, n) -&gt; Format.fprintf fmt " * %s%a" x pow n
 
 let mono fmt (a, x) =
-  <span data-count="46">F</span>ormat.fprintf fmt "%g%a" a var x
+  <span data-count="47">F</span>ormat.fprintf fmt "%g%a" a var x
 
 let polyprint fmt (terms, variable) =
-  <span data-count="23">l</span>et size = List.length terms in
-  <span data-count="23">l</span>et print_sign fmt l =
+  <span data-count="40">l</span>et size = List.length terms in
+  <span data-count="40">l</span>et print_sign fmt l =
     <span data-count="24">m</span>atch l with
     | <span data-count="24">(</span>_k, v) -&gt;
       if Float.compar<span data-count="24">e</span> 0. v &gt; 0 then
@@ -167,12 +157,12 @@ let polyprint fmt (terms, variable) =
       else
         <span data-count="18">F</span>ormat.fprintf fmt " + " in
   let rec reduce terms =
-    <span data-count="47">b</span>egin
+    <span data-count="64">b</span>egin
       match terms with
-      | [] -&gt; assert false
-      | <span data-count="22">[</span>(k, v)] -&gt;
-        mono fmt ((if Float.compar<span data-count="22">e</span> 0. v &gt; 0 &amp;&amp; <span data-count="8">s</span>ize &lt;&gt; 1 then <span data-count="4">~</span>-<span data-count="4">.</span>v else <span data-count="18">v</span>),
-          (if String.equal variable "" then <span data-count="2">N</span>one else <span data-count="20">S</span>ome(variable, k)));
+      | <span data-count="17">[</span>] -&gt; Format.fprintf fmt "0"
+      | <span data-count="23">[</span>(k, v)] -&gt;
+        mono fmt ((if Float.compar<span data-count="23">e</span> 0. v &gt; 0 &amp;&amp; <span data-count="8">s</span>ize &lt;&gt; 1 then <span data-count="4">~</span>-<span data-count="4">.</span>v else <span data-count="19">v</span>),
+          (if String.equal variable "" then <span data-count="2">N</span>one else <span data-count="21">S</span>ome(variable, k)));
       | <span data-count="24">(</span>k, v)::r -&gt;
         mono fmt ((if Float.compar<span data-count="24">e</span> 0. v &gt; 0 then <span data-count="6">~</span>-<span data-count="6">.</span>v else <span data-count="18">v</span>),
           (if String.equal variable "" then <span data-count="0">N</span>one else <span data-count="24">S</span>ome(variable, k)));
@@ -182,12 +172,8 @@ let polyprint fmt (terms, variable) =
   in
   reduce terms
 
-let poly fmt = function
-  | <span data-count="0">[</span>] -&gt; Format.fprintf fmt "0"
-  | <span data-count="0">p</span>olynome -&gt; Format.pp_print_list ~pp_sep:(fun fmt () -&gt; <span data-count="0">F</span>ormat.fprintf fmt " + ") mono fmt polynome
-
-let equ fmt (polynome, var) =
-  <span data-count="22">p</span>olyprint fmt (polynome, var)
+let equ fmt (polynomeL, polynomeR, var) =
+  <span data-count="20">F</span>ormat.fprintf fmt "%a = %a" polyprint (polynomeL, var) polyprint (polynomeR, var)
 </code></pre>
       </div>
     </div>
