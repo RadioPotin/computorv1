@@ -32,7 +32,7 @@ let polyprint fmt (terms, variable) =
   let rec reduce terms =
     begin
       match terms with
-      | [] -> assert false
+      | [] -> Format.fprintf fmt "0"
       | [(k, v)] ->
         mono fmt ((if Float.compare 0. v > 0 && size <> 1 then ~-.v else v),
           (if String.equal variable "" then None else Some(variable, k)));

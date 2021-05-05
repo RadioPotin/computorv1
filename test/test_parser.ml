@@ -8,7 +8,7 @@ let counter =
     incr count;
     !count
 
-let handle_test expectedL expectedR given =
+let handle_test expected_l expected_r given =
   Format.printf "Test %d: %s@." (counter()) given;
   let eq e1 e2 =
     let pow1, coef1 = e1 in
@@ -21,8 +21,8 @@ let handle_test expectedL expectedR given =
   let ast = eq_parse given in
   let pl, pr = Solver.file_to_lists ast in
   try
-    List.iter2 (fun x y -> assert (eq x y)) expectedL pl;
-    List.iter2 (fun x y -> assert (eq x y)) expectedR pr; ()
+    List.iter2 (fun x y -> assert (eq x y)) expected_l pl;
+    List.iter2 (fun x y -> assert (eq x y)) expected_r pr; ()
   with
     Assert_failure _ -> Format.eprintf "Error with equality of lists.@.";
     exit 1
@@ -30,7 +30,7 @@ let handle_test expectedL expectedR given =
 let test_parser () =
   Format.printf "---- Now testing parser ----@.";
   (*
-   * TEST 0
+   * TEST 22
    *)
   handle_test
     [(0, 0.)]
@@ -38,7 +38,7 @@ let test_parser () =
     "0 = 0";
 
   (*
-   * TEST 1
+   * TEST 23
    *)
   handle_test
     [(0, 0.)]
@@ -46,7 +46,7 @@ let test_parser () =
     "0 = 3";
 
   (*
-   * TEST 2
+   * TEST 24
    *)
   handle_test
     [(1, -1.);(0, 1.)]
@@ -54,7 +54,7 @@ let test_parser () =
     "-x + 1 = 0";
 
   (*
-   * TEST 3
+   * TEST 25
    *)
   handle_test
     [(1, -1.);(1, -1.);(1, -1.);(2, 1.);(2, -2.);(2, 1.);(0, 1.)]
@@ -62,7 +62,7 @@ let test_parser () =
     "-X - X - X + X^2 - 2X^2 + X^2 + 1 = 0";
 
   (*
-   * TEST 4
+   * TEST 26
    *)
   handle_test
     [(0, 5.);(1, 4.);(2, -9.3)]
@@ -70,7 +70,7 @@ let test_parser () =
     "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0";
 
   (*
-   * TEST 2
+   * TEST 27
    *)
   handle_test
     [(2, -1.);(0, 1.)]

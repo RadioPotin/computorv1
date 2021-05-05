@@ -17,17 +17,6 @@ let test_pp () =
   (*
    * TEST 28
    *)
-  Format.printf "Test %d: Assert Pp.polyprint empty list unreachable path. Ignore ->" (counter());
-  begin
-    match Pp.polyprint Format.std_formatter ([], "") with
-    | exception (Assert_failure _) -> ()
-    | () -> assert false
-  end;
-  Format.printf "\n";
-
-  (*
-   * TEST 29
-   *)
   Format.printf "Test %d: 0 = 0@." (counter());
   handle_test_pp
     "0 = 0\n"
