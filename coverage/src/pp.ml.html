@@ -14,10 +14,12 @@
           <span class="dirname">src/</span>pp.ml
         </a>
       </h1>
-      <h2>97.30%</h2>
+      <h2>89.74%</h2>
     </div>
     <div id="navbar">
-      <span class="unvisited" style="bottom:7.69%"></span>
+      <span class="some-visited" style="bottom:22.64%"></span>
+      <span class="unvisited" style="bottom:7.55%"></span>
+      <span class="unvisited" style="bottom:5.66%"></span>
     </div>
     <div id="report">
       <div id="lines-layer">
@@ -36,44 +38,45 @@
 <a id="L12"></a><span > </span>
 <a id="L13"></a><span > </span>
 <a id="L14"></a><span class="visited"> </span>
-<a id="L15"></a><span class="visited"> </span>
-<a id="L16"></a><span class="visited"> </span>
+<a id="L15"></a><span > </span>
+<a id="L16"></a><span > </span>
 <a id="L17"></a><span class="visited"> </span>
 <a id="L18"></a><span class="visited"> </span>
-<a id="L19"></a><span class="visited"> </span>
-<a id="L20"></a><span class="visited"> </span>
-<a id="L21"></a><span > </span>
-<a id="L22"></a><span class="visited"> </span>
+<a id="L19"></a><span > </span>
+<a id="L20"></a><span > </span>
+<a id="L21"></a><span class="visited"> </span>
+<a id="L22"></a><span > </span>
 <a id="L23"></a><span > </span>
 <a id="L24"></a><span class="visited"> </span>
-<a id="L25"></a><span > </span>
-<a id="L26"></a><span > </span>
+<a id="L25"></a><span class="visited"> </span>
+<a id="L26"></a><span class="visited"> </span>
 <a id="L27"></a><span class="visited"> </span>
 <a id="L28"></a><span class="visited"> </span>
 <a id="L29"></a><span class="visited"> </span>
-<a id="L30"></a><span class="visited"> </span>
+<a id="L30"></a><span > </span>
 <a id="L31"></a><span class="visited"> </span>
-<a id="L32"></a><span class="visited"> </span>
-<a id="L33"></a><span > </span>
+<a id="L32"></a><span > </span>
+<a id="L33"></a><span class="visited"> </span>
 <a id="L34"></a><span > </span>
 <a id="L35"></a><span > </span>
-<a id="L36"></a><span > </span>
-<a id="L37"></a><span > </span>
+<a id="L36"></a><span class="visited"> </span>
+<a id="L37"></a><span class="visited"> </span>
 <a id="L38"></a><span class="visited"> </span>
-<a id="L39"></a><span > </span>
-<a id="L40"></a><span > </span>
-<a id="L41"></a><span class="visited"> </span>
+<a id="L39"></a><span class="visited"> </span>
+<a id="L40"></a><span class="visited"> </span>
+<a id="L41"></a><span class="some-visited"> </span>
 <a id="L42"></a><span class="visited"> </span>
-<a id="L43"></a><span > </span>
+<a id="L43"></a><span class="visited"> </span>
 <a id="L44"></a><span > </span>
-<a id="L45"></a><span class="visited"> </span>
+<a id="L45"></a><span > </span>
 <a id="L46"></a><span > </span>
 <a id="L47"></a><span > </span>
-<a id="L48"></a><span class="unvisited"> </span>
-<a id="L49"></a><span class="visited"> </span>
-<a id="L50"></a><span > </span>
+<a id="L48"></a><span > </span>
+<a id="L49"></a><span class="unvisited"> </span>
+<a id="L50"></a><span class="unvisited"> </span>
 <a id="L51"></a><span > </span>
-<a id="L52"></a><span class="visited"> </span>
+<a id="L52"></a><span > </span>
+<a id="L53"></a><span class="visited"> </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -130,6 +133,7 @@
 <a href="#L50">50</a>
 <a href="#L51">51</a>
 <a href="#L52">52</a>
+<a href="#L53">53</a>
 </pre>
 <pre><code class="ocaml">(* This file will contain all pretty-printing for computorv1 *)
 
@@ -143,46 +147,47 @@ let deltap fmt delta =
       <span data-count="10">"</span>The solution is:@."
   )
 
-let polyprint fmt (terms, variable) =
-  <span data-count="19">F</span>ormat.fprintf fmt "Reduced form: ";
-  <span data-count="19">l</span>et size = List.length terms in
-  <span data-count="19">l</span>et print_sign fmt l =
-    <span data-count="22">m</span>atch l with
-    | <span data-count="22">(</span>_k, v) -&gt;
-      if Float.compar<span data-count="22">e</span> 0. v &gt; 0 then
-        <span data-count="5">F</span>ormat.fprintf fmt " - "
-      else
-        <span data-count="17">F</span>ormat.fprintf fmt " + " in
-  let rec reduce terms variable =
-    <span data-count="41">b</span>egin
-      match terms with
-      | [] -&gt; assert false
-      | <span data-count="18">[</span>(k, v)] -&gt;
-        Format.fprintf fmt "%g * %s^%d" (if Float.compar<span data-count="18">e</span> 0. v &gt; 0 &amp;&amp; <span data-count="7">s</span>ize &lt;&gt; 1 then <span data-count="3">~</span>-<span data-count="3">.</span>v else <span data-count="15">v</span>) variable k;
-      | <span data-count="22">(</span>k, v)::r -&gt;
-        Format.fprintf fmt "%g * %s^%d" (if Float.compar<span data-count="22">e</span> 0. v &gt; 0 then <span data-count="6">~</span>-<span data-count="6">.</span>v else <span data-count="16">v</span>) variable k;
-        <span data-count="22">p</span>rint_sign fmt (List.h<span data-count="22">d</span> r);
-        <span data-count="22">r</span>educe r variable
-    end;
-  in
-  reduce terms variable
-
 let pow fmt n =
-  <span data-count="4">i</span>f n &lt;&gt; 1 then <span data-count="3">F</span>ormat.fprintf fmt "^%d" n
+  <span data-count="44">F</span>ormat.fprintf fmt "^%d" n
 
 let var fmt = function
   | <span data-count="2">N</span>one -&gt; ()
-  | <span data-count="4">S</span>ome (x, n) -&gt; Format.fprintf fmt "%s%a" x pow n
+  | <span data-count="44">S</span>ome (x, n) -&gt; Format.fprintf fmt " * %s%a" x pow n
 
 let mono fmt (a, x) =
-  <span data-count="6">F</span>ormat.fprintf fmt "%g%a" a var x
+  <span data-count="46">F</span>ormat.fprintf fmt "%g%a" a var x
+
+let polyprint fmt (terms, variable) =
+  <span data-count="23">l</span>et size = List.length terms in
+  <span data-count="23">l</span>et print_sign fmt l =
+    <span data-count="24">m</span>atch l with
+    | <span data-count="24">(</span>_k, v) -&gt;
+      if Float.compar<span data-count="24">e</span> 0. v &gt; 0 then
+        <span data-count="6">F</span>ormat.fprintf fmt " - "
+      else
+        <span data-count="18">F</span>ormat.fprintf fmt " + " in
+  let rec reduce terms =
+    <span data-count="47">b</span>egin
+      match terms with
+      | [] -&gt; assert false
+      | <span data-count="22">[</span>(k, v)] -&gt;
+        mono fmt ((if Float.compar<span data-count="22">e</span> 0. v &gt; 0 &amp;&amp; <span data-count="8">s</span>ize &lt;&gt; 1 then <span data-count="4">~</span>-<span data-count="4">.</span>v else <span data-count="18">v</span>),
+          (if String.equal variable "" then <span data-count="2">N</span>one else <span data-count="20">S</span>ome(variable, k)));
+      | <span data-count="24">(</span>k, v)::r -&gt;
+        mono fmt ((if Float.compar<span data-count="24">e</span> 0. v &gt; 0 then <span data-count="6">~</span>-<span data-count="6">.</span>v else <span data-count="18">v</span>),
+          (if String.equal variable "" then <span data-count="0">N</span>one else <span data-count="24">S</span>ome(variable, k)));
+        <span data-count="24">p</span>rint_sign fmt (List.h<span data-count="24">d</span> r);
+        <span data-count="24">r</span>educe r
+    end;
+  in
+  reduce terms
 
 let poly fmt = function
   | <span data-count="0">[</span>] -&gt; Format.fprintf fmt "0"
-  | <span data-count="4">p</span>olynome -&gt; Format.pp_print_list ~pp_sep:(fun fmt () -&gt; <span data-count="2">F</span>ormat.fprintf fmt " + ") mono fmt polynome
+  | <span data-count="0">p</span>olynome -&gt; Format.pp_print_list ~pp_sep:(fun fmt () -&gt; <span data-count="0">F</span>ormat.fprintf fmt " + ") mono fmt polynome
 
-let equ fmt (left, right) =
-  <span data-count="2">F</span>ormat.fprintf fmt "%a = %a@." poly left poly right
+let equ fmt (polynome, var) =
+  <span data-count="22">p</span>olyprint fmt (polynome, var)
 </code></pre>
       </div>
     </div>
