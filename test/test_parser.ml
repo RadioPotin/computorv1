@@ -32,7 +32,7 @@ let handle_test expectedL expectedR given =
     List.iter2 (fun x y -> assert (eq x y)) expectedR pr; ()
   with
     Assert_failure _ -> Format.eprintf "Error with equality of lists.@.";
-    Format.eprintf "Expected: %a@.Got: %a" Pp.equ (expectedL, expectedR) Pp.equ (pl, pr); exit 1
+    Format.eprintf "Expected: %a = %a@.Got: %a = %a" Pp.poly expectedL Pp.poly expectedR Pp.poly pl Pp.poly pr; exit 1
 
 let test_parser () =
   Format.printf "---- Now testing parser ----@.";
@@ -75,6 +75,7 @@ let test_parser () =
     [(5., Some("X", 0));(4., Some("X", 1));(-9.3, Some("X", 2))]
     [(1., Some("X", 0))]
     "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0";
+
   (*
    * TEST 2
    *)

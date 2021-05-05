@@ -18,20 +18,12 @@ let rec convert_sub p =
   match p with
   | Add(a, b) -> convert_sub a @ convert b
   | Sub(a, b) -> convert_sub a @ convert_sub b
-  | Mon x ->
-    begin
-      match x with
-      | (n, v)-> [(~-.n, v)]
-    end
+  | Mon(n, v) -> [(~-.n, v)]
 and convert p =
   match p with
   | Add(a, b) -> convert a @ convert b
   | Sub(a, b) -> convert a @ convert_sub b
-  | Mon x->
-    begin
-      match x with
-      | (n, v) -> [(n, v)]
-    end
+  | Mon(n, v) -> [(n, v)]
 
 let file_to_lists (p1, p2) =
   (convert p1, convert p2)
@@ -123,7 +115,7 @@ let solve fmt e =
   (* Raise an exception in case of degree > 2 *)
   if max_degree > 2 then
     begin
-      Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+      Pp.equ fmt (filtered_terms, (Option.value !seen ~default:""));
       Format.fprintf fmt "Polynomial degree: %d@." max_degree;
       Format.fprintf fmt "The polynomial degree is strictly greater than 2, I can't solve.@.";
       raise Big_degree
@@ -141,7 +133,7 @@ let solve fmt e =
     begin
       match delta with
       | 0. -> let solution = ~-.b /. (2. *. a) in
-        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
         Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
@@ -150,7 +142,7 @@ let solve fmt e =
       | delta when Float.compare 0. delta < 0 ->
         let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in
         let solution2 = (~-.b +. (sqrt delta))/. (2. *. a) in
-        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
         Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
@@ -159,7 +151,7 @@ let solve fmt e =
           (if Float.compare (-0.) solution2 = 0 then 0. else solution2)
 
       | delta ->
-        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
         Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
@@ -194,7 +186,7 @@ let solve fmt e =
           (* Case 3 = 0
           *)
         | _c ->
-          Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+          Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
           Format.fprintf fmt " = 0@.";
           Format.fprintf fmt "Impossible.@."
       end
@@ -204,7 +196,7 @@ let solve fmt e =
     | b ->
       begin
         let solution = ~-.c /. b in
-        Pp.polyprint fmt (filtered_terms, (Option.value !seen ~default:""));
+        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
         Format.fprintf fmt " = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt 0.;

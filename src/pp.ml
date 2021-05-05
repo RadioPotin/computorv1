@@ -10,8 +10,17 @@ let deltap fmt delta =
       "The solution is:@."
   )
 
+let pow fmt n =
+  Format.fprintf fmt "^%d" n
+
+let var fmt = function
+  | None -> ()
+  | Some (x, n) -> Format.fprintf fmt " * %s%a" x pow n
+
+let mono fmt (a, x) =
+  Format.fprintf fmt "%g%a" a var x
+
 let polyprint fmt (terms, variable) =
-  Format.fprintf fmt "Reduced form: ";
   let size = List.length terms in
   let print_sign fmt l =
     match l with
@@ -20,33 +29,25 @@ let polyprint fmt (terms, variable) =
         Format.fprintf fmt " - "
       else
         Format.fprintf fmt " + " in
-  let rec reduce terms variable =
+  let rec reduce terms =
     begin
       match terms with
       | [] -> assert false
       | [(k, v)] ->
-        Format.fprintf fmt "%g * %s^%d" (if Float.compare 0. v > 0 && size <> 1 then ~-.v else v) variable k;
+        mono fmt ((if Float.compare 0. v > 0 && size <> 1 then ~-.v else v),
+          (if String.equal variable "" then None else Some(variable, k)));
       | (k, v)::r ->
-        Format.fprintf fmt "%g * %s^%d" (if Float.compare 0. v > 0 then ~-.v else v) variable k;
+        mono fmt ((if Float.compare 0. v > 0 then ~-.v else v),
+          (if String.equal variable "" then None else Some(variable, k)));
         print_sign fmt (List.hd r);
-        reduce r variable
+        reduce r
     end;
   in
-  reduce terms variable
-
-let pow fmt n =
-  if n <> 1 then Format.fprintf fmt "^%d" n
-
-let var fmt = function
-  | None -> ()
-  | Some (x, n) -> Format.fprintf fmt "%s%a" x pow n
-
-let mono fmt (a, x) =
-  Format.fprintf fmt "%g%a" a var x
+  reduce terms
 
 let poly fmt = function
   | [] -> Format.fprintf fmt "0"
   | polynome -> Format.pp_print_list ~pp_sep:(fun fmt () -> Format.fprintf fmt " + ") mono fmt polynome
 
-let equ fmt (left, right) =
-  Format.fprintf fmt "%a = %a@." poly left poly right
+let equ fmt (polynome, var) =
+  polyprint fmt (polynome, var)

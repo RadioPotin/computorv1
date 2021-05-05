@@ -5,8 +5,8 @@ open Test_parser
    * All tests for Pp module
    *)
 
-let handle_test_pp expected equation =
-  let s = Format.asprintf "%a" Pp.equ equation in
+let handle_test_pp expected (pl, pr) var =
+  let s = Format.asprintf "%a = %a\n" Pp.equ (pl, var) Pp.equ (pr, var) in
   try
     assert (String.equal expected s)
   with
@@ -31,12 +31,14 @@ let test_pp () =
   Format.printf "Test %d: 0 = 0@." (counter());
   handle_test_pp
     "0 = 0\n"
-    ([(0., None)], [(0., None)]);
+    ([(0, 0.)], [(0, 0.)])
+    "";
 
   (*
    * TEST 30
    *)
   Format.printf "Test %d: 5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0@." (counter());
   handle_test_pp
-    "5X^0 + 4X + -9.3X^2 = 1X^0\n"
-    ([(5., Some("X", 0));(4., Some("X", 1));(-9.3, Some("X", 2));], [(1., Some("X", 0))])
+    "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0\n"
+    ([(0, 5.);(1, 4.);(2, -9.3);], [(0, 1.)])
+    "X"

@@ -28,7 +28,7 @@ let handle_test_ast expected ast =
   with
     Assert_failure _ ->
     Format.eprintf "Error with equality of lists.:@.@.";
-    Format.eprintf "Expected: %a@.Got: %a" Pp.equ (expected, [0., None]) Pp.equ (pl, [0., None]);
+    Format.eprintf "Expected: %a = %a@.Got: %a = %a" Pp.poly expected Pp.poly [0., None] Pp.poly pl Pp.poly [0., None];
     exit 1
 
 let test_solver () =
