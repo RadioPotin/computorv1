@@ -45,9 +45,5 @@ let polyprint fmt (terms, variable) =
   in
   reduce terms
 
-let poly fmt = function
-  | [] -> Format.fprintf fmt "0"
-  | polynome -> Format.pp_print_list ~pp_sep:(fun fmt () -> Format.fprintf fmt " + ") mono fmt polynome
-
-let equ fmt (polynome, var) =
-  polyprint fmt (polynome, var)
+let equ fmt (polynomeL, polynomeR, var) =
+  Format.fprintf fmt "%a = %a" polyprint (polynomeL, var) polyprint (polynomeR, var)

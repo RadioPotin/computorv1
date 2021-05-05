@@ -6,7 +6,7 @@ open Test_parser
    *)
 
 let handle_test_pp expected (pl, pr) var =
-  let s = Format.asprintf "%a = %a\n" Pp.equ (pl, var) Pp.equ (pr, var) in
+  let s = Format.asprintf "%a\n" Pp.equ (pl, pr, var) in
   try
     assert (String.equal expected s)
   with

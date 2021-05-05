@@ -11,18 +11,11 @@ let counter =
 let handle_test expectedL expectedR given =
   Format.printf "Test %d: %s@." (counter()) given;
   let eq e1 e2 =
-    let f1, opt1 = e1 in
-    let f2, opt2 = e2 in
+    let pow1, coef1 = e1 in
     begin
-      if Float.compare f1 f2 = 0 then
-        match opt1, opt2 with
-        | None, None -> true
-        | None, Some _x -> false
-        | Some _x, None -> false
-        | Some (var1, p1), Some (var2, p2) ->
-          String.equal var1 var2 && Int.compare p1 p2 = 0
-      else
-        false
+      match e2 with
+      |(n, None) -> if Float.compare coef1 n = 0 then Int.compare 0 pow1 = 0 else false
+      |(n, Some(_, p)) -> if Float.compare coef1 n = 0 then Int.compare pow1 p = 0 else false
     end
   in
   let ast = eq_parse given in
@@ -32,7 +25,7 @@ let handle_test expectedL expectedR given =
     List.iter2 (fun x y -> assert (eq x y)) expectedR pr; ()
   with
     Assert_failure _ -> Format.eprintf "Error with equality of lists.@.";
-    Format.eprintf "Expected: %a = %a@.Got: %a = %a" Pp.poly expectedL Pp.poly expectedR Pp.poly pl Pp.poly pr; exit 1
+    exit 1
 
 let test_parser () =
   Format.printf "---- Now testing parser ----@.";
@@ -40,46 +33,46 @@ let test_parser () =
    * TEST 0
    *)
   handle_test
-    [(0., None)]
-    [(0., None)]
+    [(0, 0.)]
+    [(0, 0.)]
     "0 = 0";
 
   (*
    * TEST 1
    *)
   handle_test
-    [(0., None)]
-    [(3., None)]
+    [(0, 0.)]
+    [(0, 3.)]
     "0 = 3";
 
   (*
    * TEST 2
    *)
   handle_test
-    [(-1., Some("x", 1));(1., None)]
-    [(0., None)]
+    [(1, -1.);(0, 1.)]
+    [(0, 0.)]
     "-x + 1 = 0";
 
   (*
    * TEST 3
    *)
   handle_test
-    [(-1., Some("X", 1));(-1., Some("X", 1));(-1., Some("X", 1));(1., Some("X", 2));(-2., Some("X", 2));(1., Some("X", 2));(1., None);]
-    [(0., None)]
+    [(1, -1.);(1, -1.);(1, -1.);(2, 1.);(2, -2.);(2, 1.);(0, 1.)]
+    [(0, 0.)]
     "-X - X - X + X^2 - 2X^2 + X^2 + 1 = 0";
 
   (*
    * TEST 4
    *)
   handle_test
-    [(5., Some("X", 0));(4., Some("X", 1));(-9.3, Some("X", 2))]
-    [(1., Some("X", 0))]
+    [(0, 5.);(1, 4.);(2, -9.3)]
+    [(0, 1.)]
     "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0";
 
   (*
    * TEST 2
    *)
   handle_test
-    [(-1., Some("x", 2));(1., None)]
-    [(0., None)]
+    [(2, -1.);(0, 1.)]
+    [(0, 0.)]
     "-x^2 + 1 = 0"

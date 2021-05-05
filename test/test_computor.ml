@@ -16,7 +16,7 @@ let handle_test expected given =
   | Assert_failure _-> Format.eprintf "EXPECTED\t\t--------------------@.@.%s@.GOT     \t\t--------------------@.@.%s@." expected str; exit 1
 
 let () =
-  Format.printf "---- Now testing solver ----@.";
+  Format.printf "---- Now testing computor ----@.";
   (*
    * Test 0
    *)

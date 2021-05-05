@@ -100,6 +100,7 @@ let solve fmt e =
       end
   ) poly;
 
+  let var = (Option.value !seen ~default:"") in
   (* Convert all Hashtbl of monomes (key:power, value:coef) to a list of (power, coef)*)
   let allterms = List.of_seq (Hashtbl.to_seq tbl) in
   (* Order in growing order of (power, _coef) *)
@@ -111,11 +112,10 @@ let solve fmt e =
     match el with
     | (0, _n) -> acc
     | (p1, _c1) -> if acc > p1 then acc else p1) 0 filtered_terms in
-
   (* Raise an exception in case of degree > 2 *)
   if max_degree > 2 then
     begin
-      Pp.equ fmt (filtered_terms, (Option.value !seen ~default:""));
+      Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, [(0, 0.)], var);
       Format.fprintf fmt "Polynomial degree: %d@." max_degree;
       Format.fprintf fmt "The polynomial degree is strictly greater than 2, I can't solve.@.";
       raise Big_degree
@@ -133,8 +133,7 @@ let solve fmt e =
     begin
       match delta with
       | 0. -> let solution = ~-.b /. (2. *. a) in
-        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
-        Format.fprintf fmt " = 0@.";
+        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, [(0, 0.)], var);
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
         Format.fprintf fmt "%g@." (if Float.compare (-0.) solution = 0 then 0. else solution)
@@ -142,8 +141,7 @@ let solve fmt e =
       | delta when Float.compare 0. delta < 0 ->
         let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in
         let solution2 = (~-.b +. (sqrt delta))/. (2. *. a) in
-        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
-        Format.fprintf fmt " = 0@.";
+        Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [(0, 0.)], var);
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
         Format.fprintf fmt "%g@.%g@."
@@ -151,8 +149,7 @@ let solve fmt e =
           (if Float.compare (-0.) solution2 = 0 then 0. else solution2)
 
       | delta ->
-        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
-        Format.fprintf fmt " = 0@.";
+        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, [(0, 0.)], var);
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
         let reduce_zi fmt root =
@@ -186,8 +183,7 @@ let solve fmt e =
           (* Case 3 = 0
           *)
         | _c ->
-          Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
-          Format.fprintf fmt " = 0@.";
+          Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, [(0, 0.)], var);
           Format.fprintf fmt "Impossible.@."
       end
 
@@ -196,8 +192,7 @@ let solve fmt e =
     | b ->
       begin
         let solution = ~-.c /. b in
-        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, (Option.value !seen ~default:""));
-        Format.fprintf fmt " = 0@.";
+        Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, [(0, 0.)], var);
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt 0.;
         Format.fprintf fmt "%g@." (if Float.compare (-0.) solution = 0 then 0. else solution)
