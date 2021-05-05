@@ -14,19 +14,13 @@ let sqrt x =
       done;
    !z
  *)
-let rec convert_sub p =
-  match p with
-  | Add(a, b) -> convert_sub a @ convert b
-  | Sub(a, b) -> convert_sub a @ convert_sub b
-  | Mon(n, v) -> [(~-.n, v)]
-and convert p =
-  match p with
-  | Add(a, b) -> convert a @ convert b
-  | Sub(a, b) -> convert a @ convert_sub b
-  | Mon(n, v) -> [(n, v)]
+let rec convert sub = function
+  | Add (a, b) -> convert sub a @ convert false b
+  | Sub (a, b) -> convert sub a @ convert true b
+  | Mon (x, v) -> if sub then [(~-. x, v)] else [(x, v)]
 
 let file_to_lists (p1, p2) =
-  (convert p1, convert p2)
+  (convert false p1, convert false p2)
 
 let sqrt x =
   let rec sqrt_aux guess = function
