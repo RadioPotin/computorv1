@@ -94,28 +94,28 @@ let () =
    * Test 10
    *)
     handle_test
-      "Reduced form: 24 * x^0 + 6 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly positive, the two solutions are:\n-2\n2\n"
+      "Reduced form: -24 * x^0 + 6 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly positive, the two solutions are:\n-2\n2\n"
       "6 * x^2 + 11 * x^0 - 35 = 0";
 
   (*
    * Test 11
    *)
     handle_test
-      "Reduced form: 3 * x^0 - 1 * x^1 + 1 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly positive, the two solutions are:\n-1.30278\n2.30278\n"
+      "Reduced form: -3 * x^0 - 1 * x^1 + 1 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly positive, the two solutions are:\n-1.30278\n2.30278\n"
       "x^2 -x - 3 = 0";
 
   (*
    * Test 12
    *)
     handle_test
-      "Reduced form: 64 * x^0 + 2 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly positive, the two solutions are:\n-5.65685\n5.65685\n"
+      "Reduced form: -64 * x^0 + 2 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly positive, the two solutions are:\n-5.65685\n5.65685\n"
       "2x^2 - 64 = 0";
 
   (*
    * Test 13
    *)
     handle_test
-      "Reduced form: 7 * x^1 + 1 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly positive, the two solutions are:\n0\n7\n"
+      "Reduced form: -7 * x^1 + 1 * x^2 = 0\nPolynomial degree: 2\nDiscriminant is strictly positive, the two solutions are:\n0\n7\n"
       "x^2 - 7x = 0";
 
   (*

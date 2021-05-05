@@ -21,29 +21,17 @@ let mono fmt (a, x) =
   Format.fprintf fmt "%g%a" a var x
 
 let polyprint fmt (terms, variable) =
-  let size = List.length terms in
-  let print_sign fmt l =
-    match l with
-    | (_k, v) ->
-      if Float.compare 0. v > 0 then
-        Format.fprintf fmt " - "
-      else
-        Format.fprintf fmt " + " in
-  let rec reduce terms =
-    begin
-      match terms with
-      | [] -> Format.fprintf fmt "0"
-      | [(k, v)] ->
-        mono fmt ((if Float.compare 0. v > 0 && size <> 1 then ~-.v else v),
-          (if String.equal variable "" then None else Some(variable, k)));
-      | (k, v)::r ->
-        mono fmt ((if Float.compare 0. v > 0 then ~-.v else v),
-          (if String.equal variable "" then None else Some(variable, k)));
-        print_sign fmt (List.hd r);
-        reduce r
-    end;
+  let mk_var k =
+    if variable = "" then None
+    else Some (variable, k)
   in
-  reduce terms
+  match terms with
+  | [] -> Format.fprintf fmt "0"
+  | (k, v)::p ->
+    mono fmt (v, mk_var k);
+    List.iter (fun (k, v) ->
+      Format.fprintf fmt "%s%a" (if v >= 0. then " + " else " - ") mono (Float.abs v, mk_var k)
+    ) p
 
 let equ fmt (polynomeL, polynomeR, var) =
   Format.fprintf fmt "%a = %a" polyprint (polynomeL, var) polyprint (polynomeR, var)
