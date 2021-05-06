@@ -149,6 +149,13 @@ let solve fmt (e : monome list * monome list) =
   let a = Option.value (Hashtbl.find_opt tbl 2) ~default:0. in
   let b = Option.value (Hashtbl.find_opt tbl 1) ~default:0. in
   let c = Option.value (Hashtbl.find_opt tbl 0) ~default:0. in
+  let normalize fmt root =
+    Format.fprintf fmt "%g"
+      ( if Float.compare (-0.) root = 0 then
+        Float.abs root
+      else
+        root )
+  in
   (* If a is not 0, then it's not a 2nd degree equation *)
   if a <> 0. then (
     (* Calculating delta for resolution of
@@ -221,8 +228,4 @@ let solve fmt (e : monome list * monome list) =
       Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
       Format.fprintf fmt "Polynomial degree: %d@." max_degree;
       Pp.deltap fmt 0.;
-      Format.fprintf fmt "%g@."
-        ( if Float.compare (-0.) solution = 0 then
-          Float.abs solution
-        else
-          solution )
+      Format.fprintf fmt "%a@." normalize solution
