@@ -24,48 +24,67 @@
 <a id="L1"></a><span > </span>
 <a id="L2"></a><span > </span>
 <a id="L3"></a><span > </span>
-<a id="L4"></a><span class="visited"> </span>
+<a id="L4"></a><span > </span>
 <a id="L5"></a><span > </span>
 <a id="L6"></a><span class="visited"> </span>
-<a id="L7"></a><span class="visited"> </span>
+<a id="L7"></a><span > </span>
 <a id="L8"></a><span class="visited"> </span>
-<a id="L9"></a><span > </span>
-<a id="L10"></a><span > </span>
-<a id="L11"></a><span class="visited"> </span>
+<a id="L9"></a><span class="visited"> </span>
+<a id="L10"></a><span class="visited"> </span>
+<a id="L11"></a><span > </span>
 <a id="L12"></a><span > </span>
 <a id="L13"></a><span class="visited"> </span>
 <a id="L14"></a><span > </span>
 <a id="L15"></a><span > </span>
 <a id="L16"></a><span class="visited"> </span>
-<a id="L17"></a><span class="visited"> </span>
+<a id="L17"></a><span > </span>
 <a id="L18"></a><span > </span>
-<a id="L19"></a><span class="visited"> </span>
+<a id="L19"></a><span > </span>
 <a id="L20"></a><span > </span>
-<a id="L21"></a><span > </span>
+<a id="L21"></a><span class="visited"> </span>
 <a id="L22"></a><span class="visited"> </span>
-<a id="L23"></a><span class="visited"> </span>
-<a id="L24"></a><span class="visited"> </span>
+<a id="L23"></a><span > </span>
+<a id="L24"></a><span > </span>
 <a id="L25"></a><span > </span>
 <a id="L26"></a><span class="visited"> </span>
 <a id="L27"></a><span > </span>
 <a id="L28"></a><span > </span>
-<a id="L29"></a><span class="visited"> </span>
-<a id="L30"></a><span class="visited"> </span>
-<a id="L31"></a><span class="visited"> </span>
+<a id="L29"></a><span > </span>
+<a id="L30"></a><span > </span>
+<a id="L31"></a><span > </span>
 <a id="L32"></a><span class="visited"> </span>
-<a id="L33"></a><span > </span>
+<a id="L33"></a><span class="visited"> </span>
 <a id="L34"></a><span class="visited"> </span>
 <a id="L35"></a><span > </span>
 <a id="L36"></a><span class="visited"> </span>
 <a id="L37"></a><span > </span>
-<a id="L38"></a><span class="visited"> </span>
-<a id="L39"></a><span > </span>
+<a id="L38"></a><span > </span>
+<a id="L39"></a><span class="visited"> </span>
 <a id="L40"></a><span class="visited"> </span>
-<a id="L41"></a><span > </span>
-<a id="L42"></a><span > </span>
+<a id="L41"></a><span class="visited"> </span>
+<a id="L42"></a><span class="visited"> </span>
 <a id="L43"></a><span > </span>
 <a id="L44"></a><span class="visited"> </span>
 <a id="L45"></a><span > </span>
+<a id="L46"></a><span class="visited"> </span>
+<a id="L47"></a><span > </span>
+<a id="L48"></a><span class="visited"> </span>
+<a id="L49"></a><span > </span>
+<a id="L50"></a><span class="visited"> </span>
+<a id="L51"></a><span > </span>
+<a id="L52"></a><span > </span>
+<a id="L53"></a><span > </span>
+<a id="L54"></a><span > </span>
+<a id="L55"></a><span > </span>
+<a id="L56"></a><span > </span>
+<a id="L57"></a><span > </span>
+<a id="L58"></a><span > </span>
+<a id="L59"></a><span > </span>
+<a id="L60"></a><span > </span>
+<a id="L61"></a><span > </span>
+<a id="L62"></a><span > </span>
+<a id="L63"></a><span class="visited"> </span>
+<a id="L64"></a><span > </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -115,9 +134,30 @@
 <a href="#L43">43</a>
 <a href="#L44">44</a>
 <a href="#L45">45</a>
+<a href="#L46">46</a>
+<a href="#L47">47</a>
+<a href="#L48">48</a>
+<a href="#L49">49</a>
+<a href="#L50">50</a>
+<a href="#L51">51</a>
+<a href="#L52">52</a>
+<a href="#L53">53</a>
+<a href="#L54">54</a>
+<a href="#L55">55</a>
+<a href="#L56">56</a>
+<a href="#L57">57</a>
+<a href="#L58">58</a>
+<a href="#L59">59</a>
+<a href="#L60">60</a>
+<a href="#L61">61</a>
+<a href="#L62">62</a>
+<a href="#L63">63</a>
+<a href="#L64">64</a>
 </pre>
-<pre><code class="ocaml">(* This file will contain all pretty-printing for computorv1 *)
+<pre><code class="ocaml">(** This file will contain all pretty-printing for computorv1 *)
 
+(** [deltap fmt delta] takes the delta of a given equation and based on its
+    sign, prints the corresponding string *)
 let deltap fmt delta =
   <span data-count="19">F</span>ormat.fprintf fmt
     ( if delta &gt; 0. then
@@ -128,15 +168,23 @@ let deltap fmt delta =
     else
       <span data-count="10">"</span>The solution is:@." )
 
-let pow fmt n = <span data-count="44">F</span>ormat.fprintf fmt "^%d" n
+(** [pow fmt n] takes in a power and pretty-prints it *)
+let pow fmt (n : int) = <span data-count="44">F</span>ormat.fprintf fmt "^%d" n
 
+(** [var fmt (var, n)] takes in the optionnal part of a monome and prints it if
+    needed *)
 let var fmt = function
   | <span data-count="2">N</span>one -&gt; ()
   | <span data-count="44">S</span>ome (x, n) -&gt; Format.fprintf fmt " * %s%a" x pow n
 
-let mono fmt ((a, x) : Ast.monome) = <span data-count="46">F</span>ormat.fprintf fmt "%g%a" a var x
+(** [mono fmt (coef, var)] successively prints each element of the monome list *)
+let mono fmt ((coefficient, variable) : Ast.monome) =
+  <span data-count="46">F</span>ormat.fprintf fmt "%g%a" coefficient var variable
 
-let polyprint fmt (terms, variable) =
+(** [polyprint fmt (terms, variable)] takes a list of terms (power:int *
+    coefficient:float) and the only variable present in the polynome and takes
+    care of the pretty-printing *)
+let polyprint fmt ((terms, variable) : (int * float) list * string) =
   <span data-count="40">l</span>et mk_var k =
     <span data-count="46">i</span>f variable = "" then
       <span data-count="2">N</span>one
@@ -158,9 +206,18 @@ let polyprint fmt (terms, variable) =
           (Float.ab<span data-count="24">s</span> v, mk_va<span data-count="24">r</span> k) )
       p
 
-let equ fmt (polynomeL, polynomeR, var) =
-  <span data-count="20">F</span>ormat.fprintf fmt "%a = %a" polyprint (polynomeL, var) polyprint
-    (polynomeR, var)
+(** [equ fmt (polynome_l, polynome_r, var)] takes both sides of the equation as
+    polynomes of type (int * float) list as well as the only variable present in
+    the equation. The polynome is represented as such instead of a Ast.monome
+    list because of the simplification undertaken in the Hashtable of type
+    (power:int coefficient:float). Sending an empty list will simply print [0],
+    once again this obeys the printing specifications of the ComputorV1 42
+    subject *)
+let equ fmt
+    ((polynome_l, polynome_r, var) :
+      (int * float) list * (int * float) list * string ) =
+  <span data-count="20">F</span>ormat.fprintf fmt "%a = %a" polyprint (polynome_l, var) polyprint
+    (polynome_r, var)
 </code></pre>
       </div>
     </div>
