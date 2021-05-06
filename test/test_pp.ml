@@ -24,7 +24,7 @@ let test_pp () =
     "";
 
   (*
-   * TEST 30
+   * TEST 29
    *)
   Format.printf "Test %d: 5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0@." (counter());
   handle_test_pp

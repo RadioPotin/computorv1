@@ -112,7 +112,7 @@ let solve fmt e =
   (* Raise an exception in case of degree > 2 *)
   if max_degree > 2 then
     begin
-      Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, [(0, 0.)], var);
+      Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, [], var);
       Format.fprintf fmt "Polynomial degree: %d@." max_degree;
       Format.fprintf fmt "The polynomial degree is strictly greater than 2, I can't solve.@.";
       raise Big_degree
@@ -133,7 +133,8 @@ let solve fmt e =
         Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt delta;
-        Format.fprintf fmt "%g@." (if Float.compare (-0.) solution = 0 then Float.abs solution else solution)
+        Format.fprintf fmt "%g@."
+          (if Float.compare (-0.) solution = 0 then Float.abs solution else solution)
 
       | delta when Float.compare 0. delta < 0 ->
         let solution1 = (~-.b -. (sqrt delta))/. (2. *. a) in

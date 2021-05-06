@@ -17,7 +17,7 @@ let var fmt = function
   | None -> ()
   | Some (x, n) -> Format.fprintf fmt " * %s%a" x pow n
 
-let mono fmt (a, x) =
+let mono fmt ((a, x):Ast.monome) =
   Format.fprintf fmt "%g%a" a var x
 
 let polyprint fmt (terms, variable) =
