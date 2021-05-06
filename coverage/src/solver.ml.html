@@ -529,9 +529,9 @@
 open Ast
 
 (** [convert ast] takes the polynome represented as a recursive type and
-    converts it to a type (coefficient:float, (variable:string * power:int)
-    option) list *)
-let convert =
+    converts it to a type
+    [(coefficient:float, (variable:string * power:int) option) list] *)
+let convert : polynome -&gt; monome list =
   let rec aux sub = function
     | <span data-count="27">A</span>dd (a, b) -&gt; au<span data-count="27">x</span> sub a @ au<span data-count="27">x</span> false b
     | <span data-count="16">S</span>ub (a, b) -&gt; au<span data-count="16">x</span> sub a @ au<span data-count="16">x</span> true b
@@ -543,8 +543,8 @@ let convert =
   in
   au<span data-count="1">x</span> false
 
-(** [ast_to_lists (p1, p2)] takes a type (polynome * polynome) and calls
-    [convert ast] on each polynome to return a (monome list * monome list) to
+(** [ast_to_lists (p1, p2)] takes a type [(polynome * polynome)] and calls
+    [convert ast] on each polynome to return a [(monome list * monome list)] to
     facilitate manipulation *)
 let ast_to_lists ((p1, p2) : polynome * polynome) = <span data-count="28">(</span>conver<span data-count="28">t</span> p1, conver<span data-count="28">t</span> p2)
 
@@ -573,11 +573,11 @@ let sqrt x =
 
 (** [solve e] takes both monome lists and does all necessary operations that
     lead to solution. Invert all monomes of the righthand side polynome and
-    concatenate to lefthand side one. Check for more than one variable, axit if
-    so. Create a Hashtable of (key:power, value:coefficient). Check for a degree
-    &gt; 2, exit if so. Simplify list by combining same power monomes. Proceed to
-    calculate delta and pretty-print the reduced form along with polynomial
-    degree and solution(s). *)
+    concatenate to lefthand side one. Check for more than one variable, exit if
+    so. Create a Hashtable of [(key:power, value:coefficient)]. Check for a
+    degree &gt; 2, exit if so. Simplify list by combining same power monomes.
+    Proceed to calculate delta and pretty-print the reduced form along with
+    polynomial degree and solution(s). *)
 let solve fmt (e : monome list * monome list) =
   (* Separate both polynomes of the equation left and right from '=' sign *)
   <span data-count="22">l</span>et left, right = e in
