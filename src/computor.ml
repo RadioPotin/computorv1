@@ -6,7 +6,7 @@ let usage () =
   exit 1
 
 let () =
-  if Array.length Sys.argv <> 2 then usage () ;
+  if Array.length Sys.argv <> 2 then usage ();
   let buf = Lexing.from_string Sys.argv.(1) in
   try
     let file = Parser.equation Lexer.token buf in

@@ -3,10 +3,10 @@
  *)
 
 exception Big_degree
+
 exception Too_many_variables
 
-type monome =
-  float * (string * int) option
+type monome = float * (string * int) option
 
 type polynome =
   | Mon of monome
