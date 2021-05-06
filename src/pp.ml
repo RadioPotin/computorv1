@@ -25,9 +25,9 @@ let var fmt = function
 let mono fmt ((coefficient, variable) : Ast.monome) =
   Format.fprintf fmt "%g%a" coefficient var variable
 
-(** [polyprint fmt (terms, variable)] takes a list of terms (power:int *
-    coefficient:float) and the only variable present in the polynome and takes
-    care of the pretty-printing *)
+(** [polyprint fmt (terms, variable)] takes a list of terms
+    [(power:int * coefficient:float)] and the only variable present in the
+    polynome and takes care of the pretty-printing *)
 let polyprint fmt ((terms, variable) : (int * float) list * string) =
   let mk_var k =
     if variable = "" then
@@ -51,11 +51,11 @@ let polyprint fmt ((terms, variable) : (int * float) list * string) =
       p
 
 (** [equ fmt (polynome_l, polynome_r, var)] takes both sides of the equation as
-    polynomes of type (int * float) list as well as the only variable present in
-    the equation. The polynome is represented as such instead of a Ast.monome
+    polynomes of type [(int * float)] list as well as the only variable present
+    in the equation. The polynome is represented as such instead of a Ast.monome
     list because of the simplification undertaken in the Hashtable of type
-    (power:int coefficient:float). Sending an empty list will simply print [0],
-    once again this obeys the printing specifications of the ComputorV1 42
+    [(power:int coefficient:float)]. Sending an empty list will simply print
+    [0], once again this obeys the printing specifications of the ComputorV1 42
     subject *)
 let equ fmt
     ((polynome_l, polynome_r, var) :

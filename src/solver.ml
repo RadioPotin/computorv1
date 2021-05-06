@@ -3,9 +3,9 @@
 open Ast
 
 (** [convert ast] takes the polynome represented as a recursive type and
-    converts it to a type (coefficient:float, (variable:string * power:int)
-    option) list *)
-let convert =
+    converts it to a type
+    [(coefficient:float, (variable:string * power:int) option) list] *)
+let convert : polynome -> monome list =
   let rec aux sub = function
     | Add (a, b) -> aux sub a @ aux false b
     | Sub (a, b) -> aux sub a @ aux true b
@@ -17,8 +17,8 @@ let convert =
   in
   aux false
 
-(** [ast_to_lists (p1, p2)] takes a type (polynome * polynome) and calls
-    [convert ast] on each polynome to return a (monome list * monome list) to
+(** [ast_to_lists (p1, p2)] takes a type [(polynome * polynome)] and calls
+    [convert ast] on each polynome to return a [(monome list * monome list)] to
     facilitate manipulation *)
 let ast_to_lists ((p1, p2) : polynome * polynome) = (convert p1, convert p2)
 
@@ -47,11 +47,11 @@ let sqrt x =
 
 (** [solve e] takes both monome lists and does all necessary operations that
     lead to solution. Invert all monomes of the righthand side polynome and
-    concatenate to lefthand side one. Check for more than one variable, axit if
-    so. Create a Hashtable of (key:power, value:coefficient). Check for a degree
-    > 2, exit if so. Simplify list by combining same power monomes. Proceed to
-    calculate delta and pretty-print the reduced form along with polynomial
-    degree and solution(s). *)
+    concatenate to lefthand side one. Check for more than one variable, exit if
+    so. Create a Hashtable of [(key:power, value:coefficient)]. Check for a
+    degree > 2, exit if so. Simplify list by combining same power monomes.
+    Proceed to calculate delta and pretty-print the reduced form along with
+    polynomial degree and solution(s). *)
 let solve fmt (e : monome list * monome list) =
   (* Separate both polynomes of the equation left and right from '=' sign *)
   let left, right = e in
