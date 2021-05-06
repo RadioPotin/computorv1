@@ -155,64 +155,46 @@ let solve fmt (e : monome list * monome list) =
      * 2nd Degree equation
      *)
     let delta = (b *. b) -. (4. *. a *. c) in
+    let normalize fmt root =
+      Format.fprintf fmt "%g"
+        ( if Float.compare (-0.) root = 0 then
+          Float.abs root
+        else
+          root )
+    in
     match delta with
     | 0. ->
+      (* Delta is null, there is only one possible solution *)
       let solution = ~-.b /. (2. *. a) in
       Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
       Format.fprintf fmt "Polynomial degree: %d@." max_degree;
       Pp.deltap fmt delta;
-      Format.fprintf fmt "%g@."
-        ( if Float.compare (-0.) solution = 0 then
-          Float.abs solution
-        else
-          solution )
+      Format.fprintf fmt "%a@." normalize solution
+      (* Delta is positive, 2 solutions possible *)
     | delta when Float.compare 0. delta < 0 ->
       let solution1 = (~-.b -. sqrt delta) /. (2. *. a) in
       let solution2 = (~-.b +. sqrt delta) /. (2. *. a) in
       Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
       Format.fprintf fmt "Polynomial degree: %d@." max_degree;
       Pp.deltap fmt delta;
-      Format.fprintf fmt "%g@.%g@."
-        ( if Float.compare (-0.) solution1 = 0 then
-          Float.abs solution1
-        else
-          solution1 )
-        ( if Float.compare (-0.) solution2 = 0 then
-          Float.abs solution2
-        else
-          solution2 )
+      Format.fprintf fmt "%a@.%a@." normalize solution1 normalize solution2
+      (* Solutions are found in complex numbers *)
     | delta ->
-      Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
-      Format.fprintf fmt "Polynomial degree: %d@." max_degree;
-      Pp.deltap fmt delta;
       let reduce_zi fmt root =
-        if root = 1. then
+        if Float.compare (-0.) root = 0 then
+          normalize fmt root
+        else if Float.compare 1. root = 0 then
           Format.fprintf fmt ""
         else
           Format.fprintf fmt "%g" root
       in
+      Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
+      Format.fprintf fmt "Polynomial degree: %d@." max_degree;
+      Pp.deltap fmt delta;
       let root1 = ~-.b /. (2. *. a) in
       let root2 = sqrt ~-.delta /. (2. *. a) in
-      Format.fprintf fmt "%g - %ai@."
-        ( if Float.compare (-0.) root1 = 0 then
-          ~-.root1
-        else
-          root1 )
-        reduce_zi
-        ( if Float.compare (-0.) root2 = 0 then
-          Float.abs root2
-        else
-          root2 );
-      Format.fprintf fmt "%g + %ai@."
-        ( if Float.compare (-0.) root1 = 0 then
-          ~-.root1
-        else
-          root1 )
-        reduce_zi
-        ( if Float.compare (-0.) root2 = 0 then
-          Float.abs root2
-        else
-          root2 )
+      Format.fprintf fmt "%a - %ai@." normalize root1 reduce_zi root2;
+      Format.fprintf fmt "%a + %ai@." normalize root1 reduce_zi root2
   ) else
     (* Calculating x for resolution of
      * 1st or 0th Degree equation
@@ -221,19 +203,19 @@ let solve fmt (e : monome list * monome list) =
     | 0. -> (
       match c with
       (* Case 0 = 0
-        *)
+      *)
       | 0. ->
         Format.fprintf fmt "Reduced form: 0 = 0@.";
         Format.fprintf fmt "Polynomial degree: %d@." max_degree;
         Pp.deltap fmt 0.;
         Format.fprintf fmt "All real numbers are solutions.\n"
       (* Case 3 = 0
-        *)
+      *)
       | _c ->
         Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
         Format.fprintf fmt "Impossible.@." )
     (* Case x = -c/b
-    *)
+  *)
     | b ->
       let solution = ~-.c /. b in
       Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
