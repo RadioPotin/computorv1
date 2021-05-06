@@ -113,25 +113,25 @@ let deltap fmt delta =
   )
 
 let pow fmt n =
-  <span data-count="45">F</span>ormat.fprintf fmt "^%d" n
+  <span data-count="44">F</span>ormat.fprintf fmt "^%d" n
 
 let var fmt = function
   | <span data-count="2">N</span>one -&gt; ()
-  | <span data-count="45">S</span>ome (x, n) -&gt; Format.fprintf fmt " * %s%a" x pow n
+  | <span data-count="44">S</span>ome (x, n) -&gt; Format.fprintf fmt " * %s%a" x pow n
 
-let mono fmt (a, x) =
-  <span data-count="47">F</span>ormat.fprintf fmt "%g%a" a var x
+let mono fmt ((a, x):Ast.monome) =
+  <span data-count="46">F</span>ormat.fprintf fmt "%g%a" a var x
 
 let polyprint fmt (terms, variable) =
   <span data-count="40">l</span>et mk_var k =
-    <span data-count="47">i</span>f variable = "" then <span data-count="2">N</span>one
-    else <span data-count="45">S</span>ome (variable, k)
+    <span data-count="46">i</span>f variable = "" then <span data-count="2">N</span>one
+    else <span data-count="44">S</span>ome (variable, k)
   in
   match terms with
-  | <span data-count="17">[</span>] -&gt; Format.fprintf fmt "0"
-  | <span data-count="23">(</span>k, v)::p -&gt;
-    mono fmt (v, mk_va<span data-count="23">r</span> k);
-    <span data-count="23">L</span>ist.iter (fun (k, v) -&gt;
+  | <span data-count="18">[</span>] -&gt; Format.fprintf fmt "0"
+  | <span data-count="22">(</span>k, v)::p -&gt;
+    mono fmt (v, mk_va<span data-count="22">r</span> k);
+    <span data-count="22">L</span>ist.iter (fun (k, v) -&gt;
       <span data-count="24">F</span>ormat.fprintf fmt "%s%a" (if v &gt;= 0. then <span data-count="18">"</span> + " else <span data-count="6">"</span> - ") mono (Float.ab<span data-count="24">s</span> v, mk_va<span data-count="24">r</span> k)
     ) p
 
