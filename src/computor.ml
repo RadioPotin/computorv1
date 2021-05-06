@@ -1,6 +1,9 @@
+(** Main entry point to the Computor executable *)
+
 open Computor
 open Ast
 
+(** Displays the usage of computor executable *)
 let usage () =
   Format.eprintf "usage: %s <2nd degree equation>@." Sys.argv.(0);
   exit 1
