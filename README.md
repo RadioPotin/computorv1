@@ -14,7 +14,7 @@ to which you can feed a polynome to solve.
 ```
 dune runtest
 ```
-This will run all tests contained in the folder `ŧest`.
+This will run all tests contained in the folder `test`.
 
 # Usage
 
