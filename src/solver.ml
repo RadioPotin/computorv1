@@ -126,16 +126,8 @@ let solve fmt (e : monome list * monome list) =
   let filtered_terms = List.filter (fun x -> snd x <> 0.) sorted_terms in
   (* Find highest degree with non null coefficient *)
   let max_degree =
-    List.fold_left
-      (fun acc el ->
-        match el with
-        | 0, _n -> acc
-        | p1, _c1 ->
-          if acc > p1 then
-            acc
-          else
-            p1 )
-      0 filtered_terms
+    try fst (List.hd (List.rev filtered_terms)) with
+    | Failure _ -> 0
   in
   (* Raise an exception in case of degree > 2 *)
   if max_degree > 2 then begin
