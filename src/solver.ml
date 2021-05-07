@@ -180,9 +180,7 @@ let solve fmt (e : monome list * monome list) =
       (* Solutions are found in complex numbers *)
     | delta ->
       let reduce_zi fmt root =
-        if Float.compare (-0.) root = 0 then
-          normalize fmt root
-        else if Float.compare 1. root = 0 then
+        if Float.compare 1. root = 0 then
           Format.fprintf fmt ""
         else
           Format.fprintf fmt "%g" root
