@@ -6,7 +6,7 @@ open Ast
 }
 
 let linebreak = ['\n' '\r']
-let whitespace = [' ']
+let whitespace = [' ' '\t']
 let var_id = ['a'-'z' 'A'-'Z']+
     let int_id = ['0'-'9']+
         let float_id  = ['0'-'9']+['.']['0'-'9']+

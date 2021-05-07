@@ -18,3 +18,5 @@ let () =
   with
   | Big_degree -> exit 1
   | Too_many_variables -> exit 1
+  | Syntax_error _ -> exit 1
+  | Parser.Error -> exit 1
