@@ -1,4 +1,5 @@
 open Computor
+open Ast
 
 let eq_parse s = Parser.equation Lexer.token (Lexing.from_string s)
 
@@ -69,4 +70,38 @@ let test_parser () =
   (*
    * TEST 27
    *)
-  handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "-x^2 + 1 = 0"
+  handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "-x^2 + 1 = 0";
+
+  (*
+   * TEST 28
+   *)
+  handle_test
+    [ (2, -1.); (0, 1.); (1, -4.); (2, 4.) ]
+    [ (0, 0.) ] "-x^2 + 1 - 4X - -4X^2 = 0";
+
+  (*
+   * TEST 29
+   *)
+  handle_test
+    [ (2, -1.); (0, 1.); (1, -4.); (3, 4.) ]
+    [ (0, 0.) ] "-1 * x^2 + 1 - 4* X + 4X^3 = 0";
+
+  (*
+   * TEST 30
+   *)
+  handle_test
+    [ (2, -1.); (0, 1.); (1, -4.); (3, 4.) ]
+    [ (0, 0.) ] "-1*x^2+1-4*X+4X^3= 0";
+
+  (*
+   * Test 31
+   *)
+  try handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "-x^2 . + 1 = 0" with
+  | Syntax_error _ -> (
+    ();
+
+    (*
+     * Test 31
+     *)
+    try handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "-x^2 + 1" with
+    | Parser.Error -> () )

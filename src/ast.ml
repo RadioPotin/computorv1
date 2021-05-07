@@ -1,5 +1,8 @@
 (** This file will contain all custom types for computorv1 *)
 
+(** Exception raised with unknown syntaxes *)
+exception Syntax_error of string
+
 (** Exception raised when equation has a monome with a degree > 2, this obeys
     the specifications of the project *)
 exception Big_degree

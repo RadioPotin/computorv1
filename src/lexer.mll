@@ -2,6 +2,7 @@
 
 {
 open Parser
+open Ast
 }
 
 let linebreak = ['\n' '\r']
@@ -21,4 +22,5 @@ let var_id = ['a'-'z' 'A'-'Z']+
                       | var_id as id {VAR id}
                       | int_id as id {INT (int_of_string id)}
                       | float_id as id {FLOAT (float_of_string id)}
+                      | _ { raise (Syntax_error ("Unexpected char: " ^ Lexing.lexeme lexbuf)) }
                       | eof { EOF }
