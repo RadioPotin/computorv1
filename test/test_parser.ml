@@ -113,4 +113,13 @@ let test_parser () =
   (*
    * Test 33
    *)
+  begin
+    match handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "" with
+    | exception Parser.Error -> ()
+    | () -> assert false
+  end;
+
+  (*
+   * Test 34
+   *)
   handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "-x^2 + 1\n=\t 0\r"

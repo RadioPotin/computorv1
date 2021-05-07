@@ -18,13 +18,13 @@ let handle_test_pp expected (pl, pr) var =
 let test_pp () =
   Format.printf "---- Now testing   pp   ----@.";
   (*
-   * TEST 33
+   * TEST 35
    *)
   Format.printf "Test %d: 0 = 0@." (counter ());
   handle_test_pp "0 = 0\n" ([ (0, 0.) ], [ (0, 0.) ]) "";
 
   (*
-   * TEST 34
+   * TEST 36
    *)
   Format.printf "Test %d: 5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0@."
     (counter ());
