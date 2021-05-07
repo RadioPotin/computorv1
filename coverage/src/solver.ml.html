@@ -14,10 +14,9 @@
           <span class="dirname">src/</span>solver.ml
         </a>
       </h1>
-      <h2>99.19%</h2>
+      <h2>100.00%</h2>
     </div>
     <div id="navbar">
-      <span class="unvisited" style="bottom:17.49%"></span>
     </div>
     <div id="report">
       <div id="lines-layer">
@@ -205,46 +204,44 @@
 <a id="L181"></a><span class="visited"> </span>
 <a id="L182"></a><span > </span>
 <a id="L183"></a><span class="visited"> </span>
-<a id="L184"></a><span class="unvisited"> </span>
-<a id="L185"></a><span class="visited"> </span>
+<a id="L184"></a><span class="visited"> </span>
+<a id="L185"></a><span > </span>
 <a id="L186"></a><span class="visited"> </span>
 <a id="L187"></a><span > </span>
-<a id="L188"></a><span class="visited"> </span>
-<a id="L189"></a><span > </span>
-<a id="L190"></a><span > </span>
+<a id="L188"></a><span > </span>
+<a id="L189"></a><span class="visited"> </span>
+<a id="L190"></a><span class="visited"> </span>
 <a id="L191"></a><span class="visited"> </span>
 <a id="L192"></a><span class="visited"> </span>
-<a id="L193"></a><span class="visited"> </span>
+<a id="L193"></a><span > </span>
 <a id="L194"></a><span class="visited"> </span>
 <a id="L195"></a><span > </span>
-<a id="L196"></a><span class="visited"> </span>
+<a id="L196"></a><span > </span>
 <a id="L197"></a><span > </span>
 <a id="L198"></a><span > </span>
-<a id="L199"></a><span > </span>
-<a id="L200"></a><span > </span>
-<a id="L201"></a><span class="visited"> </span>
-<a id="L202"></a><span class="visited"> </span>
+<a id="L199"></a><span class="visited"> </span>
+<a id="L200"></a><span class="visited"> </span>
+<a id="L201"></a><span > </span>
+<a id="L202"></a><span > </span>
 <a id="L203"></a><span > </span>
-<a id="L204"></a><span > </span>
+<a id="L204"></a><span class="visited"> </span>
 <a id="L205"></a><span > </span>
 <a id="L206"></a><span class="visited"> </span>
-<a id="L207"></a><span > </span>
+<a id="L207"></a><span class="visited"> </span>
 <a id="L208"></a><span class="visited"> </span>
-<a id="L209"></a><span class="visited"> </span>
-<a id="L210"></a><span class="visited"> </span>
-<a id="L211"></a><span > </span>
+<a id="L209"></a><span > </span>
+<a id="L210"></a><span > </span>
+<a id="L211"></a><span class="visited"> </span>
 <a id="L212"></a><span > </span>
 <a id="L213"></a><span class="visited"> </span>
 <a id="L214"></a><span > </span>
-<a id="L215"></a><span class="visited"> </span>
-<a id="L216"></a><span > </span>
-<a id="L217"></a><span > </span>
-<a id="L218"></a><span class="visited"> </span>
+<a id="L215"></a><span > </span>
+<a id="L216"></a><span class="visited"> </span>
+<a id="L217"></a><span class="visited"> </span>
+<a id="L218"></a><span > </span>
 <a id="L219"></a><span class="visited"> </span>
-<a id="L220"></a><span > </span>
+<a id="L220"></a><span class="visited"> </span>
 <a id="L221"></a><span class="visited"> </span>
-<a id="L222"></a><span class="visited"> </span>
-<a id="L223"></a><span class="visited"> </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -470,8 +467,6 @@
 <a href="#L219">219</a>
 <a href="#L220">220</a>
 <a href="#L221">221</a>
-<a href="#L222">222</a>
-<a href="#L223">223</a>
 </pre>
 <pre><code class="ocaml">(** This module will contain code for 2nd Degree equation resolution *)
 
@@ -655,9 +650,7 @@ let solve fmt (e : monome list * monome list) =
       (* Solutions are found in complex numbers *)
     | <span data-count="3">d</span>elta -&gt;
       let reduce_zi fmt root =
-        <span data-count="6">i</span>f Float.compar<span data-count="6">e</span> (-0.) root = 0 then
-          <span data-count="0">n</span>ormalize fmt root
-        else <span data-count="6">i</span>f Float.compar<span data-count="6">e</span> 1. root = 0 then
+        <span data-count="6">i</span>f Float.compar<span data-count="6">e</span> 1. root = 0 then
           <span data-count="2">F</span>ormat.fprintf fmt ""
         else
           <span data-count="4">F</span>ormat.fprintf fmt "%g" root
