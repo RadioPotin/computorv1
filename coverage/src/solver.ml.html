@@ -499,20 +499,20 @@ open Ast
     [(coefficient:float, (variable:string * power:int) option) list] *)
 let convert : polynome -&gt; monome list =
   let rec aux sub = function
-    | <span data-count="27">A</span>dd (a, b) -&gt; au<span data-count="27">x</span> sub a @ au<span data-count="27">x</span> false b
-    | <span data-count="16">S</span>ub (a, b) -&gt; au<span data-count="16">x</span> sub a @ au<span data-count="16">x</span> true b
-    | <span data-count="100">M</span>on (x, v) -&gt;
+    | <span data-count="32">A</span>dd (a, b) -&gt; au<span data-count="32">x</span> sub a @ au<span data-count="32">x</span> false b
+    | <span data-count="20">S</span>ub (a, b) -&gt; au<span data-count="20">x</span> sub a @ au<span data-count="20">x</span> true b
+    | <span data-count="115">M</span>on (x, v) -&gt;
       if sub then
-        <span data-count="16">[</span> (~-<span data-count="16">.</span>x, v) ]
+        <span data-count="20">[</span> (~-<span data-count="20">.</span>x, v) ]
       else
-        <span data-count="84">[</span> (x, v) ]
+        <span data-count="95">[</span> (x, v) ]
   in
   au<span data-count="1">x</span> false
 
 (** [ast_to_lists (p1, p2)] takes a type [(polynome * polynome)] and calls
     [convert ast] on each polynome to return a [(monome list * monome list)] to
     facilitate manipulation *)
-let ast_to_lists ((p1, p2) : polynome * polynome) = <span data-count="28">(</span>conver<span data-count="28">t</span> p1, conver<span data-count="28">t</span> p2)
+let ast_to_lists ((p1, p2) : polynome * polynome) = <span data-count="31">(</span>conver<span data-count="31">t</span> p1, conver<span data-count="31">t</span> p2)
 
 (** [sqrt x] is a reimplementation of classic sqrt function, it's presence is
     justified by the specifications of the ComputorV1 42 subject *)

@@ -43,6 +43,9 @@
 <a id="L20"></a><span > </span>
 <a id="L21"></a><span > </span>
 <a id="L22"></a><span > </span>
+<a id="L23"></a><span > </span>
+<a id="L24"></a><span > </span>
+<a id="L25"></a><span > </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -69,8 +72,14 @@
 <a href="#L20">20</a>
 <a href="#L21">21</a>
 <a href="#L22">22</a>
+<a href="#L23">23</a>
+<a href="#L24">24</a>
+<a href="#L25">25</a>
 </pre>
 <pre><code class="ocaml">(** This file will contain all custom types for computorv1 *)
+
+(** Exception raised with unknown syntaxes *)
+exception Syntax_error of string
 
 (** Exception raised when equation has a monome with a degree &gt; 2, this obeys
     the specifications of the project *)
