@@ -14,7 +14,7 @@
           <span class="dirname">src/</span>parser.ml
         </a>
       </h1>
-      <h2>50.64%</h2>
+      <h2>51.49%</h2>
     </div>
     <div id="navbar">
       <span class="unvisited" style="top:5.95%"></span>
@@ -113,8 +113,6 @@
       <span class="unvisited" style="bottom:4.76%"></span>
       <span class="unvisited" style="bottom:1.73%"></span>
       <span class="unvisited" style="bottom:1.62%"></span>
-      <span class="unvisited" style="bottom:0.87%"></span>
-      <span class="unvisited" style="bottom:0.76%"></span>
       <span class="unvisited" style="bottom:0.54%"></span>
     </div>
     <div id="report">
@@ -1035,8 +1033,8 @@
 <a id="L913"></a><span class="visited"> </span>
 <a id="L914"></a><span class="visited"> </span>
 <a id="L915"></a><span class="visited"> </span>
-<a id="L916"></a><span class="unvisited"> </span>
-<a id="L917"></a><span class="unvisited"> </span>
+<a id="L916"></a><span class="visited"> </span>
+<a id="L917"></a><span class="visited"> </span>
 <a id="L918"></a><span > </span>
 <a id="L919"></a><span class="unvisited"> </span>
 <a id="L920"></a><span > </span>
@@ -2535,7 +2533,7 @@ and _menhir_run9 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; 'ttv_re
 
 and _menhir_errorcase : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; 'ttv_return =
   fun _menhir_env _menhir_stack _menhir_s -&gt;
-    <span data-count="1">m</span>atch _menhir_s with
+    <span data-count="2">m</span>atch _menhir_s with
     | <span data-count="0">M</span>enhirState34 -&gt;
         let _menhir_stack = Obj.magic _menhir_stack in
         let (_menhir_stack, _menhir_s, _) = _menhir_stack in
@@ -2564,7 +2562,7 @@ and _menhir_errorcase : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; 't
         let _menhir_stack = Obj.magic _menhir_stack in
         let ((_menhir_stack, _menhir_s), _) = _menhir_stack in
         _menhir_errorcase _menhir_env (Obj.magic _menhir_stack) _menhir_s
-    | <span data-count="1">M</span>enhirState0 -&gt;
+    | <span data-count="2">M</span>enhirState0 -&gt;
         let _menhir_stack = Obj.magic _menhir_stack in
         raise _eRR
 
@@ -2858,10 +2856,10 @@ and _menhir_run24 : _menhir_env -&gt; 'ttv_tail -&gt; _menhir_state -&gt; (
 
 and _menhir_discard : _menhir_env -&gt; _menhir_env =
   fun _menhir_env -&gt;
-    <span data-count="485">l</span>et lexer = _menhir_env._menhir_lexer in
+    <span data-count="486">l</span>et lexer = _menhir_env._menhir_lexer in
     let lexbuf = _menhir_env._menhir_lexbuf in
     let _tok = lexer lexbuf in
-    <span data-count="484">{</span>
+    <span data-count="485">{</span>
       _menhir_lexer = lexer;
       _menhir_lexbuf = lexbuf;
       _menhir_token = _tok;
@@ -2870,7 +2868,7 @@ and _menhir_discard : _menhir_env -&gt; _menhir_env =
 
 and equation : (Lexing.lexbuf -&gt; token) -&gt; Lexing.lexbuf -&gt; (Ast.equation) =
   fun lexer lexbuf -&gt;
-    <span data-count="34">l</span>et _menhir_env = {
+    <span data-count="35">l</span>et _menhir_env = {
       _menhir_lexer = lexer;
       _menhir_lexbuf = lexbuf;
       _menhir_token = Obj.magic ();
@@ -2878,7 +2876,7 @@ and equation : (Lexing.lexbuf -&gt; token) -&gt; Lexing.lexbuf -&gt; (Ast.equati
     } in
     Obj.magic (let _menhir_stack = ((), _menhir_env._menhir_lexbuf.Lexing.lex_curr_p) in
     let _menhir_env = _menhir_discard _menhir_env in
-    <span data-count="34">l</span>et _tok = _menhir_env._menhir_token in
+    <span data-count="35">l</span>et _tok = _menhir_env._menhir_token in
     match _tok with
     | <span data-count="0">F</span>LOAT _v -&gt;
         _menhir_run2<span data-count="0">4</span> _menhir_env (Obj.magic _menhir_stack) MenhirState0 _v
@@ -2888,8 +2886,8 @@ and equation : (Lexing.lexbuf -&gt; token) -&gt; Lexing.lexbuf -&gt; (Ast.equati
         _menhir_run<span data-count="12">4</span> _menhir_env (Obj.magic _menhir_stack) MenhirState0
     | <span data-count="3">V</span>AR _v -&gt;
         _menhir_run<span data-count="3">1</span> _menhir_env (Obj.magic _menhir_stack) MenhirState0 _v
-    | <span data-count="0">_</span> -&gt;
-        assert <span data-count="0">(</span>not _menhir_env._menhir_error);
+    | <span data-count="1">_</span> -&gt;
+        assert <span data-count="1">(</span>not _menhir_env._menhir_error);
         _menhir_env._menhir_error &lt;- true;
         _menhir_errorcas<span data-count="0">e</span> _menhir_env (Obj.magic _menhir_stack) MenhirState0)
 
