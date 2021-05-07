@@ -1,5 +1,4 @@
 open Computor
-open Ast
 
 let eq_parse s = Parser.equation Lexer.token (Lexing.from_string s)
 
@@ -96,12 +95,15 @@ let test_parser () =
   (*
    * Test 31
    *)
-  try handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "-x^2 . + 1 = 0" with
-  | Syntax_error _ -> (
-    ();
+  begin
+    match handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "-x^2 . + 1 = 0" with
+    | exception Ast.Syntax_error _ -> ()
+    | () -> assert false
+  end;
 
-    (*
-     * Test 31
-     *)
-    try handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "-x^2 + 1" with
-    | Parser.Error -> () )
+  (*
+   * Test 32
+   *)
+  match handle_test [ (2, -1.); (0, 1.) ] [ (0, 0.) ] "-x^2 + 1" with
+  | exception Parser.Error -> ()
+  | () -> assert false
