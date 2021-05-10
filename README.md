@@ -19,7 +19,7 @@ This will run all tests contained in the folder `test`.
 # Usage
 
 ```
-./_build/default/src/computor.exe <equation>
+dune exec -- src/computor.exe <equation>
 ```
 
 `<equation>` being a string that defines a polynome of degree inferior or equal to 2.
@@ -49,3 +49,5 @@ Variable `n` stands for the exponent part of the term.
 `x`
 
 `a`
+
+### Details [Here](https://radiopotin.github.io/computorv1/)
