@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
   <meta name="description" content="A web interface for ComputorV1 2nd degree equation solver.">
-  <meta name="keywords" content="computor, computorv1, executable, 42, ocaml, lambda, functionnal, programming">
+  <meta name="keywords" content="computor, computorv1, equation, 2nd degree, second degree, executable, 42, ocaml, lambda, functionnal, programming">
   <meta name="author" content="Dario Pinto (RadioPotin)">
   <meta charset="utf-8">
   <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="script.js"></script>
     <title>
       ComputorV1 Web interface
     </title>
-
   </head>
   <body>
     <h1> ComputorV1 </h1>
-    <textarea>4x^2 + 3x - 7 = 45 - 34x^2 + 45x</textarea>
-    <button type="button">Solve</button>
-    <blockquote>Computing...</blockquote>
+    <textarea id="textbox">4x^2 + 3x - 7 = 45 - 34x^2 + 45x</textarea>
+    <button type="button" id="butn">Solve</button>
+    <blockquote id="output">Result will appear here.</blockquote>
   </body>
 </html>
