@@ -11,9 +11,9 @@ const text = document.getElementById("textbox");
 if (!text) {
   throw "invalid textbox";
 }
-if (!(text instanceof HTMLInputElement))
+if (!(text instanceof HTMLTextAreaElement))
 {
-  throw "textbox not HTMLInputElement";
+  throw "textbox not HTMLTextAreaElement";
 }
 
 const result = document.getElementById("output");
