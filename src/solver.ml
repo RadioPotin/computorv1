@@ -131,7 +131,7 @@ let solve fmt (e : monome list * monome list) =
   in
   (* Raise an exception in case of degree > 2 *)
   if max_degree > 2 then begin
-    Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, [], var);
+    Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
     Format.fprintf fmt "Polynomial degree: %d@." max_degree;
     Format.fprintf fmt
       "The polynomial degree is strictly greater than 2, I can't solve.@.";
