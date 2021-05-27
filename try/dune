@@ -1,0 +1,10 @@
+(executable
+ (name trycomputorv1)
+ (libraries js_of_ocaml computor)
+ (modes js)
+ (preprocess
+  (pps js_of_ocaml-ppx)))
+
+(alias
+ (name try)
+ (deps trycomputorv1.bc.js style.css index.html))

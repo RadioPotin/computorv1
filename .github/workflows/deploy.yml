@@ -30,7 +30,7 @@ jobs:
           mv _build/default/_doc/_html doc/api
       - name: try
         run: |
-          mv try doc/try
+          mv _build/default/try doc/try
       - name: coverage
         run: |
           opam exec -- dune runtest --instrument-with bisect_ppx
