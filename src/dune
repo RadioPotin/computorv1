@@ -1,6 +1,6 @@
 (library
  (public_name computor)
- (modules ast lexer parser pp solver)
+ (modules ast lexer parser pp solver try_utils)
  (instrumentation
   (backend bisect_ppx)))
 
