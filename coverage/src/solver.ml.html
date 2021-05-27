@@ -601,7 +601,7 @@ let solve fmt (e : monome list * monome list) =
   in
   (* Raise an exception in case of degree &gt; 2 *)
   if max_degree &gt; 2 then <span data-count="1">b</span>egin
-    Format.fprintf fmt "Reduced form: %a" Pp.equ (filtered_terms, [], var);
+    Format.fprintf fmt "Reduced form: %a@." Pp.equ (filtered_terms, [], var);
     <span data-count="1">F</span>ormat.fprintf fmt "Polynomial degree: %d@." max_degree;
     <span data-count="1">F</span>ormat.fprintf fmt
       "The polynomial degree is strictly greater than 2, I can't solve.@.";
