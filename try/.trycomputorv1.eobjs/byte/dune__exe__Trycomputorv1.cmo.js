@@ -2,7 +2,8 @@
    {"use strict";
     var
      runtime=joo_global_object.jsoo_runtime,
-     caml_string_of_jsbytes=runtime.caml_string_of_jsbytes;
+     caml_string_of_jsbytes=runtime.caml_string_of_jsbytes,
+     caml_wrap_exception=runtime.caml_wrap_exception;
     function caml_call1(f,a0)
      {return f.length == 1?f(a0):runtime.caml_call_gen(f,[a0])}
     function caml_call2(f,a0,a1)
@@ -15,20 +16,38 @@
               :runtime.caml_call_gen(f,[a0,a1,a2,a3])}
     var
      global_data=runtime.caml_get_global_data(),
+     cst_Highest_degree_is_superior=
+      caml_string_of_jsbytes
+       ("Highest degree is superior to 2, please give a second degree equation."),
+     cst_There_are_more_than_one_va=
+      caml_string_of_jsbytes
+       ("There are more than one variable in this equation, please give only one."),
+     cst_There_is_a_syntax_error_in=
+      caml_string_of_jsbytes("There is a syntax error in this input."),
+     cst_There_is_an_unknown_token_=
+      caml_string_of_jsbytes("There is an unknown token in this input."),
      cst_Invalid_button=caml_string_of_jsbytes("Invalid button"),
      cst_Invalid_blockquote=caml_string_of_jsbytes("Invalid blockquote"),
      cst_Invalid_textarea=caml_string_of_jsbytes("Invalid textarea"),
+     Stdlib_format=global_data.Stdlib__format,
+     Stdlib_buffer=global_data.Stdlib__buffer,
+     Stdlib_string=global_data.Stdlib__string,
      Stdlib_lexing=global_data.Stdlib__lexing,
      Computor_Lexer=global_data.Computor__Lexer,
      Computor_Parser=global_data.Computor__Parser,
      Computor_Solver=global_data.Computor__Solver,
-     Stdlib_format=global_data.Stdlib__format,
+     Computor_Ast=global_data.Computor__Ast,
      Assert_failure=global_data.Assert_failure,
      Js_of_ocaml_Dom_html=global_data.Js_of_ocaml__Dom_html,
      Js_of_ocaml_Js=global_data.Js_of_ocaml__Js,
+     _h_=[0,[0,0],caml_string_of_jsbytes("%c")],
+     _g_=
+      [0,
+       [11,caml_string_of_jsbytes("\n<br />"),0],
+       caml_string_of_jsbytes("\n<br />")],
      _f_=[0,[15,0],caml_string_of_jsbytes("%a")],
      _a_=[0,[2,0,[17,4,0]],caml_string_of_jsbytes("%s@.")],
-     _b_=[0,caml_string_of_jsbytes("try/trycomputorv1.ml"),6,2];
+     _b_=[0,caml_string_of_jsbytes("try/trycomputorv1.ml"),7,2];
     function error(s)
      {caml_call2(Stdlib_format[128],_a_,s);throw [0,Assert_failure,_b_]}
     var t2=Js_of_ocaml_Dom_html[8].document,text=t2.getElementById("textbox");
@@ -49,25 +68,47 @@
      button$0=
       caml_call3(Js_of_ocaml_Js[49],button,Js_of_ocaml_Dom_html[117][9],_e_);
     function result(s)
+     {try
+       {var
+         _m_=runtime.caml_string_of_jsstring(s),
+         _n_=caml_call2(Stdlib_lexing[3],0,_m_),
+         ast=caml_call2(Computor_Parser[2],Computor_Lexer[2],_n_),
+         polynomes=caml_call1(Computor_Solver[2],ast),
+         _o_=caml_call3(Stdlib_format[130],_f_,Computor_Solver[4],polynomes);
+        return _o_}
+      catch(_p_)
+       {_p_ = caml_wrap_exception(_p_);
+        if(_p_ === Computor_Ast[2])return cst_Highest_degree_is_superior;
+        if(_p_ === Computor_Ast[3])return cst_There_are_more_than_one_va;
+        if(_p_[1] === Computor_Ast[1])return cst_There_is_a_syntax_error_in;
+        if(_p_ === Computor_Parser[1])return cst_There_is_an_unknown_token_;
+        throw _p_}}
+    function convert_newlines(s)
      {var
-       _j_=runtime.caml_string_of_jsstring(s),
-       _k_=caml_call2(Stdlib_lexing[3],0,_j_),
-       ast=caml_call2(Computor_Parser[2],Computor_Lexer[2],_k_),
-       polynomes=caml_call1(Computor_Solver[2],ast);
-      return caml_call3(Stdlib_format[130],_f_,Computor_Solver[4],polynomes)}
-    var _g_=! ! 0;
-    function _h_(param)
+       buff=caml_call1(Stdlib_buffer[1],512),
+       fmt=caml_call1(Stdlib_format[109],buff);
+      function _l_(c)
+       {return 10 === c
+                ?caml_call2(Stdlib_format[126],fmt,_g_)
+                :caml_call3(Stdlib_format[126],fmt,_h_,c)}
+      caml_call2(Stdlib_string[19],_l_,s);
+      return caml_call1(Stdlib_buffer[2],buff)}
+    var _i_=! ! 0;
+    function _j_(param)
      {blockquote.innerHTML
       =
-      runtime.caml_jsstring_of_string(result(textarea.value));
+      runtime.caml_jsstring_of_string
+       (convert_newlines(result(textarea.value)));
       return ! ! 1}
-    var _i_=caml_call1(Js_of_ocaml_Dom_html[10],_h_);
+    var _k_=caml_call1(Js_of_ocaml_Dom_html[10],_j_);
     caml_call4
-     (Js_of_ocaml_Dom_html[17],button$0,Js_of_ocaml_Dom_html[15][1],_i_,_g_);
-    var Dune_exe_Trycomputorv1=[0,error,textarea,blockquote,button$0,result];
+     (Js_of_ocaml_Dom_html[17],button$0,Js_of_ocaml_Dom_html[15][1],_k_,_i_);
+    var
+     Dune_exe_Trycomputorv1=
+      [0,error,textarea,blockquote,button$0,result,convert_newlines];
     runtime.caml_register_global
-     (25,Dune_exe_Trycomputorv1,"Dune__exe__Trycomputorv1");
+     (34,Dune_exe_Trycomputorv1,"Dune__exe__Trycomputorv1");
     return}
   (function(){return this}()));
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLjAsImZpbGUiOiIudHJ5Y29tcHV0b3J2MS5lb2Jqcy9ieXRlL2R1bmVfX2V4ZV9fVHJ5Y29tcHV0b3J2MS5jbW8uanMiLCJzb3VyY2VSb290IjoiIiwibmFtZXMiOlsiZXJyb3IiLCJzIiwidGV4dCIsInRleHRhcmVhIiwib3V0cHV0IiwiYmxvY2txdW90ZSIsImJ1dHRvbiIsImJ1dHRvbiQwIiwicmVzdWx0IiwiYXN0IiwicG9seW5vbWVzIl0sInNvdXJjZXMiOlsiL2hvbWUvcnVubmVyL3dvcmsvY29tcHV0b3J2MS9jb21wdXRvcnYxL19idWlsZC9kZWZhdWx0L3RyeS90cnljb21wdXRvcnYxLm1sIl0sIm1hcHBpbmdzIjoiOztJOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzthQUdJQSxNQUFNQztNQUNSLGtDQURRQSxHQUNSLDRCQUNZOzRDQUdSQzt3QkFFQSxrQ0FBd0I7SUFENUI7O29DQURJQTs7S0FLQUU7d0JBSUEsb0NBQTBCO0lBRDlCOztvQ0FISUE7O0tBT0FFO3dCQUVBLGdDQUFzQjtJQUQxQjtLQUZFQztNQUVGLDhCQURJRDtJQUNKLFNBR0VFLE9BQU9QO01BQ2lEOzJDQURqREE7T0FDNkI7T0FBNUI7T0FDTSx3Q0FEWlE7TUFDWSw0REFBWkMsVUFDdUM7SUFRdkM7O007O01BRmtFLGdDQUF6QixPQTFCM0NQO01BMkJPLFlBQVk7SUFGakI7SUFERjsrQkFaQUk7SUFhRSw4QkE3QkZQLE1BSUFHLFNBS0FFLFdBT0FFLFNBS0FDO0lBT0E7O1UiLCJzb3VyY2VzQ29udGVudCI6WyJvcGVuIEpzX29mX29jYW1sXG5vcGVuIENvbXB1dG9yXG5cbmxldCBlcnJvciBzID1cbiAgRm9ybWF0LmVwcmludGYgXCIlc0AuXCIgcztcbiAgYXNzZXJ0IGZhbHNlXG5cbmxldCB0ZXh0YXJlYSA9XG4gIGxldCB0ZXh0ID0gRG9tX2h0bWwud2luZG93IyMuZG9jdW1lbnQjI2dldEVsZW1lbnRCeUlkIChKcy5zdHJpbmcgXCJ0ZXh0Ym94XCIpIGluXG4gIEpzLmNvZXJjZV9vcHQgdGV4dCBEb21faHRtbC5Db2VyY2VUby50ZXh0YXJlYSAoZnVuIF8gLT5cbiAgICAgIGVycm9yIFwiSW52YWxpZCB0ZXh0YXJlYVwiIClcblxubGV0IGJsb2NrcXVvdGUgPVxuICBsZXQgb3V0cHV0ID1cbiAgICBEb21faHRtbC53aW5kb3cjIy5kb2N1bWVudCMjZ2V0RWxlbWVudEJ5SWQgKEpzLnN0cmluZyBcIm91dHB1dFwiKVxuICBpblxuICBKcy5jb2VyY2Vfb3B0IG91dHB1dCBEb21faHRtbC5Db2VyY2VUby5ibG9ja3F1b3RlIChmdW4gXyAtPlxuICAgICAgZXJyb3IgXCJJbnZhbGlkIGJsb2NrcXVvdGVcIiApXG5cbmxldCBidXR0b24gPVxuICBsZXQgYnV0dG9uID0gRG9tX2h0bWwud2luZG93IyMuZG9jdW1lbnQjI2dldEVsZW1lbnRCeUlkIChKcy5zdHJpbmcgXCJidXRuXCIpIGluXG4gIEpzLmNvZXJjZV9vcHQgYnV0dG9uIERvbV9odG1sLkNvZXJjZVRvLmJ1dHRvbiAoZnVuIF8gLT5cbiAgICAgIGVycm9yIFwiSW52YWxpZCBidXR0b25cIiApXG5cbmxldCByZXN1bHQgcyA9XG4gIGxldCBhc3QgPSBQYXJzZXIuZXF1YXRpb24gTGV4ZXIudG9rZW4gKExleGluZy5mcm9tX3N0cmluZyAoSnMudG9fc3RyaW5nIHMpKSBpblxuICBsZXQgcG9seW5vbWVzID0gU29sdmVyLmFzdF90b19saXN0cyBhc3QgaW5cbiAgRm9ybWF0LmFzcHJpbnRmIFwiJWFcIiBTb2x2ZXIuc29sdmUgcG9seW5vbWVzXG5cbmxldCAoKSA9XG4gIGxldCBfaWQgPVxuICAgIERvbV9odG1sLmFkZEV2ZW50TGlzdGVuZXIgYnV0dG9uIERvbV9odG1sLkV2ZW50LmNsaWNrXG4gICAgICAoRG9tX2h0bWwuaGFuZGxlciAoZnVuIF8gLT5cbiAgICAgICAgICAgYmxvY2txdW90ZSMjLmlubmVySFRNTCA6PSBKcy5zdHJpbmcgKHJlc3VsdCB0ZXh0YXJlYSMjLnZhbHVlKTtcbiAgICAgICAgICAgSnMuYm9vbCB0cnVlICkgKVxuICAgICAgKEpzLmJvb2wgZmFsc2UpXG4gIGluXG4gICgpXG4iXX0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLjAsImZpbGUiOiIudHJ5Y29tcHV0b3J2MS5lb2Jqcy9ieXRlL2R1bmVfX2V4ZV9fVHJ5Y29tcHV0b3J2MS5jbW8uanMiLCJzb3VyY2VSb290IjoiIiwibmFtZXMiOlsiZXJyb3IiLCJzIiwidGV4dCIsInRleHRhcmVhIiwib3V0cHV0IiwiYmxvY2txdW90ZSIsImJ1dHRvbiIsImJ1dHRvbiQwIiwicmVzdWx0IiwiYXN0IiwicG9seW5vbWVzIiwiY29udmVydF9uZXdsaW5lcyIsImJ1ZmYiLCJmbXQiLCJjIl0sInNvdXJjZXMiOlsiL2hvbWUvcnVubmVyL3dvcmsvY29tcHV0b3J2MS9jb21wdXRvcnYxL19idWlsZC9kZWZhdWx0L3RyeS90cnljb21wdXRvcnYxLm1sIl0sIm1hcHBpbmdzIjoiOztJOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7YUFJSUEsTUFBTUM7TUFDUixrQ0FEUUEsR0FDUiw0QkFDWTs0Q0FHUkM7d0JBRUEsa0NBQXdCO0lBRDVCOztvQ0FESUE7O0tBS0FFO3dCQUlBLG9DQUEwQjtJQUQ5Qjs7b0NBSElBOztLQU9BRTt3QkFFQSxnQ0FBc0I7SUFEMUI7S0FGRUM7TUFFRiw4QkFESUQ7SUFDSixTQUdFRSxPQUFPUDtNQUNUO1FBRW9EOzZDQUgzQ0E7U0FHdUI7U0FBNUI7U0FFYyx3Q0FIWlE7U0FJSix5REFESUM7Ozs7bUNBSUo7bUNBRUE7c0NBQ2tCO3NDQUNGO1FBZmQsVUFld0Q7SUFoQjVELFNBa0JFQyxpQkFBaUJWO01BQ1I7O09BQ0Qsa0NBRE5XO01BQ00sYUFJSkU7UUFGSixjQUVJQTtpQkFEUSw4QkFIVkQ7aUJBSU8sOEJBSlBBLFFBSUVDLEVBQWdDO01BSHRDLGlDQUhtQmI7TUFHbkIsbUNBRklXLEtBT2dCO0lBU2hCOztNOztNQUY2RDtRQUE1QyxpQkFBa0IsT0EvQ3JDVDtNQWdETyxZQUFZO0lBSGpCO0lBREY7K0JBaENBSTtJQWlDRTs7U0FqREZQLE1BSUFHLFNBS0FFLFdBT0FFLFNBS0FDLE9BZUFHO0lBWUE7O1UiLCJzb3VyY2VzQ29udGVudCI6WyJvcGVuIEpzX29mX29jYW1sXG5vcGVuIENvbXB1dG9yXG5vcGVuIEFzdFxuXG5sZXQgZXJyb3IgcyA9XG4gIEZvcm1hdC5lcHJpbnRmIFwiJXNALlwiIHM7XG4gIGFzc2VydCBmYWxzZVxuXG5sZXQgdGV4dGFyZWEgPVxuICBsZXQgdGV4dCA9IERvbV9odG1sLndpbmRvdyMjLmRvY3VtZW50IyNnZXRFbGVtZW50QnlJZCAoSnMuc3RyaW5nIFwidGV4dGJveFwiKSBpblxuICBKcy5jb2VyY2Vfb3B0IHRleHQgRG9tX2h0bWwuQ29lcmNlVG8udGV4dGFyZWEgKGZ1biBfIC0+XG4gICAgICBlcnJvciBcIkludmFsaWQgdGV4dGFyZWFcIiApXG5cbmxldCBibG9ja3F1b3RlID1cbiAgbGV0IG91dHB1dCA9XG4gICAgRG9tX2h0bWwud2luZG93IyMuZG9jdW1lbnQjI2dldEVsZW1lbnRCeUlkIChKcy5zdHJpbmcgXCJvdXRwdXRcIilcbiAgaW5cbiAgSnMuY29lcmNlX29wdCBvdXRwdXQgRG9tX2h0bWwuQ29lcmNlVG8uYmxvY2txdW90ZSAoZnVuIF8gLT5cbiAgICAgIGVycm9yIFwiSW52YWxpZCBibG9ja3F1b3RlXCIgKVxuXG5sZXQgYnV0dG9uID1cbiAgbGV0IGJ1dHRvbiA9IERvbV9odG1sLndpbmRvdyMjLmRvY3VtZW50IyNnZXRFbGVtZW50QnlJZCAoSnMuc3RyaW5nIFwiYnV0blwiKSBpblxuICBKcy5jb2VyY2Vfb3B0IGJ1dHRvbiBEb21faHRtbC5Db2VyY2VUby5idXR0b24gKGZ1biBfIC0+XG4gICAgICBlcnJvciBcIkludmFsaWQgYnV0dG9uXCIgKVxuXG5sZXQgcmVzdWx0IHMgPVxuICB0cnlcbiAgICBsZXQgYXN0ID1cbiAgICAgIFBhcnNlci5lcXVhdGlvbiBMZXhlci50b2tlbiAoTGV4aW5nLmZyb21fc3RyaW5nIChKcy50b19zdHJpbmcgcykpXG4gICAgaW5cbiAgICBsZXQgcG9seW5vbWVzID0gU29sdmVyLmFzdF90b19saXN0cyBhc3QgaW5cbiAgICBGb3JtYXQuYXNwcmludGYgXCIlYVwiIFNvbHZlci5zb2x2ZSBwb2x5bm9tZXNcbiAgd2l0aFxuICB8IEJpZ19kZWdyZWUgLT5cbiAgICBcIkhpZ2hlc3QgZGVncmVlIGlzIHN1cGVyaW9yIHRvIDIsIHBsZWFzZSBnaXZlIGEgc2Vjb25kIGRlZ3JlZSBlcXVhdGlvbi5cIlxuICB8IFRvb19tYW55X3ZhcmlhYmxlcyAtPlxuICAgIFwiVGhlcmUgYXJlIG1vcmUgdGhhbiBvbmUgdmFyaWFibGUgaW4gdGhpcyBlcXVhdGlvbiwgcGxlYXNlIGdpdmUgb25seSBvbmUuXCJcbiAgfCBTeW50YXhfZXJyb3IgXyAtPiBcIlRoZXJlIGlzIGEgc3ludGF4IGVycm9yIGluIHRoaXMgaW5wdXQuXCJcbiAgfCBQYXJzZXIuRXJyb3IgLT4gXCJUaGVyZSBpcyBhbiB1bmtub3duIHRva2VuIGluIHRoaXMgaW5wdXQuXCJcblxubGV0IGNvbnZlcnRfbmV3bGluZXMgcyA9XG4gIGxldCBidWZmID0gQnVmZmVyLmNyZWF0ZSA1MTIgaW5cbiAgbGV0IGZtdCA9IEZvcm1hdC5mb3JtYXR0ZXJfb2ZfYnVmZmVyIGJ1ZmYgaW5cbiAgU3RyaW5nLml0ZXJcbiAgICAoZnVuY3Rpb25cbiAgICAgIHwgJ1xcbicgLT4gRm9ybWF0LmZwcmludGYgZm10IFwiXFxuPGJyIC8+XCJcbiAgICAgIHwgYyAtPiBGb3JtYXQuZnByaW50ZiBmbXQgXCIlY1wiIGMgKVxuICAgIHM7XG4gIEJ1ZmZlci5jb250ZW50cyBidWZmXG5cbmxldCAoKSA9XG4gIGxldCBfaWQgPVxuICAgIERvbV9odG1sLmFkZEV2ZW50TGlzdGVuZXIgYnV0dG9uIERvbV9odG1sLkV2ZW50LmNsaWNrXG4gICAgICAoRG9tX2h0bWwuaGFuZGxlciAoZnVuIF8gLT5cbiAgICAgICAgICAgYmxvY2txdW90ZSMjLmlubmVySFRNTCA6PVxuICAgICAgICAgICAgIEpzLnN0cmluZyAoY29udmVydF9uZXdsaW5lcyAocmVzdWx0IHRleHRhcmVhIyMudmFsdWUpKTtcbiAgICAgICAgICAgSnMuYm9vbCB0cnVlICkgKVxuICAgICAgKEpzLmJvb2wgZmFsc2UpXG4gIGluXG4gICgpXG4iXX0=
