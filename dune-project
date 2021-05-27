@@ -25,8 +25,14 @@
    (>= 2.8))
   (menhir
    (>= 2.1))
+  (js_of_ocaml
+   (>= 3.9))
+  (js_of_ocaml-ppx
+   (and
+    :build
+    (>= 3.9)))
   (bisect_ppx
    (and
     :with-test
-    (>= "2.6")
+    (>= 2.6)
     :dev))))
