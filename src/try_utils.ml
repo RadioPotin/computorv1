@@ -1,5 +1,10 @@
+(** This file contains two functions used in module
+    computorv1/try/trycomputorv1.ml. *)
+
 open Ast
 
+(** [result s] takes input from <textarea id="textbox"> and feeds it to
+    computorv1 program. Also catches all possible errors. *)
 let result s =
   try
     let ast = Parser.equation Lexer.token (Lexing.from_string s) in
@@ -16,6 +21,8 @@ let result s =
     Format.eprintf "ERROR: %s" (Printexc.to_string e);
     raise e
 
+(** [convert_newlines s] takes the string [result] function returns and converts
+    all newlines in it to an HTML compatible newline. *)
 let convert_newlines s =
   let buff = Buffer.create 512 in
   let fmt = Format.formatter_of_buffer buff in
