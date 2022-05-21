@@ -28,6 +28,6 @@ let test_pp () =
    *)
   Format.printf "Test %d: 5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0@."
     (counter ());
-  handle_test_pp "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0\n"
+  handle_test_pp "5 + 4 * X - 9.3 * X^2 = 1\n"
     ([ (0, 5.); (1, 4.); (2, -9.3) ], [ (0, 1.) ])
     "X"

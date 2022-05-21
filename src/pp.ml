@@ -5,12 +5,12 @@
 let deltap fmt delta =
   Format.fprintf fmt
     ( if delta > 0. then
-      "Discriminant is strictly positive, the two solutions are:@."
-    else if delta < 0. then
-      "Discriminant is strictly negative, there is no solution with real \
-       numbers:@."
-    else
-      "The solution is:@." )
+        "Discriminant is strictly positive, the two solutions are:@."
+      else if delta < 0. then
+        "Discriminant is strictly negative, there is no solution with real \
+         numbers:@."
+      else
+        "The solution is:@." )
 
 (** [pow fmt n] takes in a power and pretty-prints it *)
 let pow fmt (n : int) = Format.fprintf fmt "^%d" n
@@ -19,7 +19,13 @@ let pow fmt (n : int) = Format.fprintf fmt "^%d" n
     needed *)
 let var fmt = function
   | None -> ()
-  | Some (x, n) -> Format.fprintf fmt " * %s%a" x pow n
+  | Some (x, n) ->
+    if n = 0 then
+      ()
+    else if n = 1 then
+      Format.fprintf fmt " * %s" x
+    else
+      Format.fprintf fmt " * %s%a" x pow n
 
 (** [mono fmt (coef, var)] successively prints each element of the monome list *)
 let mono fmt ((coefficient, variable) : Ast.monome) =
@@ -41,13 +47,13 @@ let polyprint fmt ((terms, variable) : (int * float) list * string) =
     mono fmt (v, mk_var k);
     List.iter
       (fun (k, v) ->
-        Format.fprintf fmt "%s%a"
-          ( if v >= 0. then
-            " + "
-          else
-            " - " )
-          mono
-          (Float.abs v, mk_var k) )
+          Format.fprintf fmt "%s%a"
+            ( if v >= 0. then
+                " + "
+              else
+                " - " )
+            mono
+            (Float.abs v, mk_var k) )
       p
 
 (** [equ fmt (polynome_l, polynome_r, var)] takes both sides of the equation as
@@ -59,6 +65,6 @@ let polyprint fmt ((terms, variable) : (int * float) list * string) =
     subject *)
 let equ fmt
     ((polynome_l, polynome_r, var) :
-      (int * float) list * (int * float) list * string ) =
+       (int * float) list * (int * float) list * string ) =
   Format.fprintf fmt "%a = %a" polyprint (polynome_l, var) polyprint
     (polynome_r, var)
